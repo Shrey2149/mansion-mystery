@@ -87,7 +87,7 @@ export default function Locations() {
     
         {/* Button with proper spacing */}
         <div className="mt-10"> {/* Add margin to avoid overlap */}
-          <Link to="/instructions">
+          <Link to="/game">
           <button className="bg-gray-700 px-8 py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 relative z-10 text-xl left-1 text-gray-400">
             Book Now
           </button>
