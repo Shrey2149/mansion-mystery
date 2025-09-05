@@ -4,7 +4,7 @@ import HeroSection from "./components/HeroSection";
 import Locations from "./components/Locations";
 import { AudioProvider } from "./components/AudioContext"; // Import the audio provider
 import Instructions from "./components/Instructions";
-import BookingCalendar from "./components/BookingCalendar";
+
 import Game from "./components/game";
 
 
@@ -17,7 +17,7 @@ function App() {
           <Route path="/locations" element={<Locations />} />
           <Route path="/game" element={<Game />} />
           <Route path="/Instructions" element={<Instructions />} />
-          <Route path="/calendar" element={<BookingCalendar />} />
+          
         </Routes>
       </Router>
     </AudioProvider>

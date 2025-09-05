@@ -260,8 +260,8 @@ export default function Instructions() {
           <img 
             src={propertyImages[currentImageIndex]} 
             alt={`Property Image ${currentImageIndex + 1}`} 
-            className="object-cover rounded-lg opacity-90 mb-4 mt-12 mobile-image"
-            style={{ width: '400px', height: '300px' }}
+            className="object-cover rounded-lg opacity-90 mb-5 mt-0 mobile-image"
+            style={{ width: '550px', height: '300px' }}
           />
 
           {/* Right Arrow */}
@@ -279,15 +279,7 @@ export default function Instructions() {
           </div>
         </div>
 
-        <Link to = "/calendar">
-        <button 
-          className="bg-gray-700 bg-opacity-70 text-white px-8 py-3 rounded-full hover:bg-gray-900 transition-all duration-300 flex items-center space-x-2 mobile-button"
-          style={{ fontFamily: "Avenir", marginTop:'4rem',marginLeft:'14rem' }}
-        >
-          <span>Continue</span>
-          <span>→</span>
-        </button>
-        </Link>
+        
       </div>
     </div>
     </>
