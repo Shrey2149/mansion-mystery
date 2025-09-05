@@ -177,18 +177,137 @@ export default function BookingCalendar() {
           .wavy-letter:nth-child(49) { animation-delay: 4.8s; }
           .wavy-letter:nth-child(50) { animation-delay: 4.9s; }
           .wavy-letter:nth-child(51) { animation-delay: 5.0s; }
+
+          /* Mobile-responsive styles */
+          @media (max-width: 1024px) {
+            .mobile-container {
+              padding: 1rem !important;
+            }
+            
+            .mobile-header {
+              margin-bottom: 2rem !important;
+            }
+            
+            .mobile-title {
+              font-size: 2rem !important;
+            }
+            
+            .mobile-subtitle {
+              font-size: 1rem !important;
+            }
+            
+            .mobile-content {
+              flex-direction: column !important;
+              gap: 2rem !important;
+            }
+            
+            .mobile-calendar {
+              width: 100% !important;
+            }
+            
+            .mobile-sidebar {
+              width: 100% !important;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .mobile-title {
+              font-size: 1.75rem !important;
+            }
+            
+            .mobile-subtitle {
+              font-size: 0.9rem !important;
+            }
+            
+            .mobile-calendar-header {
+              font-size: 1.25rem !important;
+            }
+            
+            .mobile-calendar-grid {
+              gap: 1px !important;
+            }
+            
+            .mobile-calendar-cell {
+              height: 2.5rem !important;
+              width: 2.5rem !important;
+              font-size: 0.75rem !important;
+            }
+            
+            .mobile-legend {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
+            }
+            
+            .mobile-sidebar-title {
+              font-size: 1.25rem !important;
+            }
+          }
+
+          @media (max-width: 640px) {
+            .mobile-title {
+              font-size: 1.5rem !important;
+              line-height: 1.3 !important;
+            }
+            
+            .mobile-subtitle {
+              font-size: 0.8rem !important;
+            }
+            
+            .mobile-calendar-header {
+              font-size: 1.1rem !important;
+            }
+            
+            .mobile-calendar-cell {
+              height: 2.25rem !important;
+              width: 2.25rem !important;
+              font-size: 0.7rem !important;
+            }
+            
+            .mobile-day-header {
+              font-size: 0.7rem !important;
+              height: 1.5rem !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .mobile-container {
+              padding: 0.75rem !important;
+            }
+            
+            .mobile-title {
+              font-size: 1.25rem !important;
+            }
+            
+            .mobile-calendar-cell {
+              height: 2rem !important;
+              width: 2rem !important;
+              font-size: 0.65rem !important;
+            }
+            
+            .mobile-day-header {
+              font-size: 0.6rem !important;
+            }
+            
+            .mobile-calendar-header {
+              font-size: 1rem !important;
+            }
+            
+            .mobile-sidebar-title {
+              font-size: 1.1rem !important;
+            }
+          }
         `}
     </style>
     <div 
-      className="min-h-screen bg-cover bg-center flex items-center justify-between px-16 text-gray-300"
+      className="min-h-screen bg-cover bg-center flex items-center justify-between px-16 text-gray-300 mobile-container"
       style={{ backgroundImage: `url(${backgroundImg})`,
     filter : 'brightness(1.2)' }}
     >
     
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4" style={{ fontFamily: "Avenir" }}>
+        <div className="text-center mb-12 mobile-header">
+          <h1 className="text-5xl font-bold mb-4 mobile-title" style={{ fontFamily: "Avenir" }}>
             {"Plan Your Stay (Gurugram)".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
                 {letter === ' ' ? '\u00A0' : letter}
@@ -196,15 +315,15 @@ export default function BookingCalendar() {
             ))}
             
           </h1>
-          <p className="text-xl text-gray-300" style={{ fontFamily: "Avenir" }}>
+          <p className="text-xl text-gray-300 mobile-subtitle" style={{ fontFamily: "Avenir" }}>
             
             Select an available date for your Mystery Mansion adventure
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-12 mobile-content">
           {/* Calendar */}
-          <div className="rounded-2xl p-8 flex-1 border border-white" style = {{backgroundColor: '#171616'}}>
+          <div className="rounded-2xl p-8 flex-1 border border-white mobile-calendar" style = {{backgroundColor: '#171616'}}>
             {/* Calendar Header */}
             <div className="flex items-center justify-between mb-8">
               <button
@@ -213,7 +332,7 @@ export default function BookingCalendar() {
               >
                 <span className="text-2xl">←</span>
               </button>
-              <h2 className="text-2xl font-bold" style={{ fontFamily: "Avenir" }}>
+              <h2 className="text-2xl font-bold mobile-calendar-header" style={{ fontFamily: "Avenir" }}>
                 {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
               </h2>
               <button
@@ -227,19 +346,23 @@ export default function BookingCalendar() {
             {/* Days of Week */}
             <div className="grid grid-cols-7 gap-2 mb-4">
               {daysOfWeek.map(day => (
-                <div key={day} className="h-8 flex items-center justify-center text-gray-300 text-sm font-medium">
+                <div key={day} className="h-8 flex items-center justify-center text-gray-300 text-sm font-medium mobile-day-header">
                   {day}
                 </div>
               ))}
             </div>
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-2">
-              {renderCalendarDays()}
+            <div className="grid grid-cols-7 gap-2 mobile-calendar-grid">
+              {renderCalendarDays().map((day, index) => (
+                <div key={index} className={day.props.className.includes('h-12') ? day.props.className.replace('h-12 w-12', 'mobile-calendar-cell') : day.props.className} onClick={day.props.onClick}>
+                  {day.props.children}
+                </div>
+              ))}
             </div>
 
             {/* Legend */}
-            <div className="flex flex-wrap gap-6 mt-8 text-sm">
+            <div className="flex flex-wrap gap-6 mt-8 text-sm mobile-legend">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-green-200 rounded"></div>
                 <span>Available</span>
@@ -260,8 +383,8 @@ export default function BookingCalendar() {
           </div>
 
           {/* Booking Details Sidebar */}
-          <div className="rounded-2xl p-8 lg:w-80 border border-white" style = {{backgroundColor: '#171616'}}>
-            <h3 className="text-2xl font-bold mb-6" style={{ fontFamily: "Avenir" }}>
+          <div className="rounded-2xl p-8 lg:w-80 border border-white mobile-sidebar" style = {{backgroundColor: '#171616'}}>
+            <h3 className="text-2xl font-bold mb-6 mobile-sidebar-title" style={{ fontFamily: "Avenir" }}>
               Booking Details
             </h3>
 
