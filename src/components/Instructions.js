@@ -110,10 +110,83 @@ export default function Instructions() {
           .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
           .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
           .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
+
+          /* Mobile-specific styles */
+          @media (max-width: 768px) {
+            .mobile-container {
+              flex-direction: column !important;
+              padding: 1rem !important;
+            }
+            
+            .mobile-title {
+              font-size: 1.5rem !important;
+              margin-left: 0 !important;
+              margin-bottom: 2rem !important;
+              text-align: center !important;
+            }
+            
+            .mobile-list {
+              margin-left: 0 !important;
+              font-size: 1rem !important;
+              padding: 0 1rem !important;
+            }
+            
+            .mobile-contact {
+              margin-left: 0 !important;
+              font-size: 1.2rem !important;
+              text-align: center !important;
+              margin-top: 2rem !important;
+            }
+            
+            .mobile-carousel {
+              margin-left: 0 !important;
+              margin-right: 0 !important;
+              margin-top: 2rem !important;
+              width: 100% !important;
+              display: flex;
+              justify-content: center;
+            }
+            
+            .mobile-image {
+              width: 280px !important;
+              height: 200px !important;
+            }
+            
+            .mobile-button {
+              margin-left: 0 !important;
+              margin-top: 2rem !important;
+            }
+            
+            .mobile-button-container {
+              margin-right: 0 !important;
+              display: flex;
+              justify-content: center;
+              width: 100%;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .mobile-title {
+              font-size: 1.2rem !important;
+            }
+            
+            .mobile-list {
+              font-size: 0.9rem !important;
+            }
+            
+            .mobile-contact {
+              font-size: 1rem !important;
+            }
+            
+            .mobile-image {
+              width: 250px !important;
+              height: 180px !important;
+            }
+          }
         `}
     </style>
     <div 
-      className="min-h-screen bg-cover bg-center flex items-center justify-between px-16 "
+      className="min-h-screen bg-cover bg-center flex items-center justify-between px-16 mobile-container"
       style={{ backgroundImage: `url(${backgroundImg})`,
             filter : 'brightness(1.2)'}}
     >
@@ -123,7 +196,7 @@ export default function Instructions() {
       {/* Left side - Instructions content */}
       <div className="relative z-10 text-white w-full">
         <h1 
-          className="text-5xl font-bold mb-12 text-center w-full"
+          className="text-5xl font-bold mb-12 text-center w-full mobile-title"
           style={{ fontFamily: "Avenir", marginLeft: '16rem' }}
         >
             {"About The Property (Gurugram)".split('').map((letter, index) => (
@@ -138,7 +211,7 @@ export default function Instructions() {
           {/* About The Property Section */}
           <div>
             
-            <ul className="space-y-2 text-xl " style={{ fontFamily: "Avenir", marginLeft:'14rem'}}>
+            <ul className="space-y-2 text-xl mobile-list" style={{ fontFamily: "Avenir", marginLeft:'14rem'}}>
               <li>• 4 bedrooms, 4 beds, 4 bathrooms</li>
               <li>• Indoor swimming pool (access till 7:30pm)</li>
               <li>• Pool table and indoor games</li>
@@ -150,7 +223,7 @@ export default function Instructions() {
 
           {/* Booking Details Section */}
           <div className="pt-4">
-            <ul className="space-y-2 text-xl" style={{ fontFamily: "Avenir" ,marginLeft:'14rem'}}>
+            <ul className="space-y-2 text-xl mobile-list" style={{ fontFamily: "Avenir" ,marginLeft:'14rem'}}>
               <li>• Book in group size of 8-12</li>
               <li>• Check-in at 5pm, check-out at 10am</li>
             </ul>
@@ -158,11 +231,11 @@ export default function Instructions() {
 
           {/* Contact Section */}
           <div className="pt-4">
-            <p className="text-3xl text-left w-full" style={{ fontFamily: "Avenir",marginLeft:'14rem' ,marginTop:'4rem'}}>
+            <p className="text-3xl text-left w-full mobile-contact" style={{ fontFamily: "Avenir",marginLeft:'14rem' ,marginTop:'4rem'}}>
               For further queries and booking the experience
 
             </p>
-            <p className="text-3xl text-left w-full" style={{ fontFamily: "Avenir",marginLeft:'14rem',marginTop:'1rem'}}>
+            <p className="text-3xl text-left w-full mobile-contact" style={{ fontFamily: "Avenir",marginLeft:'14rem',marginTop:'1rem'}}>
               WhatsApp: +91 8279845322
 
             </p>
@@ -171,9 +244,9 @@ export default function Instructions() {
       </div>
 
       {/* Right side - Continue button */}
-      <div className="relative z-10 flex flex-col items-center" style = {{marginRight:'10rem'}}>
+      <div className="relative z-10 flex flex-col items-center mobile-button-container" style = {{marginRight:'10rem'}}>
         {/* Image Carousel */}
-        <div className="mb-8 w-full relative" style = {{marginTop: '4rem',marginLeft:'2rem'}}>
+        <div className="mb-8 w-full relative mobile-carousel" style = {{marginTop: '4rem',marginLeft:'2rem'}}>
           {/* Left Arrow */}
           <button 
             onClick={prevImage}
@@ -187,7 +260,7 @@ export default function Instructions() {
           <img 
             src={propertyImages[currentImageIndex]} 
             alt={`Property Image ${currentImageIndex + 1}`} 
-            className="object-cover rounded-lg opacity-90 mb-4 mt-12"
+            className="object-cover rounded-lg opacity-90 mb-4 mt-12 mobile-image"
             style={{ width: '400px', height: '300px' }}
           />
 
@@ -208,7 +281,7 @@ export default function Instructions() {
 
         <Link to = "/calendar">
         <button 
-          className="bg-gray-700 bg-opacity-70 text-white px-8 py-3 rounded-full hover:bg-gray-900 transition-all duration-300 flex items-center space-x-2"
+          className="bg-gray-700 bg-opacity-70 text-white px-8 py-3 rounded-full hover:bg-gray-900 transition-all duration-300 flex items-center space-x-2 mobile-button"
           style={{ fontFamily: "Avenir", marginTop:'4rem',marginLeft:'14rem' }}
         >
           <span>Continue</span>
