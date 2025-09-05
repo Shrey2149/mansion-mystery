@@ -154,7 +154,7 @@ export default function HeroSection() {
             {/* Bookings Text */}
             <p
               className="bookings-text text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white font-semibold"
-              style={{ fontFamily: "Avenir", color:'#cac8d6'}}
+              style={{ fontFamily: "Avenir", color:'#cac8d6',marginTop:'2rem'}}
             >
               {"Bookings Open Now".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -174,12 +174,12 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center text-center space-y-1 sm:space-y-0">
           <div className="flex-1 text-center space-y-3">
             <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
-              Stay in a premium villa in a group of friends/colleagues.
+              Stay in a premium villa in a group of friends or colleagues
             </p>
             {/* White Divider Line */}
             <div className="w-60 sm:w-80 md:w-96 lg:w-full lg:max-w-2xl xl:max-w-2xl h-px bg-white mx-auto opacity-60"></div>
             <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
-              Solve a real-life mystery game during the Stay
+              Solve a real-life mystery game during the stay
             </p>
           </div>
 

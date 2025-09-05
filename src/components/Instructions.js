@@ -159,7 +159,12 @@ export default function Instructions() {
           {/* Contact Section */}
           <div className="pt-4">
             <p className="text-3xl text-left w-full" style={{ fontFamily: "Avenir",marginLeft:'14rem' ,marginTop:'4rem'}}>
-              For any queries, WhatsApp : +91 8279845322
+              For further queries and booking the experience
+
+            </p>
+            <p className="text-3xl text-left w-full" style={{ fontFamily: "Avenir",marginLeft:'14rem',marginTop:'1rem'}}>
+              WhatsApp: +91 8279845322
+
             </p>
           </div>
         </div>

@@ -131,7 +131,8 @@ export default function Game() {
             className="min-h-[300px] sm:min-h-[350px] md:min-h-[400px] flex flex-col items-center justify-start mb-8 sm:mb-12 md:mb-16"
             style={{ fontFamily: "Avenir", paddingTop: '1rem sm:1.5rem md:2rem' }}
           >
-            <div style={{ height: `${currentLine.position * (window.innerWidth < 640 ? 50 : window.innerWidth < 768 ? 65 : 80)}px` }}></div>
+            {/* INCREASED SPACING CALCULATION */}
+            <div style={{ height: `${currentLine.position * (window.innerWidth < 640 ? 80 : window.innerWidth < 768 ? 100 : 120)}px` }}></div>
             <p 
               className="text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl text-center max-w-xs sm:max-w-md md:max-w-4xl lg:max-w-6xl xl:max-w-7xl leading-relaxed px-4"
               style={{ 
