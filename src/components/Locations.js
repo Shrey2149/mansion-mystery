@@ -2,15 +2,10 @@ import React, { useEffect } from "react";
 import gurgaonImg from "../assets/Gurgaon_image.jpeg";
 import mussoorieImg from "../assets/Mussourrie_image.png";
 import backgroundImg from "../assets/locations-bg.jpeg";
-import { useAudio } from "../components/AudioContext.js"; // Import the hook
+
 import { Link } from "react-router-dom";
 
 export default function Locations() {
-  const { startAudio } = useAudio(); // Use the context
-
-  useEffect(() => {
-    startAudio(); // Start audio when component mounts
-  }, [startAudio]);
 
   return (
     <>
@@ -87,7 +82,7 @@ export default function Locations() {
     
         {/* Button with proper spacing */}
         <div className="mt-10"> {/* Add margin to avoid overlap */}
-          <Link to="/game">
+          <Link to="/Instructions">
           <button className="bg-gray-700 px-8 py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 relative z-10 text-xl left-1 text-gray-400">
             Book Now
           </button>

@@ -156,46 +156,40 @@ export default function HeroSection() {
               className="bookings-text text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white font-semibold"
               style={{ fontFamily: "Avenir", color:'#cac8d6',marginTop:'2rem'}}
             >
-              {"Bookings Open Now".split('').map((letter, index) => (
-                <span key={index} className="wavy-letter">
-                  {letter === ' ' ? '\u00A0' : letter}
-                </span>
-              ))}
             </p>
           </div>
         </div>
-      </div>
 
-      {/* Static Bottom Banner */}
+        {/* Centered Button - positioned much lower, outside content div */}
+        <div className="absolute bottom-40 left-[34%] transform -translate-x-1/2 z-20">
+          <Link to="/game">
+            <button 
+              className="bg-gray-800 text-white px-3 py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 lg:px-7 lg:py-3 xl:px-9 xl:py-4 rounded-full shadow-lg hover:bg-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl transition-all hover:scale-105 whitespace-nowrap" 
+              style={{ backgroundColor:'#464357'}} 
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#323232")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#464357")}
+            >
+              Enter inside
+            </button>
+          </Link>
+        </div>
+        </div>
+      
+
+      {/* Static Bottom Banner - Button removed */}
       <div 
         className="fixed bottom-0 left-0 right-0 bg-black/80 py-2 sm:py-4 px-4 sm:px-8 z-50 backdrop-blur-sm"
         style={{ fontFamily: "Avenir", color:'#b9b7c7ff'}}
       >
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center text-center space-y-1 sm:space-y-0">
-          <div className="flex-1 text-center space-y-3">
-            <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
-              Stay in a premium villa in a group of friends or colleagues
-            </p>
-            {/* White Divider Line */}
-            <div className="w-60 sm:w-80 md:w-96 lg:w-full lg:max-w-2xl xl:max-w-2xl h-px bg-white mx-auto opacity-60"></div>
-            <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
-              Solve a real-life mystery game during the stay
-            </p>
-          </div>
-
-          {/* Button on the right */}
-          <div className="flex-shrink-0 mt-2 sm:mt-0 sm:ml-6">
-            <Link to="/locations">
-              <button 
-                className="bg-gray-800 text-white px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 xl:px-8 xl:py-4 rounded-full shadow-lg hover:bg-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl transition-all hover:scale-105 whitespace-nowrap" 
-                style={{ backgroundColor:'#464357'}} 
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#323232")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#464357")}
-              >
-                Choose Location
-              </button>
-            </Link>
-          </div>
+        <div className="max-w-7xl mx-auto text-center space-y-3">
+          <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
+            Stay in a premium villa in a group of friends or colleagues
+          </p>
+          {/* White Divider Line */}
+          <div className="w-60 sm:w-80 md:w-96 lg:w-full lg:max-w-2xl xl:max-w-2xl h-px bg-white mx-auto opacity-60"></div>
+          <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
+            Solve a real-life mystery game during the stay
+          </p>
         </div>
       </div>
     </>

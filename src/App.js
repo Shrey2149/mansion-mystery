@@ -4,6 +4,7 @@ import HeroSection from "./components/HeroSection";
 import Locations from "./components/Locations";
 import { AudioProvider } from "./components/AudioContext"; // Import the audio provider
 import Instructions from "./components/Instructions";
+import Whatsapp from "./components/whatsapp"
 
 import Game from "./components/game";
 
@@ -19,6 +20,8 @@ function App() {
           <Route path="/Instructions" element={<Instructions />} />
           
         </Routes>
+
+        <Whatsapp/>
       </Router>
     </AudioProvider>
   );

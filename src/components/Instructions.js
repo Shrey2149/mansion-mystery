@@ -90,7 +90,7 @@ export default function Instructions() {
           .wavy-letter:nth-child(13) { animation-delay: 1.2s; }
           .wavy-letter:nth-child(14) { animation-delay: 1.3s; }
           .wavy-letter:nth-child(15) { animation-delay: 1.4s; }
-          .wavy-letter:nth-child(16) { animation-delay: 1.5s; }
+          .wavy-letter:nth-child(16) { animation-delay: 1.6s; }
           .wavy-letter:nth-child(17) { animation-delay: 1.6s; }
           .wavy-letter:nth-child(18) { animation-delay: 1.7s; }
           .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
@@ -111,37 +111,92 @@ export default function Instructions() {
           .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
           .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
 
-          /* Mobile-specific styles */
+          /* Desktop styles */
+          .desktop-layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 6rem 4rem 2rem 4rem;
+            min-height: 100vh;
+          }
+
+          .desktop-content {
+            flex: 1;
+            margin-right: 2rem;
+          }
+
+          .desktop-title {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: left;
+            margin-left: 4rem;
+          }
+
+          .desktop-list {
+            margin-left: 4rem;
+            margin-right: 2rem;
+            font-size: 1.25rem;
+            margin-top: 2rem;
+          }
+
+          .desktop-contact {
+            margin-left: 4rem;
+            margin-right: 2rem;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+          }
+
+          .desktop-carousel {
+            flex-shrink: 0;
+            margin-right: 6rem;
+            margin-top: 8rem; /* Increased from 2rem to 8rem to shift down */
+          }
+
+          /* Mobile styles */
           @media (max-width: 768px) {
-            .mobile-container {
+            .desktop-layout {
               flex-direction: column !important;
-              padding: 1rem !important;
+              padding: 2rem 1rem !important;
+              align-items: center !important;
             }
             
-            .mobile-title {
+            .desktop-content {
+              width: 100% !important;
+              margin-right: 0 !important;
+              order: 1;
+            }
+            
+            .desktop-title {
               font-size: 1.5rem !important;
               margin-left: 0 !important;
               margin-bottom: 2rem !important;
               text-align: center !important;
+              line-height: 1.3 !important;
             }
             
-            .mobile-list {
-              margin-left: 0 !important;
-              font-size: 1rem !important;
-              padding: 0 1rem !important;
-            }
-            
-            .mobile-contact {
-              margin-left: 0 !important;
-              font-size: 1.2rem !important;
-              text-align: center !important;
-              margin-top: 2rem !important;
-            }
-            
-            .mobile-carousel {
+            .desktop-list {
               margin-left: 0 !important;
               margin-right: 0 !important;
+              font-size: 0.9rem !important;
+              padding: 0 1rem !important;
+              text-align: left !important;
+            }
+            
+            .desktop-contact {
+              margin-left: 0 !important;
+              margin-right: 0 !important;
+              font-size: 1rem !important;
+              text-align: center !important;
               margin-top: 2rem !important;
+              padding: 0 1rem !important;
+              white-space: normal !important;
+              line-height: 1.4 !important;
+            }
+            
+            .desktop-carousel {
+              order: 2;
+              margin-right: 0 !important;
+              margin-top: 10rem !important; /* Keep this for mobile */
               width: 100% !important;
               display: flex;
               justify-content: center;
@@ -151,31 +206,21 @@ export default function Instructions() {
               width: 280px !important;
               height: 200px !important;
             }
-            
-            .mobile-button {
-              margin-left: 0 !important;
-              margin-top: 2rem !important;
-            }
-            
-            .mobile-button-container {
-              margin-right: 0 !important;
-              display: flex;
-              justify-content: center;
-              width: 100%;
-            }
           }
 
           @media (max-width: 480px) {
-            .mobile-title {
-              font-size: 1.2rem !important;
+            .desktop-title {
+              font-size: clamp(0.7rem, 3vw, 1.2rem) !important;
+              white-space: nowrap !important;
+              overflow: visible !important;
             }
             
-            .mobile-list {
+            .desktop-list {
+              font-size: 0.8rem !important;
+            }
+            
+            .desktop-contact {
               font-size: 0.9rem !important;
-            }
-            
-            .mobile-contact {
-              font-size: 1rem !important;
             }
             
             .mobile-image {
@@ -186,67 +231,53 @@ export default function Instructions() {
         `}
     </style>
     <div 
-      className="min-h-screen bg-cover bg-center flex items-center justify-between px-16 mobile-container"
-      style={{ backgroundImage: `url(${backgroundImg})`,
-            filter : 'brightness(1.2)'}}
+      className="bg-cover bg-center desktop-layout"
+      style={{ 
+        backgroundImage: `url(${backgroundImg})`,
+        filter: 'brightness(1.2)' 
+      }}
     >
-      {/* Overlay for dark effect */}
-      
-
       {/* Left side - Instructions content */}
-      <div className="relative z-10 text-white w-full">
+      <div className="relative z-10 text-white desktop-content">
         <h1 
-          className="text-5xl font-bold mb-12 text-center w-full mobile-title"
-          style={{ fontFamily: "Avenir", marginLeft: '16rem' }}
+          className="font-bold desktop-title"
+          style={{ fontFamily: "Avenir" }}
         >
             {"About The Property (Gurugram)".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
                 {letter === ' ' ? '\u00A0' : letter}
               </span>
             ))}
-          
         </h1>
 
         <div className="space-y-8">
           {/* About The Property Section */}
           <div>
-            
-            <ul className="space-y-2 text-xl mobile-list" style={{ fontFamily: "Avenir", marginLeft:'14rem'}}>
-              <li>• 4 bedrooms, 4 beds, 4 bathrooms</li>
-              <li>• Indoor swimming pool (access till 7:30pm)</li>
-              <li>• Pool table and indoor games</li>
-              <li>• In-home cinema</li>
-              <li>• BYOB</li>
-              <li>• In-house dining on order</li>
-            </ul>
-          </div>
-
-          {/* Booking Details Section */}
-          <div className="pt-4">
-            <ul className="space-y-2 text-xl mobile-list" style={{ fontFamily: "Avenir" ,marginLeft:'14rem'}}>
-              <li>• Book in group size of 8-12</li>
-              <li>• Check-in at 5pm, check-out at 10am</li>
+            <ul className="space-y-2 desktop-list" style={{ fontFamily: "Avenir" }}>
+              <li>• ⁠With 4 bedrooms and 4 bathrooms, every guest has room to rest, plot, and prepare for the night ahead.</li>
+              <li>• An indoor swimming pool, open till 7:30pm, invites you before the mystery deepens.</li>
+              <li>• Between clues, gather around the pool table or other games to test your strategy.</li>
+              <li>• The in-home cinema sets the perfect stage for group debriefs.</li>
+              <li>• You're welcome to BYOB — and we'll set the bar for you.</li>
+              <li>• When hunger strikes, indulge in in-house dining available on order.</li>
+              <li>• ⁠Ideal for groups of 8–12, the space is crafted for both camaraderie and suspicion.</li>
+              <li>• Check-in from 5pm, check-out by 10am gives plenty of time for secrets to settle.</li>
             </ul>
           </div>
 
           {/* Contact Section */}
           <div className="pt-4">
-            <p className="text-3xl text-left w-full mobile-contact" style={{ fontFamily: "Avenir",marginLeft:'14rem' ,marginTop:'4rem'}}>
-              For further queries and booking the experience
-
-            </p>
-            <p className="text-3xl text-left w-full mobile-contact" style={{ fontFamily: "Avenir",marginLeft:'14rem',marginTop:'1rem'}}>
-              WhatsApp: +91 8279845322
-
+            <p className="desktop-contact" style={{ fontFamily: "Avenir" }}>
+              For further queries and booking the experience, WhatsApp: +91 8279845322
             </p>
           </div>
         </div>
       </div>
 
-      {/* Right side - Continue button */}
-      <div className="relative z-10 flex flex-col items-center mobile-button-container" style = {{marginRight:'10rem'}}>
+      {/* Right side - Image Carousel */}
+      <div className="relative z-10 desktop-carousel">
         {/* Image Carousel */}
-        <div className="mb-8 w-full relative mobile-carousel" style = {{marginTop: '4rem',marginLeft:'2rem'}}>
+        <div className="relative">
           {/* Left Arrow */}
           <button 
             onClick={prevImage}
@@ -260,8 +291,8 @@ export default function Instructions() {
           <img 
             src={propertyImages[currentImageIndex]} 
             alt={`Property Image ${currentImageIndex + 1}`} 
-            className="object-cover rounded-lg opacity-90 mb-5 mt-0 mobile-image"
-            style={{ width: '550px', height: '300px' }}
+            className="object-cover rounded-lg opacity-90 mobile-image"
+            style={{ width: '480px', height: '280px' }}
           />
 
           {/* Right Arrow */}
@@ -273,13 +304,11 @@ export default function Instructions() {
             →
           </button>
 
-          {/* Image Counter (optional) */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+          {/* Image Counter */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
             {currentImageIndex + 1} / {propertyImages.length}
           </div>
         </div>
-
-        
       </div>
     </div>
     </>

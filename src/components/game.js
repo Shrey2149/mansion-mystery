@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import backgroundImg from "../assets/instructions-bg.png"; 
 import { Link } from "react-router-dom";
+import { useAudio } from "../components/AudioContext.js";
 
 export default function Game() {
+  const { startAudio } = useAudio(); // Use the context
+  
+    useEffect(() => {
+      startAudio(); // Start audio when component mounts
+    }, [startAudio]);
   const [currentLineIndex, setCurrentLineIndex] = useState(-1);
-  const [showContinueButton, setShowContinueButton] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
   const [currentLine, setCurrentLine] = useState({ text: '', visible: false, position: 0 });
 
   // Define the text lines to animate
@@ -15,42 +21,54 @@ export default function Game() {
     "Your actions decide how the mystery unravels"
   ];
 
-  useEffect(() => {
-    const animateLines = async () => {
-      // Wait for initial delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+  // Function to restart the animation
+  const restartAnimation = () => {
+    setShowOptions(false);
+    setCurrentLineIndex(-1);
+    setCurrentLine({ text: '', visible: false, position: 0 });
+    
+    // Start animation again after a brief delay
+    setTimeout(() => {
+      animateLines();
+    }, 500);
+  };
+
+  const animateLines = async () => {
+    // Wait for initial delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    for (let i = 0; i < textLines.length; i++) {
+      setCurrentLineIndex(i);
       
-      for (let i = 0; i < textLines.length; i++) {
-        setCurrentLineIndex(i);
-        
-        // Fade out previous line first
-        if (i > 0) {
-          setCurrentLine(prev => ({ ...prev, visible: false }));
-          await new Promise(resolve => setTimeout(resolve, 2100));
-        }
-        
-        // Set new line and fade in
-        setCurrentLine({ 
-          text: textLines[i], 
-          visible: true, 
-          position: i 
-        });
-        
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Wait for display time
-        await new Promise(resolve => setTimeout(resolve, 600));
+      // Fade out previous line first
+      if (i > 0) {
+        setCurrentLine(prev => ({ ...prev, visible: false }));
+        await new Promise(resolve => setTimeout(resolve, 2100));
       }
       
-      // Fade out last line
-      setCurrentLine(prev => ({ ...prev, visible: false }));
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Set new line and fade in
+      setCurrentLine({ 
+        text: textLines[i], 
+        visible: true, 
+        position: i 
+      });
       
-      // Show continue button after all animations
-      setCurrentLineIndex(-1);
-      setShowContinueButton(true);
-    };
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Wait for display time
+      await new Promise(resolve => setTimeout(resolve, 600));
+    }
+    
+    // Fade out last line
+    setCurrentLine(prev => ({ ...prev, visible: false }));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Show options after all animations
+    setCurrentLineIndex(-1);
+    setShowOptions(true);
+  };
 
+  useEffect(() => {
     animateLines();
   }, []);
 
@@ -98,6 +116,36 @@ export default function Game() {
           transition: opacity 10s ease-in;
         }
 
+        @keyframes slideInFromLeft {
+          0% {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInFromRight {
+          0% {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .slide-in-left {
+          animation: slideInFromLeft 0.8s ease-out;
+        }
+
+        .slide-in-right {
+          animation: slideInFromRight 0.8s ease-out;
+        }
+
         @media (max-width: 640px) {
           .wavy-letter:nth-child(n) {
             animation: wave 3s ease-in-out infinite;
@@ -113,7 +161,7 @@ export default function Game() {
         }}
       >
         {/* Main content container */}
-        <div className="relative z-10 text-white w-full text-center max-w-6xl mx-auto">
+        <div className="relative z-10 text-white w-full text-center max-w-10xl mx-auto">
           {/* Title with wavy animation */}
           <h1 
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 md:mb-10 justify-center"
@@ -134,7 +182,7 @@ export default function Game() {
             {/* INCREASED SPACING CALCULATION */}
             <div style={{ height: `${currentLine.position * (window.innerWidth < 640 ? 80 : window.innerWidth < 768 ? 100 : 120)}px` }}></div>
             <p 
-              className="text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl text-center max-w-xs sm:max-w-md md:max-w-4xl lg:max-w-6xl xl:max-w-7xl leading-relaxed px-4"
+              className="text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl text-center max-w-sm sm:max-w-lg md:max-w-6xl lg:max-w-full xl:max-w-full leading-relaxed px-4 whitespace-nowrap"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                 opacity: currentLine.visible ? 1 : 0,
@@ -146,15 +194,32 @@ export default function Game() {
             </p>
           </div>
 
-          {/* Continue Button */}
-          <div className="flex justify-center">
-            <Link to="/instructions">
+          {/* Two Options - Side by Side */}
+          <div 
+            className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 md:gap-12"
+            style={{ 
+              opacity: showOptions ? 1 : 0,
+              transition: 'opacity 1.2s ease-out'
+            }}
+          >
+            {/* See Hints Again Button */}
+            <button 
+              onClick={restartAnimation}
+              className="bg-gray-700 bg-opacity-70 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full hover:bg-gray-900 transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base"
+              style={{ 
+                fontFamily: "Avenir"
+              }}
+            >
+              <span>↻</span>
+              <span>See Hints Again</span>
+            </button>
+
+            {/* Continue Button */}
+            <Link to="/locations">
               <button 
                 className="bg-gray-700 bg-opacity-70 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full hover:bg-gray-900 transition-all duration-300 flex items-center space-x-2 text-sm sm:text-base"
                 style={{ 
-                  fontFamily: "Avenir",
-                  opacity: showContinueButton ? 1 : 0,
-                  transition: 'opacity 1.2s ease-out'
+                  fontFamily: "Avenir"
                 }}
               >
                 <span>Continue</span>
@@ -162,6 +227,18 @@ export default function Game() {
               </button>
             </Link>
           </div>
+
+          {/* Optional helper text */}
+          <p 
+            className="text-xs sm:text-sm text-gray-300 mt-6 opacity-70"
+            style={{ 
+              fontFamily: "Avenir",
+              opacity: showOptions ? 0.7 : 0,
+              transition: 'opacity 1.5s ease-out 0.5s'
+            }}
+          >
+            Choose your next step to continue the mystery adventure
+          </p>
         </div>
       </div>
     </>
