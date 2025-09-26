@@ -21,7 +21,19 @@ import eighteenImg from "../assets/twentyPic.png"
 import { Link } from "react-router-dom";
 
 export default function Instructions() {
-  // Array of property images - add more images here
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+
+  // Navigation items
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "The Game", href: "/#about-game" },
+    { name: "The Architect", href: "/creator" },
+    { name: "Locations", href: "/#locations" },
+    { name: "FAQs", href: "/#faqs" }
+  ];
+
+  // Array of property images
   const propertyImages = [
     secondImg,
     sixthImg,
@@ -37,29 +49,32 @@ export default function Instructions() {
     forteenthImg,
     twelvethImg,
     thirteenthImg,
-    
     fifteenthImg,
     sixteenthImg,
     seventeenthImg,
     eighteenImg
-    // Add more image imports here
-    // secondImg,
-    // thirdImg,
-    // etc.
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const changeImage = (newIndex) => {
+    if (newIndex !== currentImageIndex) {
+      setIsImageTransitioning(true);
+      setTimeout(() => {
+        setCurrentImageIndex(newIndex);
+        setIsImageTransitioning(false);
+      }, 150);
+    }
+  };
+
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === propertyImages.length - 1 ? 0 : prevIndex + 1
-    );
+    const newIndex = currentImageIndex === propertyImages.length - 1 ? 0 : currentImageIndex + 1;
+    changeImage(newIndex);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? propertyImages.length - 1 : prevIndex - 1
-    );
+    const newIndex = currentImageIndex === 0 ? propertyImages.length - 1 : currentImageIndex - 1;
+    changeImage(newIndex);
   };
 
   return (
@@ -111,10 +126,26 @@ export default function Instructions() {
           .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
           .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
 
+          /* Navigation Styles */
+          .nav-bg {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+          }
+
+          /* Mobile menu styles */
+          .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+          }
+          
+          .mobile-menu.open {
+            transform: translateY(0);
+          }
+
           /* Desktop styles */
           .desktop-layout {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
             padding: 6rem 4rem 2rem 4rem;
             min-height: 100vh;
@@ -130,6 +161,7 @@ export default function Instructions() {
             margin-bottom: 3rem;
             text-align: left;
             margin-left: 4rem;
+            white-space: nowrap;
           }
 
           .desktop-list {
@@ -137,6 +169,7 @@ export default function Instructions() {
             margin-right: 2rem;
             font-size: 1.25rem;
             margin-top: 2rem;
+            line-height: 2.5;
           }
 
           .desktop-contact {
@@ -144,12 +177,23 @@ export default function Instructions() {
             margin-right: 2rem;
             font-size: 1.5rem;
             margin-top: 2rem;
+            font-style: italic;
           }
 
           .desktop-carousel {
             flex-shrink: 0;
             margin-right: 6rem;
-            margin-top: 8rem; /* Increased from 2rem to 8rem to shift down */
+            display: flex;
+            align-items: center;
+          }
+
+          /* Image fade transition */
+          .image-container {
+            transition: opacity 0.3s ease-in-out;
+          }
+
+          .image-container.transitioning {
+            opacity: 0;
           }
 
           /* Mobile styles */
@@ -167,11 +211,12 @@ export default function Instructions() {
             }
             
             .desktop-title {
-              font-size: 1.5rem !important;
+              font-size: clamp(1.2rem, 4vw, 2rem) !important;
               margin-left: 0 !important;
               margin-bottom: 2rem !important;
               text-align: center !important;
               line-height: 1.3 !important;
+              white-space: nowrap !important;
             }
             
             .desktop-list {
@@ -180,6 +225,7 @@ export default function Instructions() {
               font-size: 0.9rem !important;
               padding: 0 1rem !important;
               text-align: left !important;
+              line-height: 2;
             }
             
             .desktop-contact {
@@ -196,7 +242,7 @@ export default function Instructions() {
             .desktop-carousel {
               order: 2;
               margin-right: 0 !important;
-              margin-top: 10rem !important; /* Keep this for mobile */
+              margin-top: 3rem !important;
               width: 100% !important;
               display: flex;
               justify-content: center;
@@ -230,6 +276,95 @@ export default function Instructions() {
           }
         `}
     </style>
+
+    {/* Navigation Bar */}
+    <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo/Brand */}
+          <div className="flex-shrink-0">
+            <Link to="/">
+              <span className="text-white text-xl font-bold" style={{ fontFamily: "Avenir" }}>
+                Mystery Mansion
+              </span>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-4">
+              {navItems.map((item, index) => (
+                item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                    style={{ fontFamily: "Avenir" }}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                    style={{ fontFamily: "Avenir" }}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {navItems.map((item, index) => (
+              item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                  style={{ fontFamily: "Avenir" }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={index}
+                  to={item.href}
+                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                  style={{ fontFamily: "Avenir" }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <div 
       className="bg-cover bg-center desktop-layout"
       style={{ 
@@ -253,16 +388,16 @@ export default function Instructions() {
         <div className="space-y-8">
           {/* About The Property Section */}
           <div>
-            <ul className="space-y-2 desktop-list" style={{ fontFamily: "Avenir" }}>
-              <li>• ⁠With 4 bedrooms and 4 bathrooms, every guest has room to rest, plot, and prepare for the night ahead.</li>
-              <li>• An indoor swimming pool, open till 7:30pm, invites you before the mystery deepens.</li>
-              <li>• Between clues, gather around the pool table or other games to test your strategy.</li>
-              <li>• The in-home cinema sets the perfect stage for group debriefs.</li>
-              <li>• You're welcome to BYOB — and we'll set the bar for you.</li>
-              <li>• When hunger strikes, indulge in in-house dining available on order.</li>
-              <li>• ⁠Ideal for groups of 8–12, the space is crafted for both camaraderie and suspicion.</li>
-              <li>• Check-in from 5pm, check-out by 10am gives plenty of time for secrets to settle.</li>
-            </ul>
+            <div className="desktop-list" style={{ fontFamily: "Avenir" }}>
+              <div>4 bedrooms, 4 bathrooms—plenty of space to plot and prepare.</div>
+              <div>Indoor pool (open till 7:30pm) for a pre-mystery dive.</div>
+              <div>Pool table and games to test your strategy between clues.</div>
+              <div>In-home cinema for group debriefs.</div>
+              <div>BYOB — your drinks, our bar can brew suspense for you</div>
+              <div>Dining available on order—fuel your next move.</div>
+              <div>Ideal for 8–12 guests, where camaraderie and secrets intertwine.</div>
+              <div>Check-in from 5pm, check-out by 10am</div>
+            </div>
           </div>
 
           {/* Contact Section */}
@@ -287,13 +422,15 @@ export default function Instructions() {
             ←
           </button>
 
-          {/* Main Image */}
-          <img 
-            src={propertyImages[currentImageIndex]} 
-            alt={`Property Image ${currentImageIndex + 1}`} 
-            className="object-cover rounded-lg opacity-90 mobile-image"
-            style={{ width: '480px', height: '280px' }}
-          />
+          {/* Main Image with fade effect */}
+          <div className={`image-container ${isImageTransitioning ? 'transitioning' : ''}`}>
+            <img 
+              src={propertyImages[currentImageIndex]} 
+              alt={`Property Image ${currentImageIndex + 1}`} 
+              className="object-cover rounded-lg opacity-90 mobile-image"
+              style={{ width: '480px', height: '280px' }}
+            />
+          </div>
 
           {/* Right Arrow */}
           <button 

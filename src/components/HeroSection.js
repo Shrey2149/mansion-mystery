@@ -61,11 +61,10 @@ export default function HeroSection() {
   // Navigation items
   const navItems = [
     { name: "Home", href: "#home" },
-    { name: "About the game", href: "#about-game" },
-    { name: "About the creator", href: "/creator" },
+    { name: "The Game", href: "#about-game" },
+    { name: "The Architect", href: "/creator" },
     { name: "Locations", href: "#locations" },
-    { name: "FAQs", href: "#faqs" },
-    { name: "Book Now", href: "#book-now" }
+    { name: "FAQs", href: "#faqs" }
   ];
 
   // Static text lines for the game section
@@ -84,7 +83,7 @@ export default function HeroSection() {
     },
     {
       question: "What is the game about?",
-      answer: "Check in with your group for a party like any other… until the unexpected happens! Imagine a live murder, a theft, or an extraordinary mystery unfolding right before your eyes. As the eye witnesses, it is your responsibility to crack it."
+      answer: "Check in with your group for a party like any other… until the unexpected happens! Imagine an unthinkable  mystery unfolding right before your eyes as you stay at the property. As the eye witnesses, of course you need to crack it"
     },
     {
       question: "How long does the game last?",
@@ -92,7 +91,7 @@ export default function HeroSection() {
     },
     {
       question: "What language is the game in?",
-      answer: "The game is conducted in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
+      answer: "Currently the game is available in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
     },
     {
       question: "Is it suitable for all ages?",
@@ -482,10 +481,10 @@ export default function HeroSection() {
               World's Only
             </p>
             
-            {/* Wavy Mystery Mansion Text */}
+            {/* Wavy Mystery Mansion Text - Different Font */}
             <h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-white text-center mt-4 sm:mt-6 lg:mt-20"
-              style={{ fontFamily: "Avenir", color:'#727081'}}
+              style={{ fontFamily: "serif", color:'#727081'}}
             >
               {"Mystery Mansion".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -506,14 +505,16 @@ export default function HeroSection() {
               ))}
             </p>
 
-            {/* Booking Section */}
-            <div className="mt-8 sm:mt-12 md:mt-16 flex flex-col items-center justify-center w-full">
-              {/* Bookings Text */}
-              <p
-                className="bookings-text text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white font-semibold"
-                style={{ fontFamily: "Avenir", color:'#cac8d6',marginTop:'2rem'}}
-              >
-              </p>
+            {/* Booking Section - Book Now Button */}
+            <div className="absolute top-[450px] bottom-0 left-1/2 transform -translate-x-1/2 z-30">
+              <Link to="/Instructions">
+                <button 
+                  className="bg-gray-700 px-6 py-2 rounded-full hover:bg-gray-900 transition-colors duration-300 text-base sm:text-lg text-gray-300 font-semibold"
+                  style={{ fontFamily: "Avenir" }}
+                >
+                  Book Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -547,11 +548,11 @@ export default function HeroSection() {
         >
           {/* Main content container */}
           <div className="relative z-10 text-white w-full text-center max-w-10xl mx-auto">
-            {/* Title with wavy animation */}
+            {/* Title with wavy animation - Cursive Font */}
             <h1 
               ref={gameTitleRef}
               className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 md:mb-10 justify-center"
-              style={{ fontFamily: "Avenir", marginTop: '1rem sm:2rem', color: '#727081' }}
+              style={{ fontFamily: "cursive", marginTop: '1rem sm:2rem', color: '#727081' }}
             >
               {"About the Game".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -593,11 +594,11 @@ export default function HeroSection() {
             filter: 'brightness(1)'
           }}
         >
-          {/* Title with wavy animation */}
+          {/* Title with wavy animation - Cursive Font */}
           <h1 
             ref={locationsTitleRef}
             className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 sm:mb-16 md:mb-20 text-center"
-            style={{ fontFamily: "Avenir", color: '#727081' }}
+            style={{ fontFamily: "cursive", color: '#727081' }}
           >
             {"Locations".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
@@ -685,11 +686,11 @@ export default function HeroSection() {
           {/* Overlay for better text readability */}
           <div className="absolute inset-0 bg-black/20"></div>
           
-          {/* Title with wavy animation */}
+          {/* Title with wavy animation - Cursive Font */}
           <h1 
             ref={faqTitleRef}
             className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 sm:mb-16 md:mb-20 text-center relative z-10"
-            style={{ fontFamily: "Avenir", color: '#727081' }}
+            style={{ fontFamily: "cursive", color: '#727081' }}
           >
             {"Frequently Asked Questions".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">

@@ -1,13 +1,24 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import bgImage from "../assets/mystery.jpeg";
 import creatorImg from "../assets/Creator.jpeg";
 import { Link } from "react-router-dom";
 
 export default function Creator() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   // Refs for animation elements
   const creatorImageRef = useRef(null);
   const creatorTitleRef = useRef(null);
   const creatorContentRef = useRef([]);
+
+  // Navigation items
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "The Game", href: "/#about-game" },
+    { name: "The Architect", href: "/creator" },
+    { name: "Locations", href: "/#locations" },
+    { name: "FAQs", href: "/#faqs" }
+  ];
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -73,6 +84,22 @@ export default function Creator() {
         .wavy-letter:nth-child(18) { animation-delay: 1.7s; }
         .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
         .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
+
+        /* Navigation Styles */
+        .nav-bg {
+          background: rgba(0, 0, 0, 0.8);
+          backdrop-filter: blur(10px);
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+          transform: translateY(-100%);
+          transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+          transform: translateY(0);
+        }
 
         /* Smooth scrolling */
         html {
@@ -221,32 +248,7 @@ export default function Creator() {
           margin-top: 0.5rem;
         }
 
-        /* Back button */
-        .back-button {
-          position: fixed;
-          top: 2rem;
-          left: 2rem;
-          z-index: 50;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(114, 112, 129, 0.3);
-          border-radius: 50px;
-          padding: 0.75rem 1.5rem;
-          color: #727081;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .back-button:hover {
-          background: rgba(114, 112, 129, 0.2);
-          border-color: rgba(114, 112, 129, 0.6);
-          transform: translateY(-2px);
-          color: #8b8999;
-        }
+        /* Back button - REMOVED */
 
         /* Staggered animations */
         .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
@@ -268,23 +270,96 @@ export default function Creator() {
             font-size: 3rem;
             left: 5px;
           }
-
-          .back-button {
-            top: 1rem;
-            left: 1rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-          }
         }
       `}</style>
 
-      {/* Back Button */}
-      <Link to="/" className="back-button" style={{ fontFamily: "Avenir" }}>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to Home
-      </Link>
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo/Brand */}
+            <div className="flex-shrink-0">
+              <Link to="/">
+                <span className="text-white text-xl font-bold" style={{ fontFamily: "Avenir" }}>
+                  Mystery Mansion
+                </span>
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navItems.map((item, index) => (
+                  item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                    <a
+                      key={index}
+                      href={item.href}
+                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                      style={{ fontFamily: "Avenir" }}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={index}
+                      to={item.href}
+                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                      style={{ fontFamily: "Avenir" }}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {isMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Menu */}
+          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {navItems.map((item, index) => (
+                item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                    style={{ fontFamily: "Avenir" }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                    style={{ fontFamily: "Avenir" }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
+            </div>
+          </div>
+        </div>
+      </nav>
 
       {/* Main Content */}
       <div
