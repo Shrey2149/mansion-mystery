@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import backgroundImg from "../assets/instructions-bg.png"; 
 import Img from "../assets/secondPic.jpeg";
 import secondImg from "../assets/thirdPic.png"
@@ -22,13 +22,15 @@ import { Link } from "react-router-dom";
 
 export default function Instructions() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState({});
+  const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
 
   // Navigation items
   const navItems = [
     { name: "Home", href: "/" },
     { name: "The Game", href: "/#about-game" },
-    { name: "The Architect", href: "/creator" },
+    { name: "The Architect", href: "#creator" },
     { name: "Locations", href: "/#locations" },
     { name: "FAQs", href: "/#faqs" }
   ];
@@ -55,15 +57,37 @@ export default function Instructions() {
     eighteenImg
   ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // Preload all images on component mount
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = propertyImages.map((src, index) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            setImagesLoaded(prev => ({ ...prev, [index]: true }));
+            resolve(src);
+          };
+          img.onerror = reject;
+          img.src = src;
+        });
+      });
+
+      try {
+        await Promise.all(imagePromises);
+        setAllImagesPreloaded(true);
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        // Still set as preloaded to prevent infinite loading
+        setAllImagesPreloaded(true);
+      }
+    };
+
+    preloadImages();
+  }, []);
 
   const changeImage = (newIndex) => {
     if (newIndex !== currentImageIndex) {
-      setIsImageTransitioning(true);
-      setTimeout(() => {
-        setCurrentImageIndex(newIndex);
-        setIsImageTransitioning(false);
-      }, 150);
+      setCurrentImageIndex(newIndex);
     }
   };
 
@@ -187,13 +211,103 @@ export default function Instructions() {
             align-items: center;
           }
 
-          /* Image fade transition */
-          .image-container {
-            transition: opacity 0.3s ease-in-out;
+          /* Optimized Image Carousel Styles */
+          .carousel-container {
+            position: relative;
+            width: 480px;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 8px;
           }
 
-          .image-container.transitioning {
-            opacity: 0;
+          .carousel-track {
+            display: flex;
+            width: ${propertyImages.length * 100}%;
+            height: 100%;
+            transform: translateX(-${currentImageIndex * (100 / propertyImages.length)}%);
+            transition: transform 0.3s ease-in-out;
+          }
+
+          .carousel-slide {
+            width: ${100 / propertyImages.length}%;
+            height: 100%;
+            flex-shrink: 0;
+          }
+
+          .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          /* Loading spinner */
+          .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+          }
+
+          .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #727081;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+
+          /* Arrow buttons */
+          .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            z-index: 10;
+            user-select: none;
+          }
+
+          .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
+          }
+
+          .carousel-arrow.prev {
+            left: 10px;
+          }
+
+          .carousel-arrow.next {
+            right: 10px;
+          }
+
+          /* Image counter */
+          .image-counter {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 10;
           }
 
           /* Mobile styles */
@@ -248,7 +362,7 @@ export default function Instructions() {
               justify-content: center;
             }
             
-            .mobile-image {
+            .carousel-container {
               width: 280px !important;
               height: 200px !important;
             }
@@ -269,7 +383,7 @@ export default function Instructions() {
               font-size: 0.9rem !important;
             }
             
-            .mobile-image {
+            .carousel-container {
               width: 250px !important;
               height: 180px !important;
             }
@@ -409,43 +523,52 @@ export default function Instructions() {
         </div>
       </div>
 
-      {/* Right side - Image Carousel */}
+      {/* Right side - Optimized Image Carousel */}
       <div className="relative z-10 desktop-carousel">
-        {/* Image Carousel */}
-        <div className="relative">
-          {/* Left Arrow */}
-          <button 
-            onClick={prevImage}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all duration-300 z-20"
-            style={{ fontSize: '20px' }}
-          >
-            ←
-          </button>
-
-          {/* Main Image with fade effect */}
-          <div className={`image-container ${isImageTransitioning ? 'transitioning' : ''}`}>
-            <img 
-              src={propertyImages[currentImageIndex]} 
-              alt={`Property Image ${currentImageIndex + 1}`} 
-              className="object-cover rounded-lg opacity-90 mobile-image"
-              style={{ width: '480px', height: '280px' }}
-            />
+        {!allImagesPreloaded ? (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
           </div>
+        ) : (
+          <div className="carousel-container">
+            {/* Previous Arrow */}
+            <button 
+              onClick={prevImage}
+              className="carousel-arrow prev"
+              disabled={!allImagesPreloaded}
+            >
+              ←
+            </button>
 
-          {/* Right Arrow */}
-          <button 
-            onClick={nextImage}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all duration-300 z-20"
-            style={{ fontSize: '20px' }}
-          >
-            →
-          </button>
+            {/* Image Track */}
+            <div className="carousel-track">
+              {propertyImages.map((image, index) => (
+                <div key={index} className="carousel-slide">
+                  <img 
+                    src={image} 
+                    alt={`Property Image ${index + 1}`} 
+                    className="carousel-image"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
+            </div>
 
-          {/* Image Counter */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-            {currentImageIndex + 1} / {propertyImages.length}
+            {/* Next Arrow */}
+            <button 
+              onClick={nextImage}
+              className="carousel-arrow next"
+              disabled={!allImagesPreloaded}
+            >
+              →
+            </button>
+
+            {/* Image Counter */}
+            <div className="image-counter">
+              {currentImageIndex + 1} / {propertyImages.length}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
     </>
