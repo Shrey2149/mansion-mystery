@@ -91,7 +91,7 @@ export default function HeroSection() {
     },
     {
       question: "What language is the game in?",
-      answer: "The game is conducted in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
+      answer: "Currently the game is available in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
     },
     {
       question: "Is it suitable for all ages?",
