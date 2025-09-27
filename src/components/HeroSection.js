@@ -1018,19 +1018,8 @@ export default function HeroSection() {
                 Through this game, I want people to not just watch thriller movies, but be a part of them and live them, for the entire stay!
               </div>
 
-              {/* CTA */}
-              <div 
-                ref={el => creatorContentRef.current[2] = el}
-                className="scroll-animate text-center lg:text-left pt-4"
-              >
-                <a 
-                  href="#locations"
-                  className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 inline-block"
-                  style={{ fontFamily: "Avenir" }}
-                >
-                  Experience the Mystery
-                </a>
-              </div>
+              
+              
             </div>
           </div>
         </div>
