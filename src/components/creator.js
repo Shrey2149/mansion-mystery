@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import bgImage from "../assets/mystery.jpeg";
 import creatorImg from "../assets/Creator.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Creator() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   
   // Refs for animation elements
   const creatorImageRef = useRef(null);
@@ -19,6 +20,21 @@ export default function Creator() {
     { name: "Locations", href: "/#locations" },
     { name: "FAQs", href: "/#faqs" }
   ];
+
+  // Handle navigation to home sections
+  const handleSectionNavigation = (href) => {
+    if (href.startsWith('/#')) {
+      const sectionId = href.substring(2); // Remove '/#'
+      navigate('/', { replace: false });
+      // Small delay to ensure page navigation completes before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -290,7 +306,16 @@ export default function Creator() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 {navItems.map((item, index) => (
-                  item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                  item.href.startsWith('/#') ? (
+                    <button
+                      key={index}
+                      onClick={() => handleSectionNavigation(item.href)}
+                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer"
+                      style={{ fontFamily: "Avenir" }}
+                    >
+                      {item.name}
+                    </button>
+                  ) : item.href.startsWith('#') ? (
                     <a
                       key={index}
                       href={item.href}
@@ -334,7 +359,19 @@ export default function Creator() {
           <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navItems.map((item, index) => (
-                item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                item.href.startsWith('/#') ? (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      handleSectionNavigation(item.href);
+                    }}
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer w-full text-left"
+                    style={{ fontFamily: "Avenir" }}
+                  >
+                    {item.name}
+                  </button>
+                ) : item.href.startsWith('#') ? (
                   <a
                     key={index}
                     href={item.href}
@@ -380,9 +417,9 @@ export default function Creator() {
             <h1 
               ref={creatorTitleRef}
               className="scroll-animate-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 sm:mb-20"
-              style={{ fontFamily: "Avenir", color: '#727081' }}
+              style={{ fontFamily: "cursive", color: '#727081' }}
             >
-              {"Meet the Creator".split('').map((letter, index) => (
+              {"The Architect".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
                   {letter === ' ' ? '\u00A0' : letter}
                 </span>
@@ -413,10 +450,10 @@ export default function Creator() {
                     Eshan
                   </h2>
                   <p 
-                    className="text-base sm:text-lg institution"
+                    className="text-base sm:text-xl institution"
                     style={{ fontFamily: "Avenir" }}
                   >
-                    IIT Roorkee & ISB Graduate
+                    Gamer.Dreamer.Builder
                   </p>
                 </div>
               </div>
@@ -424,78 +461,64 @@ export default function Creator() {
               {/* Creator Story */}
               <div className="space-y-6">
                 
-                {/* Background Card */}
+                {/* Journey Title and Stats Cards */}
                 <div 
                   ref={el => creatorContentRef.current[0] = el}
                   className="scroll-animate content-card"
                 >
                   <h3 
-                    className="text-xl sm:text-2xl font-bold mb-4 highlight"
+                    className="text-xl sm:text-2xl font-bold mb-6 highlight text-center"
                     style={{ fontFamily: "Avenir" }}
                   >
                     The Journey
                   </h3>
+                  
+                  {/* Stats Cards inside Journey card */}
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    <div className="stat-card">
+                      <span className="stat-number">3</span>
+                      <span className="stat-label">Unique Stories</span>
+                    </div>
+                    <div className="stat-card">
+                      <span className="stat-number">15</span>
+                      <span className="stat-label">Games Hosted</span>
+                    </div>
+                    <div className="stat-card">
+                      <span className="stat-number">180</span>
+                      <span className="stat-label">Players at ISB</span>
+                    </div>
+                  </div>
+                  
+                  {/* Journey Content */}
                   <p 
                     className="text-sm sm:text-base leading-relaxed mb-4"
                     style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
                   >
-                    <span className="highlight">Eshan</span> is an <span className="institution">IIT Roorkee</span> and <span className="institution">Indian School of Business (ISB)</span> graduate. The game evolved from being a different-and-fun birthday party idea at ISB for a group of 5 to being one of the most popular activities at ISB.
+                    Even before school, I was swapping cassettes, playing video games. Mario, Duck Hunt, and Contra soon gave way to Lion King, NFS, and Prince of Persia. But my love for thrill wasn't limited to the digital world—I loved creating board games, and reading novels like Goosebumps and Agatha Christie. I was also drawn to mind-bending thrillers like Glass Onion, Coherence, and The Sixth Sense, always envious of the characters who got to live the mysteries and experience the thrill firsthand. Then I finally found the perfect blend of them all.
+                  </p>
+                  <p 
+                    className="text-sm sm:text-base leading-relaxed mb-4"
+                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+                  >
+                    Mystery Mansion started as a quirky birthday party idea for a group of five at ISB. It quickly grew into one of the campus' most popular activities. And now I am sharing this immersive experience with the world, giving people a chance to be Holmes, Poirot, and Benoit Blanc themselves.
                   </p>
                   <p 
                     className="text-sm sm:text-base leading-relaxed"
                     style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
                   >
-                    At ISB, <span className="highlight">3 different stories</span> were played by <span className="highlight">180 friends</span> across <span className="highlight">15 different games</span>, making it a campus sensation.
-                  </p>
-                </div>
-
-                {/* Stats Cards */}
-                <div 
-                  ref={el => creatorContentRef.current[1] = el}
-                  className="scroll-animate grid grid-cols-3 gap-4"
-                >
-                  <div className="stat-card">
-                    <span className="stat-number">180</span>
-                    <span className="stat-label">Players at ISB</span>
-                  </div>
-                  <div className="stat-card">
-                    <span className="stat-number">15</span>
-                    <span className="stat-label">Games Hosted</span>
-                  </div>
-                  <div className="stat-card">
-                    <span className="stat-number">3</span>
-                    <span className="stat-label">Unique Stories</span>
-                  </div>
-                </div>
-
-                {/* Vision Card */}
-                <div 
-                  ref={el => creatorContentRef.current[2] = el}
-                  className="scroll-animate content-card"
-                >
-                  <h3 
-                    className="text-xl sm:text-2xl font-bold mb-4 highlight"
-                    style={{ fontFamily: "Avenir" }}
-                  >
-                    The Vision
-                  </h3>
-                  <p 
-                    className="text-sm sm:text-base leading-relaxed mb-4"
-                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
-                  >
-                    Once out of ISB, he aimed to bring the idea to professional scale. Now with his first story at <span className="highlight">Gurugram</span>, he is looking to establish roots in different parts of the country.
+                    I'm bringing the game to different locations, blending local culture and aesthetics of villas with the stories people become a part of for the night.
                   </p>
                   <p 
-                    className="text-sm sm:text-base leading-relaxed"
-                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+                    className="text-sm sm:text-base leading-relaxed mt-4 font-bold"
+                    style={{ fontFamily: "Avenir", color: '#727081' }}
                   >
-                    <span className="highlight">New city, new story.</span> Each location brings its own unique mystery inspired by local culture and history.
+                    New villa. New story. New thrill.
                   </p>
                 </div>
 
                 {/* Quote */}
                 <div 
-                  ref={el => creatorContentRef.current[3] = el}
+                  ref={el => creatorContentRef.current[1] = el}
                   className="scroll-animate quote"
                   style={{ fontFamily: "Avenir" }}
                 >
@@ -504,17 +527,16 @@ export default function Creator() {
 
                 {/* CTA */}
                 <div 
-                  ref={el => creatorContentRef.current[4] = el}
+                  ref={el => creatorContentRef.current[2] = el}
                   className="scroll-animate text-center lg:text-left pt-4"
                 >
-                  <Link to="/#locations">
-                    <button 
-                      className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-                      style={{ fontFamily: "Avenir" }}
-                    >
-                      Experience the Mystery
-                    </button>
-                  </Link>
+                  <button 
+                    onClick={() => handleSectionNavigation('/#locations')}
+                    className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                    style={{ fontFamily: "Avenir" }}
+                  >
+                    Experience the Mystery
+                  </button>
                 </div>
               </div>
             </div>

@@ -91,7 +91,7 @@ export default function HeroSection() {
     },
     {
       question: "What language is the game in?",
-      answer: "Currently the game is available in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
+      answer: "The game is conducted in Hindi, to keep the experience authentic and true to the natural dynamics of the situation."
     },
     {
       question: "Is it suitable for all ages?",
@@ -167,6 +167,65 @@ export default function HeroSection() {
         .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
         .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
         .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
+
+        /* Fixed Background for First Two Sections */
+        .fixed-bg-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 200vh; /* Cover only first two sections */
+          background-image: url(${bgImage});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          z-index: -1;
+        }
+
+        /* Fixed Background for Locations and FAQs Sections */
+        .fixed-bg-container-locations {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background-image: url(${backgroundImg});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          z-index: -1;
+        }
+
+        /* Hide locations background for first two sections */
+        .section-1, .section-2 {
+          position: relative;
+          z-index: 1;
+        }
+
+        .section-1::before, .section-2::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url(${bgImage});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          z-index: -1;
+        }
+
+        .section-1::after, .section-2::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+          z-index: -1;
+        }
 
         /* Navigation Styles */
         .nav-bg {
@@ -374,6 +433,9 @@ export default function HeroSection() {
         }
       `}</style>
 
+      {/* Fixed Background for Locations and FAQs Sections */}
+      <div className="fixed-bg-container-locations"></div>
+
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -461,18 +523,8 @@ export default function HeroSection() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home">
-        <div
-          className="relative h-screen bg-cover bg-center flex flex-col items-center justify-start pt-8 sm:pt-12 md:pt-16 lg:pt-20"
-          style={{ 
-            backgroundImage: `url(${bgImage})`,
-            filter: 'brightness(1)'
-          }}
-        >
-          
-          {/* Overlay for additional dark effect */}
-          <div className="absolute inset-0 bg-black/30"></div>
-
+      <section id="home" className="section-1">
+        <div className="relative h-screen flex flex-col items-center justify-start pt-8 sm:pt-12 md:pt-16 lg:pt-20">
           {/* Content */}
           <div className="relative z-10 px-4 max-w-4xl space-y-2 sm:space-y-4 w-full">
             {/* Title */}
@@ -517,7 +569,6 @@ export default function HeroSection() {
               </Link>
             </div>
           </div>
-        </div>
 
           {/* Static Bottom Banner */}
           <div 
@@ -535,17 +586,12 @@ export default function HeroSection() {
               </p>
             </div>
           </div>
+        </div>
       </section>
 
       {/* About the Game Section */}
-      <section id="about-game">
-        <div 
-          className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center px-4 sm:px-8 md:px-16"
-          style={{ 
-            backgroundImage: `url(${bgImage})`,
-            filter: 'brightness(1)'
-          }}
-        >
+      <section id="about-game" className="section-2">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 md:px-16">
           {/* Main content container */}
           <div className="relative z-10 text-white w-full text-center max-w-10xl mx-auto">
             {/* Title with wavy animation - Cursive Font */}
@@ -587,13 +633,7 @@ export default function HeroSection() {
 
       {/* Locations Section */}
       <section id="locations">
-        <div 
-          className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16"
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            filter: 'brightness(1)'
-          }}
-        >
+        <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16">
           {/* Title with wavy animation - Cursive Font */}
           <h1 
             ref={locationsTitleRef}
@@ -676,13 +716,7 @@ export default function HeroSection() {
 
       {/* FAQs Section */}
       <section id="faqs">
-        <div 
-          className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16"
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            filter: 'brightness(1)'
-          }}
-        >
+        <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16">
           {/* Overlay for better text readability */}
           <div className="absolute inset-0 bg-black/20"></div>
           
