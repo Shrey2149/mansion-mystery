@@ -30,9 +30,9 @@ export default function Instructions() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "The Game", href: "/#about-game" },
-    { name: "The Architect", href: "#creator" },
     { name: "Locations", href: "/#locations" },
-    { name: "FAQs", href: "/#faqs" }
+    { name: "FAQs", href: "/#faqs" },
+    { name: "The Architect", href: "#creator" }
   ];
 
   // Array of property images
