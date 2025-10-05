@@ -7,12 +7,10 @@ export default function Creator() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   
-  // Refs for animation elements
   const creatorImageRef = useRef(null);
   const creatorTitleRef = useRef(null);
   const creatorContentRef = useRef([]);
 
-  // Navigation items
   const navItems = [
     { name: "Home", href: "/" },
     { name: "The Game", href: "/#about-game" },
@@ -21,12 +19,10 @@ export default function Creator() {
     { name: "The Architect", href: "/creator" }
   ];
 
-  // Handle navigation to home sections
   const handleSectionNavigation = (href) => {
     if (href.startsWith('/#')) {
-      const sectionId = href.substring(2); // Remove '/#'
+      const sectionId = href.substring(2);
       navigate('/', { replace: false });
-      // Small delay to ensure page navigation completes before scrolling
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -36,10 +32,9 @@ export default function Creator() {
     }
   };
 
-  // Intersection Observer for scroll animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.2,
+      threshold: 0.15,
       rootMargin: '-30px 0px -30px 0px'
     };
 
@@ -55,7 +50,6 @@ export default function Creator() {
       });
     }, observerOptions);
 
-    // Observe all animation elements
     const elementsToObserve = [
       creatorImageRef.current,
       creatorTitleRef.current,
@@ -67,9 +61,24 @@ export default function Creator() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest('nav')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMenuOpen]);
+
   return (
     <>
       <style jsx>{`
+        * {
+          box-sizing: border-box;
+        }
+
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-8px); }
@@ -77,7 +86,7 @@ export default function Creator() {
         
         .wavy-letter {
           display: inline-block;
-          animation: wave 4s ease-in-out infinite;
+          animation: wave 5s ease-in-out infinite;
         }
         
         .wavy-letter:nth-child(1) { animation-delay: 0s; }
@@ -101,28 +110,49 @@ export default function Creator() {
         .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
         .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
 
-        /* Navigation Styles */
-        .nav-bg {
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(10px);
+        body {
+          overflow-x: hidden;
         }
 
-        /* Mobile menu styles */
-        .mobile-menu {
-          transform: translateY(-100%);
-          transition: transform 0.3s ease-in-out;
-        }
-        
-        .mobile-menu.open {
-          transform: translateY(0);
-        }
-
-        /* Smooth scrolling */
         html {
           scroll-behavior: smooth;
         }
 
-        /* Scroll Animation Styles */
+        .nav-bg {
+          background: rgba(0, 0, 0, 0.95);
+          backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+          max-height: 400px;
+        }
+
+        .creator-section {
+          position: relative;
+          background-image: url(${bgImage});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          min-height: 100vh;
+        }
+
+        .creator-section::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+          z-index: 0;
+        }
+
         .scroll-animate {
           opacity: 0;
           transform: translateY(50px);
@@ -132,11 +162,6 @@ export default function Creator() {
         .scroll-animate.animate-in {
           opacity: 1;
           transform: translateY(0);
-        }
-
-        .scroll-animate.animate-out {
-          opacity: 0;
-          transform: translateY(30px);
         }
 
         .scroll-animate-up {
@@ -150,11 +175,6 @@ export default function Creator() {
           transform: translateY(0);
         }
 
-        .scroll-animate-up.animate-out {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-
         .scroll-animate-scale {
           opacity: 0;
           transform: scale(0.9) translateY(30px);
@@ -166,28 +186,25 @@ export default function Creator() {
           transform: scale(1) translateY(0);
         }
 
-        .scroll-animate-scale.animate-out {
-          opacity: 0;
-          transform: scale(0.95) translateY(20px);
-        }
-
-        /* Creator Image Styles */
         .creator-image {
           border-radius: 20px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
           transition: all 0.3s ease;
           border: 3px solid rgba(114, 112, 129, 0.3);
+          width: 100%;
+          max-width: 450px;
+          object-fit: cover;
+          aspect-ratio: 3/4;
         }
 
         .creator-image:hover {
           transform: scale(1.02);
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
           border-color: rgba(114, 112, 129, 0.6);
         }
 
-        /* Content Card Styles */
         .content-card {
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(0, 0, 0, 0.5);
           backdrop-filter: blur(15px);
           border: 1px solid rgba(114, 112, 129, 0.3);
           border-radius: 20px;
@@ -197,11 +214,10 @@ export default function Creator() {
 
         .content-card:hover {
           border-color: rgba(114, 112, 129, 0.5);
-          background: rgba(114, 112, 129, 0.1);
+          background: rgba(114, 112, 129, 0.15);
           transform: translateY(-5px);
         }
 
-        /* Highlight text styles */
         .highlight {
           color: #727081;
           font-weight: 700;
@@ -212,7 +228,6 @@ export default function Creator() {
           font-weight: 600;
         }
 
-        /* Quote style */
         .quote {
           position: relative;
           font-style: italic;
@@ -235,7 +250,6 @@ export default function Creator() {
           line-height: 1;
         }
 
-        /* Stats Cards */
         .stat-card {
           background: rgba(114, 112, 129, 0.15);
           border: 1px solid rgba(114, 112, 129, 0.4);
@@ -264,27 +278,106 @@ export default function Creator() {
           margin-top: 0.5rem;
         }
 
-        /* Back button - REMOVED */
-
-        /* Staggered animations */
         .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
         .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
         .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
-        .scroll-animate:nth-child(4) { transition-delay: 0.4s; }
-        .scroll-animate:nth-child(5) { transition-delay: 0.5s; }
+
+        @media (max-width: 1024px) {
+          .creator-image {
+            max-width: 400px;
+          }
+
+          .content-card {
+            padding: 1.75rem;
+          }
+
+          .stat-number {
+            font-size: 2.25rem;
+          }
+        }
 
         @media (max-width: 768px) {
+          .creator-section {
+            background-attachment: scroll;
+          }
+
+          .creator-image {
+            max-width: 350px;
+            margin: 0 auto;
+          }
+
           .content-card {
             padding: 1.5rem;
           }
           
           .quote {
             padding: 1rem 1rem 1rem 2.5rem;
+            margin: 1.5rem 0;
           }
           
           .quote::before {
             font-size: 3rem;
             left: 5px;
+          }
+
+          .stat-card {
+            padding: 1.25rem 0.75rem;
+          }
+
+          .stat-number {
+            font-size: 2rem;
+          }
+
+          .stat-label {
+            font-size: 0.8rem;
+          }
+
+          .wavy-letter {
+            animation: wave 6s ease-in-out infinite;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .creator-image {
+            max-width: 300px;
+          }
+
+          .content-card {
+            padding: 1.25rem;
+          }
+
+          .stat-card {
+            padding: 1rem 0.5rem;
+          }
+
+          .stat-number {
+            font-size: 1.75rem;
+          }
+
+          .stat-label {
+            font-size: 0.75rem;
+          }
+
+          .quote {
+            padding: 0.875rem 0.875rem 0.875rem 2.25rem;
+          }
+
+          .quote::before {
+            font-size: 2.5rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .creator-image {
+            max-width: 260px;
+          }
+
+          .stat-number {
+            font-size: 1.5rem;
+          }
+
+          .stat-label {
+            font-size: 0.7rem;
           }
         }
       `}</style>
@@ -293,10 +386,9 @@ export default function Creator() {
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo/Brand */}
             <div className="flex-shrink-0">
               <Link to="/">
-                <span className="text-white text-xl font-bold" style={{ fontFamily: "Avenir" }}>
+                <span className="text-white text-base sm:text-lg md:text-xl font-bold" style={{ fontFamily: "Avenir" }}>
                   Mystery Mansion
                 </span>
               </Link>
@@ -341,8 +433,12 @@ export default function Creator() {
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="text-gray-300 hover:text-white focus:outline-none p-2"
+                aria-label="Toggle menu"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMenuOpen ? (
@@ -356,8 +452,8 @@ export default function Creator() {
           </div>
 
           {/* Mobile Navigation Menu */}
-          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} nav-bg`}>
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item, index) => (
                 item.href.startsWith('/#') ? (
                   <button
@@ -399,24 +495,14 @@ export default function Creator() {
       </nav>
 
       {/* Main Content */}
-      <div
-        className="min-h-screen bg-cover bg-center"
-        style={{ 
-          backgroundImage: `url(${bgImage})`,
-          filter: 'brightness(1)'
-        }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/30"></div>
-
-        {/* Content Container */}
-        <div className="relative z-10 pt-24 pb-16 px-4 sm:px-8 md:px-16">
-          <div className="max-w-6xl mx-auto">
+      <section className="creator-section">
+        <div className="relative z-10 pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
             
             {/* Title */}
             <h1 
               ref={creatorTitleRef}
-              className="scroll-animate-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 sm:mb-20"
+              className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 px-2"
               style={{ fontFamily: "cursive", color: '#727081' }}
             >
               {"The Architect".split('').map((letter, index) => (
@@ -427,7 +513,7 @@ export default function Creator() {
             </h1>
 
             {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
               
               {/* Creator Image */}
               <div 
@@ -437,20 +523,19 @@ export default function Creator() {
                 <img
                   src={creatorImg}
                   alt="Eshan - Creator of Mystery Mansion"
-                  className="creator-image w-full max-w-md mx-auto lg:mx-0 object-cover"
-                  style={{ aspectRatio: '3/4' }}
+                  className="creator-image mx-auto lg:mx-0"
                 />
                 
                 {/* Creator Name */}
-                <div className="mt-6 text-center lg:text-left">
+                <div className="mt-4 sm:mt-6 text-center lg:text-left">
                   <h2 
-                    className="text-2xl sm:text-3xl font-bold mb-2"
+                    className="text-xl sm:text-2xl md:text-3xl font-bold mb-2"
                     style={{ fontFamily: "Avenir", color: '#727081' }}
                   >
                     Eshan
                   </h2>
                   <p 
-                    className="text-base sm:text-xl institution"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl institution"
                     style={{ fontFamily: "Avenir" }}
                   >
                     Gamer.Dreamer.Builder
@@ -459,22 +544,22 @@ export default function Creator() {
               </div>
 
               {/* Creator Story */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 
-                {/* Journey Title and Stats Cards */}
+                {/* Journey Card */}
                 <div 
                   ref={el => creatorContentRef.current[0] = el}
                   className="scroll-animate content-card"
                 >
                   <h3 
-                    className="text-xl sm:text-2xl font-bold mb-6 highlight text-center"
+                    className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 highlight text-center"
                     style={{ fontFamily: "Avenir" }}
                   >
                     The Journey
                   </h3>
                   
-                  {/* Stats Cards inside Journey card */}
-                  <div className="grid grid-cols-3 gap-4 mb-6">
+                  {/* Stats Cards */}
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
                     <div className="stat-card">
                       <span className="stat-number">3</span>
                       <span className="stat-label">Unique Stories</span>
@@ -491,25 +576,25 @@ export default function Creator() {
                   
                   {/* Journey Content */}
                   <p 
-                    className="text-sm sm:text-base leading-relaxed mb-4"
+                    className="text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4"
                     style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
                   >
                     Even before school, I was swapping cassettes, playing video games. Mario, Duck Hunt, and Contra soon gave way to Lion King, NFS, and Prince of Persia. But my love for thrill wasn't limited to the digital world—I loved creating board games, and reading novels like Goosebumps and Agatha Christie. I was also drawn to mind-bending thrillers like Glass Onion, Coherence, and The Sixth Sense, always envious of the characters who got to live the mysteries and experience the thrill firsthand. Then I finally found the perfect blend of them all.
                   </p>
                   <p 
-                    className="text-sm sm:text-base leading-relaxed mb-4"
+                    className="text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4"
                     style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
                   >
                     Mystery Mansion started as a quirky birthday party idea for a group of five at ISB. It quickly grew into one of the campus' most popular activities. And now I am sharing this immersive experience with the world, giving people a chance to be Holmes, Poirot, and Benoit Blanc themselves.
                   </p>
                   <p 
-                    className="text-sm sm:text-base leading-relaxed"
+                    className="text-xs sm:text-sm md:text-base leading-relaxed"
                     style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
                   >
                     I'm bringing the game to different locations, blending local culture and aesthetics of villas with the stories people become a part of for the night.
                   </p>
                   <p 
-                    className="text-sm sm:text-base leading-relaxed mt-4 font-bold"
+                    className="text-xs sm:text-sm md:text-base leading-relaxed mt-3 sm:mt-4 font-bold"
                     style={{ fontFamily: "Avenir", color: '#727081' }}
                   >
                     New villa. New story. New thrill.
@@ -519,7 +604,7 @@ export default function Creator() {
                 {/* Quote */}
                 <div 
                   ref={el => creatorContentRef.current[1] = el}
-                  className="scroll-animate quote"
+                  className="scroll-animate quote text-xs sm:text-sm md:text-base"
                   style={{ fontFamily: "Avenir" }}
                 >
                   Through this game, I want people to not just watch thriller movies, but be a part of them and live them, for the entire stay!
@@ -528,11 +613,11 @@ export default function Creator() {
                 {/* CTA */}
                 <div 
                   ref={el => creatorContentRef.current[2] = el}
-                  className="scroll-animate text-center lg:text-left pt-4"
+                  className="scroll-animate text-center lg:text-left pt-2 sm:pt-4"
                 >
                   <button 
                     onClick={() => handleSectionNavigation('/#locations')}
-                    className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                    className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base shadow-lg hover:shadow-xl"
                     style={{ fontFamily: "Avenir" }}
                   >
                     Experience the Mystery
@@ -542,7 +627,7 @@ export default function Creator() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

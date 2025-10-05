@@ -170,6 +170,9 @@ export default function HeroSection() {
         .wavy-letter:nth-child(28) { animation-delay: 2.7s; }
         .wavy-letter:nth-child(29) { animation-delay: 2.8s; }
         .wavy-letter:nth-child(30) { animation-delay: 2.9s; }
+        .wavy-letter:nth-child(31) { animation-delay: 3.0s; }
+        .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
+        .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
 
         .section-1, .section-2 {
           position: relative;
