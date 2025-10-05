@@ -16,9 +16,9 @@ export default function Creator() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "The Game", href: "/#about-game" },
-    { name: "The Architect", href: "/creator" },
     { name: "Locations", href: "/#locations" },
-    { name: "FAQs", href: "/#faqs" }
+    { name: "FAQs", href: "/#faqs" },
+    { name: "The Architect", href: "/creator" }
   ];
 
   // Handle navigation to home sections

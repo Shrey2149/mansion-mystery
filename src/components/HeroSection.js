@@ -8,11 +8,10 @@ import { Link } from "react-router-dom";
 import { useAudio } from "../components/AudioContext.js";
 
 export default function HeroSection() {
-  const { startAudio } = useAudio(); // Use the context
+  const { startAudio } = useAudio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFAQ, setOpenFAQ] = useState(null);
   
-  // Refs for animation elements
   const gameTextRefs = useRef([]);
   const gameTitleRef = useRef(null);
   const locationsTitleRef = useRef(null);
@@ -21,14 +20,13 @@ export default function HeroSection() {
   const faqItemsRef = useRef([]);
 
   useEffect(() => {
-    startAudio(); // Start audio when component mounts
+    startAudio();
   }, [startAudio]);
 
-  // Intersection Observer for scroll animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.2,
-      rootMargin: '-50px 0px -50px 0px'
+      threshold: 0.15,
+      rootMargin: '-30px 0px -30px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -43,7 +41,6 @@ export default function HeroSection() {
       });
     }, observerOptions);
 
-    // Observe all animation elements
     const elementsToObserve = [
       gameTitleRef.current,
       ...gameTextRefs.current,
@@ -58,7 +55,6 @@ export default function HeroSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Navigation items
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "The Game", href: "#about-game" },
@@ -67,7 +63,6 @@ export default function HeroSection() {
     { name: "The Architect", href: "/creator" }
   ];
 
-  // Static text lines for the game section
   const gameTextLines = [
     "Check in with friends as the stay begins like any other",
     "But the unexpected can strike anytime, anywhere",
@@ -75,7 +70,6 @@ export default function HeroSection() {
     "Your actions decide how the mystery unravels"
   ];
 
-  // FAQ data
   const faqData = [
     {
       question: "Where are Mystery Mansions located?",
@@ -83,7 +77,7 @@ export default function HeroSection() {
     },
     {
       question: "What is the game about?",
-      answer: "Check in with your group for a party like any other… until the unexpected happens! Imagine an unthinkable  mystery unfolding right before your eyes as you stay at the property. As the eye witnesses, of course you need to crack it"
+      answer: "Check in with your group for a party like any other… until the unexpected happens! Imagine an unthinkable mystery unfolding right before your eyes as you stay at the property. As the eye witnesses, of course you need to crack it"
     },
     {
       question: "How long does the game last?",
@@ -162,58 +156,13 @@ export default function HeroSection() {
         .wavy-letter:nth-child(28) { animation-delay: 2.7s; }
         .wavy-letter:nth-child(29) { animation-delay: 2.8s; }
         .wavy-letter:nth-child(30) { animation-delay: 2.9s; }
-        .wavy-letter:nth-child(31) { animation-delay: 3s; }
-        .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
-        .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
-        .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
-        .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
 
-        /* Fixed Background for First Two Sections */
-        .fixed-bg-container {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 200vh; /* Cover only first two sections */
-          background-image: url(${bgImage});
-          background-size: cover;
-          background-position: center;
-          background-attachment: fixed;
-          z-index: -1;
-        }
-
-        /* Fixed Background for Locations and FAQs Sections */
-        .fixed-bg-container-locations {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100vh;
-          background-image: url(${backgroundImg});
-          background-size: cover;
-          background-position: center;
-          background-attachment: fixed;
-          z-index: -1;
-        }
-
-        /* Hide locations background for first two sections */
         .section-1, .section-2 {
           position: relative;
-          z-index: 1;
-        }
-
-        .section-1::before, .section-2::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
           background-image: url(${bgImage});
           background-size: cover;
           background-position: center;
           background-attachment: fixed;
-          z-index: -1;
         }
 
         .section-1::after, .section-2::after {
@@ -224,16 +173,33 @@ export default function HeroSection() {
           width: 100%;
           height: 100%;
           background: rgba(0, 0, 0, 0.3);
-          z-index: -1;
+          z-index: 0;
         }
 
-        /* Navigation Styles */
+        #locations, #faqs {
+          position: relative;
+          background-image: url(${backgroundImg});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+        }
+
+        #locations::after, #faqs::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.2);
+          z-index: 0;
+        }
+
         .nav-bg {
-          background: rgba(0, 0, 0, 0.8);
+          background: rgba(0, 0, 0, 0.9);
           backdrop-filter: blur(10px);
         }
 
-        /* Mobile menu styles */
         .mobile-menu {
           transform: translateY(-100%);
           transition: transform 0.3s ease-in-out;
@@ -243,135 +209,39 @@ export default function HeroSection() {
           transform: translateY(0);
         }
 
-        /* Responsive positioning classes */
-        .bookings-text {
-          position: relative;
-          left: 35vw;
-          top: 30vh;
-          display: inline-block;
-        }
-
-        /* White divider line - force visibility on mobile */
-        .mobile-divider {
-          width: 240px !important;
-          height: 1px !important;
-          background-color: white !important;
-          margin: 0 auto !important;
-          opacity: 0.6 !important;
-        }
-
-        /* Media queries for better responsiveness */
-        @media (max-width: 1200px) {
-          .bookings-text {
-            left: 35vw;
-            top: 30vh;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .bookings-text {
-            left: 35vh;
-            top: 30vh;
-            text-align: center;
-            display: block;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .bookings-text {
-            left: 0;
-            top: 1vh;
-          }
-        }
-
-        /* Force show divider on small screens */
-        @media (max-width: 639px) {
-          .mobile-divider {
-            display: block !important;
-          }
-        }
-
-        /* Show divider on all screens */
-        .mobile-divider {
-          display: block !important;
-        }
-
-        /* Smooth scrolling */
         html {
           scroll-behavior: smooth;
         }
 
-        /* Locations section specific styles */
-        .location-card {
-          transform: transition duration-300;
-        }
-        
-        .location-card:hover {
-          transform: scale(1.05);
-        }
-
-        /* Scroll Animation Styles */
-        .scroll-animate {
+        .scroll-animate, .scroll-animate-up, .scroll-animate-scale {
           opacity: 0;
           transform: translateY(50px);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .scroll-animate.animate-in {
+        .scroll-animate.animate-in, .scroll-animate-up.animate-in, .scroll-animate-scale.animate-in {
           opacity: 1;
           transform: translateY(0);
-        }
-
-        .scroll-animate.animate-out {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-
-        /* Different animation types */
-        .scroll-animate-up {
-          opacity: 0;
-          transform: translateY(60px);
-          transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .scroll-animate-up.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .scroll-animate-up.animate-out {
-          opacity: 0;
-          transform: translateY(40px);
         }
 
         .scroll-animate-scale {
-          opacity: 0;
           transform: scale(0.9) translateY(30px);
-          transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .scroll-animate-scale.animate-in {
-          opacity: 1;
           transform: scale(1) translateY(0);
         }
 
-        .scroll-animate-scale.animate-out {
-          opacity: 0;
-          transform: scale(0.95) translateY(20px);
-        }
-
-        /* Staggered animations for multiple elements */
         .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
         .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
         .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
         .scroll-animate:nth-child(4) { transition-delay: 0.4s; }
         .scroll-animate:nth-child(5) { transition-delay: 0.5s; }
 
-        /* FAQ Specific Styles */
         .faq-item {
           border: 1px solid rgba(114, 112, 129, 0.3);
           border-radius: 12px;
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(0, 0, 0, 0.5);
           backdrop-filter: blur(10px);
           transition: all 0.3s ease;
           margin-bottom: 1rem;
@@ -379,12 +249,12 @@ export default function HeroSection() {
 
         .faq-item:hover {
           border-color: #727081;
-          background: rgba(114, 112, 129, 0.1);
+          background: rgba(114, 112, 129, 0.15);
           transform: translateY(-2px);
         }
 
         .faq-question {
-          padding: 1.5rem;
+          padding: 1rem;
           cursor: pointer;
           display: flex;
           justify-content: space-between;
@@ -403,19 +273,33 @@ export default function HeroSection() {
           overflow: hidden;
           transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                       padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          padding: 0 1.5rem;
+          padding: 0 1rem;
           color: #a8a6b5;
           line-height: 1.6;
         }
 
         .faq-answer.open {
-          max-height: 200px;
-          padding: 1rem 1.5rem 1.5rem;
+          max-height: 300px;
+          padding: 0.75rem 1rem 1rem;
+        }
+
+        @media (min-width: 640px) {
+          .faq-question {
+            padding: 1.5rem;
+          }
+          .faq-answer {
+            padding: 0 1.5rem;
+          }
+          .faq-answer.open {
+            padding: 1rem 1.5rem 1.5rem;
+          }
         }
 
         .faq-icon {
           transition: transform 0.3s ease;
           color: #727081;
+          flex-shrink: 0;
+          margin-left: 0.5rem;
         }
 
         .faq-icon.rotate {
@@ -431,23 +315,36 @@ export default function HeroSection() {
         .whatsapp-link:hover {
           color: #128C7E;
         }
-      `}</style>
 
-      {/* Fixed Background for Locations and FAQs Sections */}
-      <div className="fixed-bg-container-locations"></div>
+        @media (max-width: 640px) {
+          .wavy-letter {
+            animation: wave 6s ease-in-out infinite;
+          }
+          
+          .section-1, .section-2, #locations, #faqs {
+            background-attachment: scroll;
+          }
+        }
+
+        .location-card {
+          transition: transform 0.3s ease;
+        }
+
+        .location-card:hover {
+          transform: scale(1.05);
+        }
+      `}</style>
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo/Brand */}
             <div className="flex-shrink-0">
-              <span className="text-white text-xl font-bold" style={{ fontFamily: "Avenir" }}>
+              <span className="text-white text-lg sm:text-xl font-bold" style={{ fontFamily: "Avenir" }}>
                 Mystery Mansion
               </span>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 {navItems.map((item, index) => (
@@ -474,11 +371,10 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Mobile menu button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+                className="text-gray-300 hover:text-white focus:outline-none"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMenuOpen ? (
@@ -491,9 +387,8 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Mobile Navigation Menu */}
           <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') ? (
                   <a
@@ -524,18 +419,15 @@ export default function HeroSection() {
 
       {/* Hero Section */}
       <section id="home" className="section-1">
-        <div className="relative h-screen flex flex-col items-center justify-start pt-8 sm:pt-12 md:pt-16 lg:pt-20">
-          {/* Content */}
-          <div className="relative z-10 px-4 max-w-4xl space-y-2 sm:space-y-4 w-full">
-            {/* Title */}
-            <p className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center text-white mt-2 sm:mt-4" 
+        <div className="relative h-screen flex flex-col items-center justify-center px-4 pt-20 pb-32 sm:pb-40">
+          <div className="relative z-10 w-full max-w-4xl space-y-3 sm:space-y-4 md:space-y-6">
+            <p className="font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl text-center text-white" 
                style={{ fontFamily: "Avenir", color:'#727081'}}>
               World's Only
             </p>
             
-            {/* Wavy Mystery Mansion Text - Different Font */}
             <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-white text-center mt-4 sm:mt-6 lg:mt-20"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white text-center px-2"
               style={{ fontFamily: "serif", color:'#727081'}}
             >
               {"Mystery Mansion".split('').map((letter, index) => (
@@ -545,9 +437,8 @@ export default function HeroSection() {
               ))}
             </h1>
 
-            {/* Wavy Tagline */}
             <p
-              className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white text-center mt-2 sm:mt-4"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white text-center px-2"
               style={{ fontFamily: "Avenir", color:'#727081'}}
             >
               {"One group. One mansion. One night.".split('').map((letter, index) => (
@@ -557,11 +448,10 @@ export default function HeroSection() {
               ))}
             </p>
 
-            {/* Booking Section - Book Now Button */}
-            <div className="absolute top-[450px] bottom-0 left-1/2 transform -translate-x-1/2 z-30">
+            <div className="flex justify-center pt-6 sm:pt-8 md:pt-12">
               <Link to="/Instructions">
                 <button 
-                  className="bg-gray-700 px-6 py-2 rounded-full hover:bg-gray-900 transition-colors duration-300 text-base sm:text-lg text-gray-300 font-semibold"
+                  className="bg-gray-700 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 text-base sm:text-lg text-gray-300 font-semibold"
                   style={{ fontFamily: "Avenir" }}
                 >
                   Book Now
@@ -570,18 +460,16 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Static Bottom Banner */}
           <div 
-            className="absolute bottom-0 left-0 right-0 bg-black/80 py-2 sm:py-4 px-4 sm:px-8 z-40 backdrop-blur-sm"
+            className="absolute bottom-0 left-0 right-0 bg-black/80 py-3 sm:py-4 md:py-6 px-4 z-40 backdrop-blur-sm"
             style={{ fontFamily: "Avenir", color:'#b9b7c7ff'}}
           >
-            <div className="max-w-7xl mx-auto text-center space-y-3">
-              <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
+            <div className="max-w-7xl mx-auto text-center space-y-2 sm:space-y-3">
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl px-2">
                 Stay in a premium villa in a group of friends or colleagues
               </p>
-              {/* White Divider Line */}
-              <div className="w-60 sm:w-80 md:w-96 lg:w-full lg:max-w-2xl xl:max-w-2xl h-px bg-white mx-auto opacity-60"></div>
-              <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl">
+              <div className="w-48 sm:w-64 md:w-80 lg:w-96 h-px bg-white mx-auto opacity-60"></div>
+              <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl px-2">
                 Solve a real-life mystery game during the stay
               </p>
             </div>
@@ -591,14 +479,12 @@ export default function HeroSection() {
 
       {/* About the Game Section */}
       <section id="about-game" className="section-2">
-        <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 md:px-16">
-          {/* Main content container */}
-          <div className="relative z-10 text-white w-full text-center max-w-10xl mx-auto">
-            {/* Title with wavy animation - Cursive Font */}
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 sm:py-24">
+          <div className="relative z-10 text-white w-full text-center max-w-6xl mx-auto">
             <h1 
               ref={gameTitleRef}
-              className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 md:mb-10 justify-center"
-              style={{ fontFamily: "cursive", marginTop: '1rem sm:2rem', color: '#727081' }}
+              className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 sm:mb-12 md:mb-16"
+              style={{ fontFamily: "cursive", color: '#727081' }}
             >
               {"About the Game".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -607,17 +493,14 @@ export default function HeroSection() {
               ))}
             </h1>
 
-            {/* Static text lines */}
-            <div 
-              className="flex flex-col items-center justify-center space-y-8 sm:space-y-12 md:space-y-16 mb-8 sm:mb-12 md:mb-16"
-              style={{ fontFamily: "Avenir", paddingTop: '1rem sm:1.5rem md:2rem' }}
-            >
+            <div className="flex flex-col items-center justify-center space-y-6 sm:space-y-10 md:space-y-14">
               {gameTextLines.map((line, index) => (
                 <p 
                   key={index}
                   ref={el => gameTextRefs.current[index] = el}
-                  className="scroll-animate text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center max-w-sm sm:max-w-lg md:max-w-6xl lg:max-w-full xl:max-w-full leading-relaxed px-4"
+                  className="scroll-animate text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-center max-w-4xl leading-relaxed px-4"
                   style={{ 
+                    fontFamily: "Avenir",
                     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     fontWeight: 'bold',
                     color: '#727081'
@@ -633,11 +516,10 @@ export default function HeroSection() {
 
       {/* Locations Section */}
       <section id="locations">
-        <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16">
-          {/* Title with wavy animation - Cursive Font */}
+        <div className="min-h-screen flex flex-col items-center justify-center py-16 sm:py-20 px-4">
           <h1 
             ref={locationsTitleRef}
-            className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 sm:mb-16 md:mb-20 text-center"
+            className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-10 sm:mb-16 text-center relative z-10"
             style={{ fontFamily: "cursive", color: '#727081' }}
           >
             {"Locations".split('').map((letter, index) => (
@@ -647,23 +529,21 @@ export default function HeroSection() {
             ))}
           </h1>
 
-          {/* Location Cards Container */}
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 max-w-6xl mx-auto">
-            {/* Gurgaon Card */}
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-8 max-w-6xl mx-auto relative z-10">
             <div 
               ref={el => locationCardsRef.current[0] = el}
               className="scroll-animate-scale location-card bg-gray-400 rounded-lg shadow-lg overflow-hidden w-full sm:w-[380px] transform transition duration-300 hover:scale-105"
             >
-              <div className="p-4 bg-gray-400">
+              <div className="p-3 sm:p-4 bg-gray-400">
                 <img 
                   src={gurgaonImg} 
                   alt="Gurgaon" 
-                  className="w-full h-64 sm:h-96 object-cover" 
+                  className="w-full h-56 sm:h-80 md:h-96 object-cover rounded" 
                   style={{objectPosition:'42% center'}}
                 />
               </div>
-              <div className="p-4 min-h-[150px] relative">
-                <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4" style={{ fontFamily: "Avenir" }}>
+              <div className="p-4 sm:p-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 mb-4 sm:mb-6" style={{ fontFamily: "Avenir" }}>
                   {"Gurugram".split('').map((letter, index) => (
                     <span key={index} className="wavy-letter">
                       {letter === ' ' ? '\u00A0' : letter}
@@ -671,41 +551,37 @@ export default function HeroSection() {
                   ))}
                 </h2>
                 
-                {/* Button with proper spacing */}
-                <div className="mt-6 sm:mt-10">
-                  <Link to="/Instructions">
-                    <button 
-                      className="bg-gray-700 px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 relative z-10 text-lg sm:text-xl text-gray-400"
-                      style={{ fontFamily: "Avenir" }}
-                    >
-                      Book Now
-                    </button>
-                  </Link>
-                </div>
+                <Link to="/Instructions">
+                  <button 
+                    className="bg-gray-700 px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 text-base sm:text-lg lg:text-xl text-gray-400 font-semibold"
+                    style={{ fontFamily: "Avenir" }}
+                  >
+                    Book Now
+                  </button>
+                </Link>
               </div>
             </div>
 
-            {/* Mussoorie Card */}
             <div 
               ref={el => locationCardsRef.current[1] = el}
               className="scroll-animate-scale location-card bg-gray-400 rounded-lg shadow-lg overflow-hidden w-full sm:w-[380px] transform transition duration-300 hover:scale-105"
             >
-              <div className="p-4 bg-gray-400">
+              <div className="p-3 sm:p-4 bg-gray-400">
                 <img 
                   src={mussoorieImg} 
                   alt="Mussoorie" 
-                  className="w-full h-64 sm:h-96 object-cover" 
+                  className="w-full h-56 sm:h-80 md:h-96 object-cover rounded" 
                 />
               </div>
-              <div className="p-4 min-h-[150px]">
-                <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-2" style={{ fontFamily: "Avenir" }}>
+              <div className="p-4 sm:p-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 mb-2" style={{ fontFamily: "Avenir" }}>
                   {"Mussoorie".split('').map((letter, index) => (
                     <span key={index} className="wavy-letter">
                       {letter === ' ' ? '\u00A0' : letter}
                     </span>
                   ))}
                 </h2>
-                <p className="mt-4 text-gray-600 font-medium text-2xl sm:text-3xl lg:text-4xl" style={{ fontFamily: "Avenir" }}>
+                <p className="mt-3 sm:mt-4 text-gray-600 font-medium text-xl sm:text-2xl md:text-3xl lg:text-4xl" style={{ fontFamily: "Avenir" }}>
                   Coming Soon…!
                 </p>
               </div>
@@ -716,14 +592,10 @@ export default function HeroSection() {
 
       {/* FAQs Section */}
       <section id="faqs">
-        <div className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-8 md:px-16">
-          {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/20"></div>
-          
-          {/* Title with wavy animation - Cursive Font */}
+        <div className="min-h-screen flex flex-col items-center justify-center py-16 sm:py-20 px-4">
           <h1 
             ref={faqTitleRef}
-            className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 sm:mb-16 md:mb-20 text-center relative z-10"
+            className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-10 sm:mb-16 text-center relative z-10"
             style={{ fontFamily: "cursive", color: '#727081' }}
           >
             {"Frequently Asked Questions".split('').map((letter, index) => (
@@ -733,7 +605,6 @@ export default function HeroSection() {
             ))}
           </h1>
 
-          {/* FAQ Items Container */}
           <div className="w-full max-w-4xl mx-auto relative z-10">
             {faqData.map((faq, index) => (
               <div 
@@ -746,7 +617,7 @@ export default function HeroSection() {
                   onClick={() => toggleFAQ(index)}
                   style={{ fontFamily: "Avenir" }}
                 >
-                  <span className="text-sm sm:text-base md:text-lg lg:text-xl">
+                  <span className="text-sm sm:text-base md:text-lg lg:text-xl pr-2">
                     {faq.question}
                   </span>
                   <svg 
@@ -780,10 +651,9 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* Contact CTA */}
-          <div className="mt-12 sm:mt-16 text-center relative z-10">
+          <div className="mt-10 sm:mt-16 text-center relative z-10">
             <p 
-              className="text-base sm:text-lg md:text-xl mb-6"
+              className="text-base sm:text-lg md:text-xl mb-4 sm:mb-6"
               style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
             >
               Still have questions?
@@ -792,7 +662,7 @@ export default function HeroSection() {
               href="https://wa.me/918279845322" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
               style={{ fontFamily: "Avenir" }}
             >
               <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
