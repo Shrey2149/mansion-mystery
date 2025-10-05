@@ -26,38 +26,21 @@ export default function Instructions() {
   const [imagesLoaded, setImagesLoaded] = useState({});
   const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
 
-  // Navigation items
   const navItems = [
     { name: "Home", href: "/" },
     { name: "The Game", href: "/#about-game" },
     { name: "Locations", href: "/#locations" },
     { name: "FAQs", href: "/#faqs" },
-    { name: "The Architect", href: "#creator" }
+    { name: "The Architect", href: "/creator" }
   ];
 
-  // Array of property images
   const propertyImages = [
-    secondImg,
-    sixthImg,
-    fifthImg,
-    forthImg,
-    seventhImg,
-    Img,
-    thirdImg,
-    eighthImg,
-    ninthImg,
-    tenthImg,
-    eleventhImg,
-    forteenthImg,
-    twelvethImg,
-    thirteenthImg,
-    fifteenthImg,
-    sixteenthImg,
-    seventeenthImg,
-    eighteenImg
+    secondImg, sixthImg, fifthImg, forthImg, seventhImg, Img,
+    thirdImg, eighthImg, ninthImg, tenthImg, eleventhImg,
+    forteenthImg, twelvethImg, thirteenthImg, fifteenthImg,
+    sixteenthImg, seventeenthImg, eighteenImg
   ];
 
-  // Preload all images on component mount
   useEffect(() => {
     const preloadImages = async () => {
       const imagePromises = propertyImages.map((src, index) => {
@@ -77,13 +60,23 @@ export default function Instructions() {
         setAllImagesPreloaded(true);
       } catch (error) {
         console.error('Error preloading images:', error);
-        // Still set as preloaded to prevent infinite loading
         setAllImagesPreloaded(true);
       }
     };
 
     preloadImages();
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest('nav')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMenuOpen]);
 
   const changeImage = (newIndex) => {
     if (newIndex !== currentImageIndex) {
@@ -103,189 +96,341 @@ export default function Instructions() {
 
   return (
     <>
-    <style jsx>{`
-          @keyframes wave {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-          }
-          
-          .wavy-letter {
-            display: inline-block;
-            animation: wave 5s ease-in-out infinite;
-          }
+      <style jsx>{`
+        * {
+          box-sizing: border-box;
+        }
+
+        @keyframes wave {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
         
-          .wavy-letter:nth-child(1) { animation-delay: 0s; }
-          .wavy-letter:nth-child(2) { animation-delay: 0.1s; }
-          .wavy-letter:nth-child(3) { animation-delay: 0.2s; }
-          .wavy-letter:nth-child(4) { animation-delay: 0.3s; }
-          .wavy-letter:nth-child(5) { animation-delay: 0.4s; }
-          .wavy-letter:nth-child(6) { animation-delay: 0.5s; }
-          .wavy-letter:nth-child(7) { animation-delay: 0.6s; }
-          .wavy-letter:nth-child(8) { animation-delay: 0.7s; }
-          .wavy-letter:nth-child(9) { animation-delay: 0.8s; }
-          .wavy-letter:nth-child(10) { animation-delay: 0.9s; }
-          .wavy-letter:nth-child(11) { animation-delay: 1s; }
-          .wavy-letter:nth-child(12) { animation-delay: 1.1s; }
-          .wavy-letter:nth-child(13) { animation-delay: 1.2s; }
-          .wavy-letter:nth-child(14) { animation-delay: 1.3s; }
-          .wavy-letter:nth-child(15) { animation-delay: 1.4s; }
-          .wavy-letter:nth-child(16) { animation-delay: 1.6s; }
-          .wavy-letter:nth-child(17) { animation-delay: 1.6s; }
-          .wavy-letter:nth-child(18) { animation-delay: 1.7s; }
-          .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
-          .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
-          .wavy-letter:nth-child(21) { animation-delay: 2s; }
-          .wavy-letter:nth-child(22) { animation-delay: 2.1s; }
-          .wavy-letter:nth-child(23) { animation-delay: 2.2s; }
-          .wavy-letter:nth-child(24) { animation-delay: 2.3s; }
-          .wavy-letter:nth-child(25) { animation-delay: 2.4s; }
-          .wavy-letter:nth-child(26) { animation-delay: 2.5s; }
-          .wavy-letter:nth-child(27) { animation-delay: 2.6s; }
-          .wavy-letter:nth-child(28) { animation-delay: 2.7s; }
-          .wavy-letter:nth-child(29) { animation-delay: 2.8s; }
-          .wavy-letter:nth-child(30) { animation-delay: 2.9s; }
-          .wavy-letter:nth-child(31) { animation-delay: 3s; }
-          .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
-          .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
-          .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
-          .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
+        .wavy-letter {
+          display: inline-block;
+          animation: wave 5s ease-in-out infinite;
+        }
+      
+        .wavy-letter:nth-child(1) { animation-delay: 0s; }
+        .wavy-letter:nth-child(2) { animation-delay: 0.1s; }
+        .wavy-letter:nth-child(3) { animation-delay: 0.2s; }
+        .wavy-letter:nth-child(4) { animation-delay: 0.3s; }
+        .wavy-letter:nth-child(5) { animation-delay: 0.4s; }
+        .wavy-letter:nth-child(6) { animation-delay: 0.5s; }
+        .wavy-letter:nth-child(7) { animation-delay: 0.6s; }
+        .wavy-letter:nth-child(8) { animation-delay: 0.7s; }
+        .wavy-letter:nth-child(9) { animation-delay: 0.8s; }
+        .wavy-letter:nth-child(10) { animation-delay: 0.9s; }
+        .wavy-letter:nth-child(11) { animation-delay: 1s; }
+        .wavy-letter:nth-child(12) { animation-delay: 1.1s; }
+        .wavy-letter:nth-child(13) { animation-delay: 1.2s; }
+        .wavy-letter:nth-child(14) { animation-delay: 1.3s; }
+        .wavy-letter:nth-child(15) { animation-delay: 1.4s; }
+        .wavy-letter:nth-child(16) { animation-delay: 1.5s; }
+        .wavy-letter:nth-child(17) { animation-delay: 1.6s; }
+        .wavy-letter:nth-child(18) { animation-delay: 1.7s; }
+        .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
+        .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
+        .wavy-letter:nth-child(21) { animation-delay: 2s; }
+        .wavy-letter:nth-child(22) { animation-delay: 2.1s; }
+        .wavy-letter:nth-child(23) { animation-delay: 2.2s; }
+        .wavy-letter:nth-child(24) { animation-delay: 2.3s; }
+        .wavy-letter:nth-child(25) { animation-delay: 2.4s; }
+        .wavy-letter:nth-child(26) { animation-delay: 2.5s; }
+        .wavy-letter:nth-child(27) { animation-delay: 2.6s; }
+        .wavy-letter:nth-child(28) { animation-delay: 2.7s; }
+        .wavy-letter:nth-child(29) { animation-delay: 2.8s; }
+        .wavy-letter:nth-child(30) { animation-delay: 2.9s; }
+        .wavy-letter:nth-child(31) { animation-delay: 3s; }
+        .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
+        .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
+        .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
+        .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
 
-          /* Navigation Styles */
-          .nav-bg {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-          }
+        body {
+          overflow-x: hidden;
+        }
 
-          /* Mobile menu styles */
-          .mobile-menu {
-            transform: translateY(-100%);
-            transition: transform 0.3s ease-in-out;
-          }
-          
-          .mobile-menu.open {
-            transform: translateY(0);
-          }
+        html {
+          scroll-behavior: smooth;
+        }
 
-          /* Desktop styles */
+        .nav-bg {
+          background: rgba(0, 0, 0, 0.95);
+          backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+          max-height: 400px;
+        }
+
+        .instructions-section {
+          position: relative;
+          background-image: url(${backgroundImg});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          min-height: 100vh;
+        }
+
+        .instructions-section::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.2);
+          z-index: 0;
+        }
+
+        .desktop-layout {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8rem 4rem 4rem 4rem;
+          min-height: 100vh;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .desktop-content {
+          flex: 1;
+          margin-right: 3rem;
+          max-width: 600px;
+        }
+
+        .desktop-title {
+          font-size: 3rem;
+          margin-bottom: 3rem;
+          text-align: left;
+          color: #727081;
+        }
+
+        .desktop-list {
+          font-size: 1.25rem;
+          margin-top: 2rem;
+          line-height: 2.5;
+          color: #a8a6b5;
+        }
+
+        .desktop-list > div {
+          margin-bottom: 0.75rem;
+        }
+
+        .desktop-contact {
+          font-size: 1.5rem;
+          margin-top: 3rem;
+          font-style: italic;
+          color: #a8a6b5;
+          line-height: 1.6;
+        }
+
+        .desktop-carousel {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        .carousel-container {
+          position: relative;
+          width: 500px;
+          height: 320px;
+          overflow: hidden;
+          border-radius: 12px;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-track {
+          display: flex;
+          width: ${propertyImages.length * 100}%;
+          height: 100%;
+          transform: translateX(-${currentImageIndex * (100 / propertyImages.length)}%);
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-slide {
+          width: ${100 / propertyImages.length}%;
+          height: 100%;
+          flex-shrink: 0;
+        }
+
+        .carousel-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .loading-spinner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 12px;
+        }
+
+        .spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-top: 4px solid #727081;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .carousel-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(0, 0, 0, 0.6);
+          color: white;
+          border: none;
+          padding: 12px 16px;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 20px;
+          transition: all 0.3s ease;
+          z-index: 10;
+          user-select: none;
+        }
+
+        .carousel-arrow:hover {
+          background: rgba(0, 0, 0, 0.8);
+          transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow:active {
+          transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-arrow.prev {
+          left: 15px;
+        }
+
+        .carousel-arrow.next {
+          right: 15px;
+        }
+
+        .image-counter {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          padding: 8px 20px;
+          border-radius: 25px;
+          font-size: 14px;
+          font-weight: 600;
+          z-index: 10;
+          backdrop-filter: blur(5px);
+        }
+
+        @media (max-width: 1024px) {
           .desktop-layout {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6rem 4rem 2rem 4rem;
-            min-height: 100vh;
+            padding: 7rem 2rem 3rem 2rem;
           }
 
           .desktop-content {
-            flex: 1;
             margin-right: 2rem;
           }
 
           .desktop-title {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            text-align: left;
-            margin-left: 4rem;
-            white-space: nowrap;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
           }
 
           .desktop-list {
-            margin-left: 4rem;
-            margin-right: 2rem;
-            font-size: 1.25rem;
-            margin-top: 2rem;
-            line-height: 2.5;
+            font-size: 1.1rem;
+            line-height: 2.2;
           }
 
           .desktop-contact {
-            margin-left: 4rem;
-            margin-right: 2rem;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-top: 2rem;
-            font-style: italic;
           }
 
-          .desktop-carousel {
-            flex-shrink: 0;
-            margin-right: 6rem;
-            display: flex;
-            align-items: center;
-          }
-
-          /* Optimized Image Carousel Styles */
           .carousel-container {
-            position: relative;
-            width: 480px;
+            width: 400px;
             height: 280px;
-            overflow: hidden;
-            border-radius: 8px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .instructions-section {
+            background-attachment: scroll;
           }
 
-          .carousel-track {
-            display: flex;
-            width: ${propertyImages.length * 100}%;
-            height: 100%;
-            transform: translateX(-${currentImageIndex * (100 / propertyImages.length)}%);
-            transition: transform 0.3s ease-in-out;
-          }
-
-          .carousel-slide {
-            width: ${100 / propertyImages.length}%;
-            height: 100%;
-            flex-shrink: 0;
-          }
-
-          .carousel-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-          }
-
-          /* Loading spinner */
-          .loading-spinner {
-            display: flex;
+          .desktop-layout {
+            flex-direction: column;
+            padding: 5rem 1.5rem 2rem 1.5rem;
             align-items: center;
-            justify-content: center;
+          }
+          
+          .desktop-content {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            margin-right: 0;
+            margin-bottom: 3rem;
+            max-width: 100%;
+          }
+          
+          .desktop-title {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            line-height: 1.3;
+          }
+          
+          .desktop-list {
+            font-size: 1rem;
+            padding: 0 0.5rem;
+            text-align: left;
+            line-height: 2;
           }
 
-          .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #727081;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+          .desktop-list > div {
+            margin-bottom: 0.5rem;
+          }
+          
+          .desktop-contact {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 0 0.5rem;
+            line-height: 1.5;
+          }
+          
+          .desktop-carousel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+          
+          .carousel-container {
+            width: 90%;
+            max-width: 350px;
+            height: 240px;
           }
 
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-
-          /* Arrow buttons */
           .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            transition: all 0.3s ease;
-            z-index: 10;
-            user-select: none;
-          }
-
-          .carousel-arrow:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: translateY(-50%) scale(1.1);
+            padding: 10px 14px;
+            font-size: 18px;
           }
 
           .carousel-arrow.prev {
@@ -296,124 +441,146 @@ export default function Instructions() {
             right: 10px;
           }
 
-          /* Image counter */
           .image-counter {
-            position: absolute;
             bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            z-index: 10;
+            padding: 6px 16px;
+            font-size: 13px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .desktop-layout {
+            padding: 5rem 1rem 2rem 1rem;
           }
 
-          /* Mobile styles */
-          @media (max-width: 768px) {
-            .desktop-layout {
-              flex-direction: column !important;
-              padding: 2rem 1rem !important;
-              align-items: center !important;
-            }
-            
-            .desktop-content {
-              width: 100% !important;
-              margin-right: 0 !important;
-              order: 1;
-            }
-            
-            .desktop-title {
-              font-size: clamp(1.2rem, 4vw, 2rem) !important;
-              margin-left: 0 !important;
-              margin-bottom: 2rem !important;
-              text-align: center !important;
-              line-height: 1.3 !important;
-              white-space: nowrap !important;
-            }
-            
-            .desktop-list {
-              margin-left: 0 !important;
-              margin-right: 0 !important;
-              font-size: 0.9rem !important;
-              padding: 0 1rem !important;
-              text-align: left !important;
-              line-height: 2;
-            }
-            
-            .desktop-contact {
-              margin-left: 0 !important;
-              margin-right: 0 !important;
-              font-size: 1rem !important;
-              text-align: center !important;
-              margin-top: 2rem !important;
-              padding: 0 1rem !important;
-              white-space: normal !important;
-              line-height: 1.4 !important;
-            }
-            
-            .desktop-carousel {
-              order: 2;
-              margin-right: 0 !important;
-              margin-top: 3rem !important;
-              width: 100% !important;
-              display: flex;
-              justify-content: center;
-            }
-            
-            .carousel-container {
-              width: 280px !important;
-              height: 200px !important;
-            }
+          .desktop-title {
+            font-size: 1.5rem;
           }
 
-          @media (max-width: 480px) {
-            .desktop-title {
-              font-size: clamp(0.7rem, 3vw, 1.2rem) !important;
-              white-space: nowrap !important;
-              overflow: visible !important;
-            }
-            
-            .desktop-list {
-              font-size: 0.8rem !important;
-            }
-            
-            .desktop-contact {
-              font-size: 0.9rem !important;
-            }
-            
-            .carousel-container {
-              width: 250px !important;
-              height: 180px !important;
-            }
+          .desktop-list {
+            font-size: 0.9rem;
           }
-        `}
-    </style>
 
-    {/* Navigation Bar */}
-    <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo/Brand */}
-          <div className="flex-shrink-0">
-            <Link to="/">
-              <span className="text-white text-xl font-bold" style={{ fontFamily: "Avenir" }}>
-                Mystery Mansion
-              </span>
-            </Link>
+          .desktop-contact {
+            font-size: 1rem;
+          }
+
+          .carousel-container {
+            width: 100%;
+            max-width: 320px;
+            height: 220px;
+          }
+
+          .wavy-letter {
+            animation: wave 6s ease-in-out infinite;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .desktop-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+          }
+          
+          .desktop-list {
+            font-size: 0.85rem;
+            line-height: 1.8;
+          }
+          
+          .desktop-contact {
+            font-size: 0.95rem;
+            margin-top: 1.5rem;
+          }
+          
+          .carousel-container {
+            max-width: 280px;
+            height: 200px;
+          }
+
+          .carousel-arrow {
+            padding: 8px 12px;
+            font-size: 16px;
+          }
+
+          .image-counter {
+            bottom: 12px;
+            padding: 5px 14px;
+            font-size: 12px;
+          }
+        }
+      `}</style>
+
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex-shrink-0">
+              <Link to="/">
+                <span className="text-white text-base sm:text-lg md:text-xl font-bold" style={{ fontFamily: "Avenir" }}>
+                  Mystery Mansion
+                </span>
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navItems.map((item, index) => (
+                  item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                    <a
+                      key={index}
+                      href={item.href}
+                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                      style={{ fontFamily: "Avenir" }}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={index}
+                      to={item.href}
+                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                      style={{ fontFamily: "Avenir" }}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="text-gray-300 hover:text-white focus:outline-none p-2"
+                aria-label="Toggle menu"
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {isMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          {/* Mobile Navigation Menu */}
+          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} nav-bg`}>
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') || item.href.startsWith('/#') ? (
                   <a
                     key={index}
                     href={item.href}
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                     style={{ fontFamily: "Avenir" }}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </a>
@@ -421,8 +588,9 @@ export default function Instructions() {
                   <Link
                     key={index}
                     to={item.href}
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                     style={{ fontFamily: "Avenir" }}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
@@ -430,78 +598,25 @@ export default function Instructions() {
               ))}
             </div>
           </div>
+        </div>
+      </nav>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+      {/* Instructions Section */}
+      <section className="instructions-section">
+        <div className="desktop-layout">
+          {/* Left side - Instructions content */}
+          <div className="desktop-content">
+            <h1 
+              className="font-bold desktop-title"
+              style={{ fontFamily: "Avenir" }}
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
+              {"About The Property (Gurugram)".split('').map((letter, index) => (
+                <span key={index} className="wavy-letter">
+                  {letter === ' ' ? '\u00A0' : letter}
+                </span>
+              ))}
+            </h1>
 
-        {/* Mobile Navigation Menu */}
-        <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} absolute top-16 left-0 right-0 nav-bg`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navItems.map((item, index) => (
-              item.href.startsWith('#') || item.href.startsWith('/#') ? (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                  style={{ fontFamily: "Avenir" }}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={index}
-                  to={item.href}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                  style={{ fontFamily: "Avenir" }}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div 
-      className="bg-cover bg-center desktop-layout"
-      style={{ 
-        backgroundImage: `url(${backgroundImg})`,
-        filter: 'brightness(1.2)' 
-      }}
-    >
-      {/* Left side - Instructions content */}
-      <div className="relative z-10 text-white desktop-content">
-        <h1 
-          className="font-bold desktop-title"
-          style={{ fontFamily: "Avenir" }}
-        >
-            {"About The Property (Gurugram)".split('').map((letter, index) => (
-              <span key={index} className="wavy-letter">
-                {letter === ' ' ? '\u00A0' : letter}
-              </span>
-            ))}
-        </h1>
-
-        <div className="space-y-8">
-          {/* About The Property Section */}
-          <div>
             <div className="desktop-list" style={{ fontFamily: "Avenir" }}>
               <div>4 bedrooms, 4 bathrooms—plenty of space to plot and prepare.</div>
               <div>Indoor pool (open till 7:30pm) for a pre-mystery dive.</div>
@@ -512,65 +627,59 @@ export default function Instructions() {
               <div>Ideal for 8–12 guests, where camaraderie and secrets intertwine.</div>
               <div>Check-in from 5pm, check-out by 10am</div>
             </div>
-          </div>
 
-          {/* Contact Section */}
-          <div className="pt-4">
             <p className="desktop-contact" style={{ fontFamily: "Avenir" }}>
               For further queries and booking the experience, WhatsApp: +91 8279845322
             </p>
           </div>
-        </div>
-      </div>
 
-      {/* Right side - Optimized Image Carousel */}
-      <div className="relative z-10 desktop-carousel">
-        {!allImagesPreloaded ? (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-          </div>
-        ) : (
-          <div className="carousel-container">
-            {/* Previous Arrow */}
-            <button 
-              onClick={prevImage}
-              className="carousel-arrow prev"
-              disabled={!allImagesPreloaded}
-            >
-              ←
-            </button>
-
-            {/* Image Track */}
-            <div className="carousel-track">
-              {propertyImages.map((image, index) => (
-                <div key={index} className="carousel-slide">
-                  <img 
-                    src={image} 
-                    alt={`Property Image ${index + 1}`} 
-                    className="carousel-image"
-                    loading={index < 3 ? "eager" : "lazy"}
-                  />
+          {/* Right side - Image Carousel */}
+          <div className="desktop-carousel">
+            {!allImagesPreloaded ? (
+              <div className="carousel-container">
+                <div className="loading-spinner">
+                  <div className="spinner"></div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="carousel-container">
+                <button 
+                  onClick={prevImage}
+                  className="carousel-arrow prev"
+                  aria-label="Previous image"
+                >
+                  ←
+                </button>
 
-            {/* Next Arrow */}
-            <button 
-              onClick={nextImage}
-              className="carousel-arrow next"
-              disabled={!allImagesPreloaded}
-            >
-              →
-            </button>
+                <div className="carousel-track">
+                  {propertyImages.map((image, index) => (
+                    <div key={index} className="carousel-slide">
+                      <img 
+                        src={image} 
+                        alt={`Property Image ${index + 1}`} 
+                        className="carousel-image"
+                        loading={index < 3 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  ))}
+                </div>
 
-            {/* Image Counter */}
-            <div className="image-counter">
-              {currentImageIndex + 1} / {propertyImages.length}
-            </div>
+                <button 
+                  onClick={nextImage}
+                  className="carousel-arrow next"
+                  aria-label="Next image"
+                >
+                  →
+                </button>
+
+                <div className="image-counter">
+                  {currentImageIndex + 1} / {propertyImages.length}
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </section>
     </>
   );
 }
