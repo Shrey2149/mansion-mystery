@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
+import bgImage from "../assets/mystery.jpeg";
+import backgroundImg from "../assets/instructions-bg.png"; 
+import gurgaonImg from "../assets/Gurgaon_image.jpeg";
+import mussoorieImg from "../assets/Mussourrie_image.png";
 import { Link } from "react-router-dom";
+import { useAudio } from "../components/AudioContext.js";
 
 export default function HeroSection() {
+  const { startAudio } = useAudio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFAQ, setOpenFAQ] = useState(null);
-  const [audioStarted, setAudioStarted] = useState(false);
   
   const gameTextRefs = useRef([]);
   const gameTitleRef = useRef(null);
@@ -12,32 +17,10 @@ export default function HeroSection() {
   const locationCardsRef = useRef([]);
   const faqTitleRef = useRef(null);
   const faqItemsRef = useRef([]);
-  const audioRef = useRef(null);
 
-  // Handle audio playback on first user interaction
   useEffect(() => {
-    const startAudio = () => {
-      if (!audioStarted && audioRef.current) {
-        audioRef.current.play().catch(err => console.log("Audio play failed:", err));
-        setAudioStarted(true);
-      }
-    };
-
-    // Try to start audio immediately
     startAudio();
-
-    // Also add listeners for first user interaction
-    const events = ['click', 'touchstart', 'keydown'];
-    events.forEach(event => {
-      document.addEventListener(event, startAudio, { once: true });
-    });
-
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, startAudio);
-      });
-    };
-  }, [audioStarted]);
+  }, [startAudio]);
 
   useEffect(() => {
     const observerOptions = {
@@ -71,7 +54,6 @@ export default function HeroSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMenuOpen && !event.target.closest('nav')) {
@@ -191,26 +173,40 @@ export default function HeroSection() {
 
         .section-1, .section-2 {
           position: relative;
-          background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-                      url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600') center/cover;
+          background-image: url(${bgImage});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
         }
 
-        @media (min-width: 768px) {
-          .section-1, .section-2 {
-            background-attachment: fixed;
-          }
+        .section-1::after, .section-2::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+          z-index: 0;
         }
 
         #locations, #faqs {
           position: relative;
-          background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)),
-                      url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1600') center/cover;
+          background-image: url(${backgroundImg});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
         }
 
-        @media (min-width: 768px) {
-          #locations, #faqs {
-            background-attachment: fixed;
-          }
+        #locations::after, #faqs::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.2);
+          z-index: 0;
         }
 
         .nav-bg {
@@ -339,6 +335,10 @@ export default function HeroSection() {
           .wavy-letter {
             animation: wave 6s ease-in-out infinite;
           }
+          
+          .section-1, .section-2, #locations, #faqs {
+            background-attachment: scroll;
+          }
         }
 
         .location-card {
@@ -360,11 +360,6 @@ export default function HeroSection() {
           }
         }
       `}</style>
-
-      {/* Hidden audio element for background music */}
-      <audio ref={audioRef} loop>
-        <source src="your-audio-file.mp3" type="audio/mpeg" />
-      </audio>
 
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
@@ -574,9 +569,10 @@ export default function HeroSection() {
             >
               <div className="p-3 sm:p-4 bg-gray-400">
                 <img 
-                  src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800" 
+                  src={gurgaonImg}
                   alt="Gurgaon" 
                   className="w-full h-48 sm:h-64 md:h-80 object-cover rounded" 
+                  style={{objectPosition:'42% center'}}
                 />
               </div>
               <div className="p-4 sm:p-6">
@@ -605,7 +601,7 @@ export default function HeroSection() {
             >
               <div className="p-3 sm:p-4 bg-gray-400">
                 <img 
-                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" 
+                  src={mussoorieImg}
                   alt="Mussoorie" 
                   className="w-full h-48 sm:h-64 md:h-80 object-cover rounded" 
                 />
