@@ -618,13 +618,13 @@ export default function Instructions() {
             </h1>
 
             <div className="desktop-list" style={{ fontFamily: "Avenir" }}>
-              <div>4 bedrooms, 4 bathrooms—plenty of space to plot and prepare.</div>
-              <div>Indoor pool (open till 7:30pm) for a pre-mystery dive.</div>
-              <div>Pool table and games to test your strategy between clues.</div>
-              <div>In-home cinema for group debriefs.</div>
+              <div>4 bedrooms, 4 bathrooms—plenty of space to plot and prepare</div>
+              <div>Indoor pool (open till 7:30pm) for a pre-mystery dive</div>
+              <div>Pool table and games to test your strategy between clues</div>
+              <div>In-home cinema for group debriefs</div>
               <div>BYOB — your drinks, our bar can brew suspense for you</div>
-              <div>Dining available on order—fuel your next move.</div>
-              <div>Ideal for 8–12 guests, where camaraderie and secrets intertwine.</div>
+              <div>Dining available on order—fuel your next move</div>
+              <div>Ideal for 8–12 guests, where camaraderie and secrets intertwine</div>
               <div>Check-in from 5pm, check-out by 10am</div>
             </div>
 
