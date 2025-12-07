@@ -209,10 +209,11 @@ export default function Instructions() {
         }
 
         .desktop-title {
-          font-size: 3rem;
+          font-size: clamp(1.75rem, 3vw, 2.5rem);
           margin-bottom: 3rem;
           text-align: left;
           color: #727081;
+          white-space: nowrap;
         }
 
         .desktop-list {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import bgImage from "../assets/mystery.jpeg";
 import creatorImg from "../assets/Creator.jpeg";
+import logoImg from "../assets/Logo.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Creator() {
@@ -385,12 +386,14 @@ export default function Creator() {
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
             <div className="flex-shrink-0">
               <Link to="/">
-                <span className="text-white text-base sm:text-lg md:text-xl font-bold" style={{ fontFamily: "Avenir" }}>
-                  Mystery Mansion
-                </span>
+                <img 
+                  src={logoImg} 
+                  alt="Mystery Mansion Logo" 
+                  className="h-11 sm:h-12 md:h-14 w-auto cursor-pointer"
+                />
               </Link>
             </div>
 
