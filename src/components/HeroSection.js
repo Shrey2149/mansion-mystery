@@ -368,13 +368,13 @@ export default function HeroSection() {
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-18 sm:h-20 md:h-24">
+          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
             <div className="flex-shrink-0">
               <a href="#home">
                 <img 
                   src={logoImg} 
                   alt="Mystery Mansion Logo" 
-                  className="h-12 sm:h-14 md:h-16 w-auto cursor-pointer"
+                  className="h-11 sm:h-12 md:h-14 w-auto cursor-pointer"
                 />
               </a>
             </div>
