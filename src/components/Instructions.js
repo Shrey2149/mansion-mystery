@@ -67,6 +67,16 @@ export default function Instructions() {
     preloadImages();
   }, []);
 
+  // Ensure the instructions page always opens scrolled to the top
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    } catch (e) {
+      // fallback
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMenuOpen && !event.target.closest('nav')) {
@@ -99,6 +109,11 @@ export default function Instructions() {
       <style jsx>{`
         * {
           box-sizing: border-box;
+        }
+
+        /* Force text color for this component */
+        body, .instructions-section, nav, .desktop-content, .desktop-title, .desktop-list, .desktop-contact, h1, h2, p, span, a, button {
+          color: #E8E3E3 !important;
         }
 
         @keyframes wave {
@@ -212,7 +227,7 @@ export default function Instructions() {
           font-size: clamp(1.75rem, 3vw, 2.5rem);
           margin-bottom: 3rem;
           text-align: left;
-          color: #727081;
+          color: #E8E3E3;
           white-space: nowrap;
         }
 
@@ -220,7 +235,7 @@ export default function Instructions() {
           font-size: 1.25rem;
           margin-top: 2rem;
           line-height: 2.5;
-          color: #a8a6b5;
+          color: #E8E3E3;
         }
 
         .desktop-list > div {
@@ -231,7 +246,7 @@ export default function Instructions() {
           font-size: 1.5rem;
           margin-top: 3rem;
           font-style: italic;
-          color: #a8a6b5;
+          color: #E8E3E3;
           line-height: 1.6;
         }
 
@@ -285,7 +300,7 @@ export default function Instructions() {
           width: 40px;
           height: 40px;
           border: 4px solid rgba(255, 255, 255, 0.3);
-          border-top: 4px solid #727081;
+          border-top: 4px solid #E8E3E3;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }

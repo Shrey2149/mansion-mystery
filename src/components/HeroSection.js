@@ -131,6 +131,19 @@ export default function HeroSection() {
           box-sizing: border-box;
         }
 
+        /* Force text color throughout this component to the requested hex (exclude h2 so headings can be styled separately) */
+        body, .section-1, .section-2, #locations, #faqs, nav, .hero-content, .faq-item, .location-card, .mobile-menu, .nav-bg, h1, p, span, a, button {
+          color: #E8E3E3 !important;
+        }
+
+        /* Utility to override forced color for specific elements */
+        .force-black {
+          color: #000 !important;
+        }
+        .force-black span {
+          color: #000 !important;
+        }
+
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
@@ -174,6 +187,7 @@ export default function HeroSection() {
         .wavy-letter:nth-child(31) { animation-delay: 3.0s; }
         .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
         .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
+        .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
 
         .section-1, .section-2 {
           position: relative;
@@ -279,12 +293,12 @@ export default function HeroSection() {
           justify-content: space-between;
           align-items: center;
           font-weight: 600;
-          color: #727081;
+          color: #E8E3E3;
           transition: all 0.3s ease;
         }
 
         .faq-question:hover {
-          color: #8b8999;
+          color: #E8E3E3;
         }
 
         .faq-answer {
@@ -293,7 +307,7 @@ export default function HeroSection() {
           transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                       padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           padding: 0 1rem;
-          color: #a8a6b5;
+          color: #E8E3E3;
           line-height: 1.6;
         }
 
@@ -316,7 +330,7 @@ export default function HeroSection() {
 
         .faq-icon {
           transition: transform 0.3s ease;
-          color: #727081;
+          color: #E8E3E3;
           flex-shrink: 0;
           margin-left: 0.5rem;
         }
@@ -326,13 +340,13 @@ export default function HeroSection() {
         }
 
         .whatsapp-link {
-          color: #25D366;
+          color: #E8E3E3;
           text-decoration: underline;
           font-weight: 600;
         }
 
         .whatsapp-link:hover {
-          color: #128C7E;
+          color: #E8E3E3;
         }
 
         @media (max-width: 640px) {
@@ -368,15 +382,9 @@ export default function HeroSection() {
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
+          <div className="flex justify-between items-center h-12 sm:h-14 md:h-16">
             <div className="flex-shrink-0">
-              <a href="#home">
-                <img 
-                  src={logoImg} 
-                  alt="Mystery Mansion Logo" 
-                  className="h-11 sm:h-12 md:h-14 w-auto cursor-pointer"
-                />
-              </a>
+              <a href="#home" aria-label="Home" className="sr-only">Home</a>
             </div>
 
             {/* Desktop Navigation */}
@@ -463,24 +471,28 @@ export default function HeroSection() {
         <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20">
           <div className="relative z-10 w-full max-w-4xl space-y-3 sm:space-y-4 md:space-y-6 hero-content">
             <p className="font-semibold text-base sm:text-lg md:text-2xl lg:text-3xl text-center" 
-               style={{ fontFamily: "Avenir", color:'#727081'}}>
+              style={{ fontFamily: "Avenir", color:'#E8E3E3'}}>
               World's Only
             </p>
             
             <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center px-2"
-              style={{ fontFamily: "serif", color:'#727081'}}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center px-2 my-0"
+              style={{ fontFamily: "serif", color:'#E8E3E3' }}
             >
-              {"Mystery Mansion".split('').map((letter, index) => (
-                <span key={index} className="wavy-letter">
-                  {letter === ' ' ? '\u00A0' : letter}
-                </span>
-              ))}
+              <img
+                src={logoImg}
+                alt="Mystery Mansion Logo"
+                className="mx-auto block h-28 sm:h-36 md:h-48 lg:h-56 my-0"
+                style={{
+                  maxWidth: '100%',
+                  objectFit: 'contain'
+                }}
+              />
             </h1>
 
             <p
               className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-center px-2"
-              style={{ fontFamily: "Avenir", color:'#727081'}}
+              style={{ fontFamily: "Avenir", color:'#E8E3E3'}}
             >
               {"One group. One mansion. One night.".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -502,8 +514,8 @@ export default function HeroSection() {
           </div>
 
           <div 
-            className="absolute bottom-0 left-0 right-0 bg-black/80 py-4 sm:py-6 md:py-8 px-4 z-40 backdrop-blur-sm"
-            style={{ fontFamily: "Avenir", color:'#b9b7c7ff'}}
+            className="absolute bottom-8 left-0 right-0 bg-black/80 py-2 sm:py-3 md:py-4 px-4 z-40 backdrop-blur-sm"
+            style={{ fontFamily: "Avenir", color:'#E8E3E3'}}
           >
             <div className="max-w-7xl mx-auto text-center space-y-2 sm:space-y-3">
               <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg px-2">
@@ -525,7 +537,7 @@ export default function HeroSection() {
             <h1 
               ref={gameTitleRef}
               className="scroll-animate-up text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 sm:mb-12 md:mb-16"
-              style={{ fontFamily: "cursive", color: '#727081' }}
+              style={{ fontFamily: "cursive", color: '#E8E3E3' }}
             >
               {"About the Game".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -544,7 +556,7 @@ export default function HeroSection() {
                     fontFamily: "Avenir",
                     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                     fontWeight: 'bold',
-                    color: '#727081'
+                    color: '#E8E3E3'
                   }}
                 >
                   {line}
@@ -561,7 +573,7 @@ export default function HeroSection() {
           <h1 
             ref={locationsTitleRef}
             className="scroll-animate-up text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-10 sm:mb-16 text-center relative z-10"
-            style={{ fontFamily: "cursive", color: '#727081' }}
+            style={{ fontFamily: "cursive", color: '#E8E3E3' }}
           >
             {"Locations".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
@@ -573,9 +585,10 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-8 max-w-6xl mx-auto relative z-10 w-full">
             <div 
               ref={el => locationCardsRef.current[0] = el}
-              className="scroll-animate-scale location-card bg-gray-400 rounded-lg shadow-lg overflow-hidden w-full sm:w-[calc(50%-1rem)] max-w-[400px] mx-auto"
+              className="scroll-animate-scale location-card rounded-lg shadow-lg overflow-hidden w-full sm:w-[calc(50%-1rem)] max-w-[400px] mx-auto"
+              style={{ backgroundColor: '#E8E3E3' }}
             >
-              <div className="p-3 sm:p-4 bg-gray-400">
+              <div className="p-3 sm:p-4" style={{ backgroundColor: '#E8E3E3' }}>
                 <img 
                   src={gurgaonImg}
                   alt="Gurgaon" 
@@ -584,7 +597,7 @@ export default function HeroSection() {
                 />
               </div>
               <div className="p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6" style={{ fontFamily: "Avenir" }}>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-black force-black mb-4 sm:mb-6" style={{ fontFamily: "Avenir" }}>
                   {"Gurugram".split('').map((letter, index) => (
                     <span key={index} className="wavy-letter">
                       {letter === ' ' ? '\u00A0' : letter}
@@ -605,9 +618,10 @@ export default function HeroSection() {
 
             <div 
               ref={el => locationCardsRef.current[1] = el}
-              className="scroll-animate-scale location-card bg-gray-400 rounded-lg shadow-lg overflow-hidden w-full sm:w-[calc(50%-1rem)] max-w-[400px] mx-auto"
+              className="scroll-animate-scale location-card rounded-lg shadow-lg overflow-hidden w-full sm:w-[calc(50%-1rem)] max-w-[400px] mx-auto"
+              style={{ backgroundColor: '#E8E3E3' }}
             >
-              <div className="p-3 sm:p-4 bg-gray-400">
+              <div className="p-3 sm:p-4" style={{ backgroundColor: '#E8E3E3' }}>
                 <img 
                   src={mussoorieImg}
                   alt="Mussoorie" 
@@ -615,14 +629,14 @@ export default function HeroSection() {
                 />
               </div>
               <div className="p-4 sm:p-6">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-2" style={{ fontFamily: "Avenir" }}>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-black force-black mb-2" style={{ fontFamily: "Avenir" }}>
                   {"Mussoorie".split('').map((letter, index) => (
                     <span key={index} className="wavy-letter">
                       {letter === ' ' ? '\u00A0' : letter}
                     </span>
                   ))}
                 </h2>
-                <p className="mt-3 sm:mt-4 text-gray-600 font-medium text-lg sm:text-xl md:text-2xl" style={{ fontFamily: "Avenir" }}>
+                <p className="mt-3 sm:mt-4 text-black force-black font-medium text-lg sm:text-xl md:text-2xl" style={{ fontFamily: "Avenir" }}>
                   Coming Soon…!
                 </p>
               </div>
@@ -637,7 +651,7 @@ export default function HeroSection() {
           <h1 
             ref={faqTitleRef}
             className="scroll-animate-up text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-10 sm:mb-16 text-center relative z-10 px-2"
-            style={{ fontFamily: "cursive", color: '#727081' }}
+            style={{ fontFamily: "cursive", color: '#E8E3E3' }}
           >
             {"Frequently Asked Questions".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
@@ -695,7 +709,7 @@ export default function HeroSection() {
           <div className="mt-10 sm:mt-16 text-center relative z-10 px-4">
             <p 
               className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-6"
-              style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+              style={{ fontFamily: "Avenir", color: '#E8E3E3' }}
             >
               Still have questions?
             </p>

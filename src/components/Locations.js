@@ -55,6 +55,7 @@ export default function Locations() {
           .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
           .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
           .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
+          .force-black { color: #000 !important; }
         `}
       </style>
     <div className="bg-black min-h-screen flex flex-col items-center py-16" style={{
@@ -64,12 +65,12 @@ export default function Locations() {
 
       <div className="flex flex-wrap justify-center gap-12">
         {/* Gurgaon Card */}
-        <div className="bg-gray-400 rounded-lg shadow-lg overflow-hidden w-[380px] transform transition duration-300 hover:scale-105">
-        <div className="p-4 bg-gray-400">
+        <div className="rounded-lg shadow-lg overflow-hidden w-[380px] transform transition duration-300 hover:scale-105" style={{backgroundColor: '#E8E3E3'}}>
+        <div className="p-4" style={{backgroundColor: '#E8E3E3'}}>
         <img src={gurgaonImg} alt="Gurgaon" className="w-full h-96 object-cover" style = {{objectPosition:'42% center'}}/>
       </div>
       <div className="p-4 min-h-[150px] relative right-0">
-        <h2 className="text-4xl font-semibold text-gray-800">
+          <h2 className="text-4xl font-semibold text-black force-black">
           {"Gurugram".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
                 {letter === ' ' ? '\u00A0' : letter}
@@ -92,12 +93,12 @@ export default function Locations() {
     </div>
 
         {/* Mussoorie Card */}
-        <div className="bg-gray-400 rounded-lg shadow-lg overflow-hidden w-[380px] transform transition duration-300 hover:scale-105">
-          <div className="p-4 bg-gray-400">
+        <div className="rounded-lg shadow-lg overflow-hidden w-[380px] transform transition duration-300 hover:scale-105" style={{backgroundColor: '#E8E3E3'}}>
+          <div className="p-4" style={{backgroundColor: '#E8E3E3'}}>
           <img src={mussoorieImg} alt="Mussoorie" className="w-full h-96 object-cover" />
           </div>
           <div className="p-4 min-h-[150px] ">
-            <h2 className="text-4xl font-semibold text-gray-800" style = {{transform: "translate(0px, 0px)"}}>
+            <h2 className="text-4xl font-semibold text-black force-black" style = {{transform: "translate(0px, 0px)"}}>
               {"Mussoorie".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
                 {letter === ' ' ? '\u00A0' : letter}

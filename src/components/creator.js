@@ -80,6 +80,11 @@ export default function Creator() {
           box-sizing: border-box;
         }
 
+        /* Force text color for this component */
+        body, .creator-section, nav, .content-card, .creator-image, h1, h2, h3, p, span, a, button {
+          color: #E8E3E3 !important;
+        }
+
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-8px); }
@@ -220,12 +225,12 @@ export default function Creator() {
         }
 
         .highlight {
-          color: #727081;
+          color: #E8E3E3;
           font-weight: 700;
         }
 
         .institution {
-          color: #8b8999;
+          color: #E8E3E3;
           font-weight: 600;
         }
 
@@ -234,16 +239,16 @@ export default function Creator() {
           font-style: italic;
           padding: 1.5rem 1.5rem 1.5rem 3rem;
           background: rgba(114, 112, 129, 0.1);
-          border-left: 4px solid #727081;
+          border-left: 4px solid #E8E3E3;
           border-radius: 0 15px 15px 0;
           margin: 2rem 0;
-          color: #a8a6b5;
+          color: #E8E3E3;
         }
 
         .quote::before {
           content: '"';
           font-size: 4rem;
-          color: #727081;
+          color: #E8E3E3;
           position: absolute;
           top: -5px;
           left: 10px;
@@ -269,12 +274,12 @@ export default function Creator() {
         .stat-number {
           font-size: 2.5rem;
           font-weight: bold;
-          color: #727081;
+          color: #E8E3E3;
           display: block;
         }
 
         .stat-label {
-          color: #a8a6b5;
+          color: #E8E3E3;
           font-size: 0.9rem;
           margin-top: 0.5rem;
         }
@@ -392,7 +397,7 @@ export default function Creator() {
                 <img 
                   src={logoImg} 
                   alt="Mystery Mansion Logo" 
-                  className="h-11 sm:h-12 md:h-14 w-auto cursor-pointer"
+                  className="h-14 sm:h-16 md:h-20 w-auto cursor-pointer my-0"
                 />
               </Link>
             </div>
