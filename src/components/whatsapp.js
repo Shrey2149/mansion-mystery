@@ -54,6 +54,7 @@ const WhatsAppFloat = () => {
   }, []);
 
   const openWhatsApp = () => {
+    setIsVisible(false); // Hide button after click
     const defaultMessage = "Hi! I'm interested in booking the mystery property experience in Gurugram. Could you please provide more details about availability and pricing?";
     const encodedMessage = encodeURIComponent(defaultMessage);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

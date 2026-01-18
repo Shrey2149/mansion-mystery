@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import gurgaonImg from "../assets/Gurgaon_image.jpeg";
 import mussoorieImg from "../assets/Mussourrie_image.png";
 import backgroundImg from "../assets/locations-bg.jpeg";

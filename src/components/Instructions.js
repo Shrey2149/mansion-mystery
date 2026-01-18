@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useMemo} from "react";
 import backgroundImg from "../assets/instructions-bg.png"; 
 import Img from "../assets/secondPic.jpeg";
 import secondImg from "../assets/thirdPic.png"
@@ -21,6 +21,7 @@ import eighteenImg from "../assets/twentyPic.png"
 import { Link } from "react-router-dom";
 
 export default function Instructions() {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
@@ -33,13 +34,27 @@ export default function Instructions() {
     { name: "FAQs", href: "/#faqs" },
     { name: "The Architect", href: "/creator" }
   ];
-
-  const propertyImages = [
-    secondImg, sixthImg, fifthImg, forthImg, seventhImg, Img,
-    thirdImg, eighthImg, ninthImg, tenthImg, eleventhImg,
-    forteenthImg, twelvethImg, thirteenthImg, fifteenthImg,
-    sixteenthImg, seventeenthImg, eighteenImg
-  ];
+   const propertyImages = useMemo(() => [
+    secondImg,
+    sixthImg,
+    fifthImg,
+    forthImg,
+    seventhImg,
+    Img,
+    thirdImg,
+    eighthImg,
+    ninthImg,
+    tenthImg,
+    eleventhImg,
+    forteenthImg,
+    twelvethImg,
+    thirteenthImg,
+    fifteenthImg,
+    sixteenthImg,
+    seventeenthImg,
+    eighteenImg
+  ], []);
+  
 
   useEffect(() => {
     const preloadImages = async () => {

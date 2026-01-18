@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback , useMemo} from "react";
 import backgroundImg from "../assets/instructions-bg.png"; 
 import { Link } from "react-router-dom";
 import { useAudio } from "../components/AudioContext.js";
@@ -9,22 +9,22 @@ export default function Game() {
     useEffect(() => {
       startAudio(); // Start audio when component mounts
     }, [startAudio]);
-  const [currentLineIndex, setCurrentLineIndex] = useState(-1);
+
+
   const [showOptions, setShowOptions] = useState(false);
   const [currentLine, setCurrentLine] = useState({ text: '', visible: false, position: 0 });
 
   // Define the text lines to animate
-  const textLines = [
+  const textLines = useMemo(() => [
     "Check in with friends as the stay begins like any other",
     "But the unexpected can strike anytime, anywhere",
     "Can your group solve the mystery before time runs out?",
     "Your actions decide how the mystery unravels"
-  ];
+  ],[]);
 
   // Function to restart the animation
   const restartAnimation = () => {
     setShowOptions(false);
-    setCurrentLineIndex(-1);
     setCurrentLine({ text: '', visible: false, position: 0 });
     
     // Start animation again after a brief delay
@@ -33,44 +33,32 @@ export default function Game() {
     }, 500);
   };
 
-  const animateLines = async () => {
-    // Wait for initial delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    for (let i = 0; i < textLines.length; i++) {
-      setCurrentLineIndex(i);
-      
-      // Fade out previous line first
-      if (i > 0) {
-        setCurrentLine(prev => ({ ...prev, visible: false }));
-        await new Promise(resolve => setTimeout(resolve, 2100));
-      }
-      
-      // Set new line and fade in
-      setCurrentLine({ 
-        text: textLines[i], 
-        visible: true, 
-        position: i 
-      });
-      
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Wait for display time
-      await new Promise(resolve => setTimeout(resolve, 600));
+  const animateLines = useCallback(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  for (let i = 0; i < textLines.length; i++) {
+    if (i > 0) {
+      setCurrentLine(prev => ({ ...prev, visible: false }));
+      await new Promise(resolve => setTimeout(resolve, 2100));
     }
-    
-    // Fade out last line
-    setCurrentLine(prev => ({ ...prev, visible: false }));
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Show options after all animations
-    setCurrentLineIndex(-1);
-    setShowOptions(true);
-  };
+
+    setCurrentLine({
+      text: textLines[i],
+      visible: true,
+      position: i
+    });
+
+    await new Promise(resolve => setTimeout(resolve, 2100));
+  }
+
+  setCurrentLine(prev => ({ ...prev, visible: false }));
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  setShowOptions(true);
+}, [textLines]);
 
   useEffect(() => {
     animateLines();
-  }, []);
+  }, [animateLines]);
 
   return (
     <>
