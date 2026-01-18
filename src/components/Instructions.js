@@ -23,7 +23,7 @@ import { Link } from "react-router-dom";
 export default function Instructions() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState({});
+  
   const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
 
   const navItems = [
@@ -46,10 +46,7 @@ export default function Instructions() {
       const imagePromises = propertyImages.map((src, index) => {
         return new Promise((resolve, reject) => {
           const img = new Image();
-          img.onload = () => {
-            setImagesLoaded(prev => ({ ...prev, [index]: true }));
-            resolve(src);
-          };
+          img.onload = () => resolve(src);
           img.onerror = reject;
           img.src = src;
         });
@@ -65,7 +62,7 @@ export default function Instructions() {
     };
 
     preloadImages();
-  }, []);
+  }, [propertyImages]);
 
   // Ensure the instructions page always opens scrolled to the top
   useEffect(() => {
@@ -672,7 +669,7 @@ export default function Instructions() {
                     <div key={index} className="carousel-slide">
                       <img 
                         src={image} 
-                        alt={`Property Image ${index + 1}`} 
+                        alt={`Luxury villa interior view ${index + 1}`} 
                         className="carousel-image"
                         loading={index < 3 ? "eager" : "lazy"}
                       />
