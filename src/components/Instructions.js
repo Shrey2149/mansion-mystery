@@ -18,6 +18,7 @@ import fifteenthImg from "../assets/seventeenPic.png"
 import sixteenthImg from "../assets/eighteenPic.png"
 import seventeenthImg from "../assets/nineteenPic.png"
 import eighteenImg from "../assets/twentyPic.png"
+import logoImg from "../assets/Logo.jpeg";
 import { Link } from "react-router-dom";
 
 export default function Instructions() {
@@ -544,9 +545,11 @@ export default function Instructions() {
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0">
               <Link to="/">
-                <span className="text-white text-base sm:text-lg md:text-xl font-bold" style={{ fontFamily: "Avenir" }}>
-                  Mystery Mansion
-                </span>
+                <img
+                  src={logoImg}
+                  alt="Mystery Mansion Logo"
+                  style={{ height: "100px", width: "auto", borderRadius: "8px" }}
+                />
               </Link>
             </div>
 
