@@ -92,7 +92,7 @@ export default function HeroSection() {
     },
     {
       question: "How long does the game last?",
-      answer: "The game typically lasts 4–5 hours, but the timing can vary depending on your group's detective skills."
+      answer: "The game typically lasts 3–5 hours, but the timing can vary depending on your group's detective skills."
     },
     {
       question: "What language is the game in?",
