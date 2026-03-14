@@ -155,7 +155,7 @@ export default function Instructions() {
 
         /* Force text color for this component */
         body, .instructions-section, nav, .desktop-content, .desktop-title, .desktop-list, .desktop-contact, h1, h2, p, span, a, button {
-          color: #E8E3E3 !important;
+          color: #E8E3E3 ;
         }
 
         .property-btn {
@@ -257,7 +257,7 @@ export default function Instructions() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 8rem 4rem 4rem 4rem;
+          padding: 2rem 4rem 1rem 4rem;
           min-height: 100vh;
           max-width: 1400px;
           margin: 0 auto;
@@ -272,7 +272,7 @@ export default function Instructions() {
         .desktop-title {
           font-size: clamp(1.75rem, 3vw, 2.5rem);
           margin-bottom: 3rem;
-          text-align: left;
+          text-align: center;
           color: #E8E3E3;
           white-space: nowrap;
         }
@@ -416,6 +416,7 @@ export default function Instructions() {
           .desktop-title {
             font-size: 2.5rem;
             margin-bottom: 2rem;
+            text-align: center;
           }
 
           .desktop-list {
@@ -858,48 +859,112 @@ export default function Instructions() {
 
       {/* Instructions Section */}
       <section className="instructions-section">
-        {/* Centered Buttons */}
-        <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'center', gap: '1rem', paddingTop: '7rem' }}>
-          <button
-            className="property-btn"
-            style={{
-              backgroundColor: '#FFFFFF',
-              color: '#000000',
-              border: 'none',
-              padding: '12px 28px',
-              borderRadius: '8px',
+        {/* Booking CTA Section */}
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
+          paddingTop: '100px',
+          paddingBottom: '80px'
+        }}>
+          {/* First booking option */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1.5rem',
+            flexWrap: 'wrap',
+            maxWidth: '900px'
+          }}>
+            <button
+              style={{
+                backgroundColor: '#FFFFFF',
+                color: '#000000',
+                border: 'none',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontFamily: 'Avenir',
+                fontWeight: '900',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '0.9'; e.target.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+              onClick={scrollToDates}
+            >
+              Join a Scheduled Mystery
+            </button>
+            <p style={{
+              color: '#E8E3E3',
               fontSize: '1rem',
               fontFamily: 'Avenir',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
-            onClick={scrollToDates}
-          >
-            Select a Date
-          </button>
-          <button
-            className="property-btn"
-            style={{
-              backgroundColor: '#FFFFFF',
-              color: '#000000',
-              border: 'none',
-              padding: '12px 28px',
-              borderRadius: '8px',
+              lineHeight: '1.6',
+              margin: '0',
+              maxWidth: '400px'
+            }}>
+              Book seats for our upcoming mystery events on pre-announced dates and solve the case with other guests.
+            </p>
+          </div>
+
+          {/* OR separator */}
+          <div style={{
+            fontSize: '2rem',
+            fontFamily: 'Avenir',
+            fontWeight: '700',
+            color: '#E8E3E3',
+            margin: '0.5rem 0'
+          }}>
+            OR
+          </div>
+
+          {/* Second booking option */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1.5rem',
+            flexWrap: 'wrap',
+            maxWidth: '900px'
+          }}>
+            <button
+              style={{
+                backgroundColor: '#FFFFFF',
+                color: '#000000',
+                border: 'none',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontFamily: 'Avenir',
+                fontWeight: '900',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '0.9'; e.target.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+              onClick={scrollToPrivateExperience}
+            >
+              Book a Private Mystery
+            </button>
+            <p style={{
+              color: '#E8E3E3',
               fontSize: '1rem',
               fontFamily: 'Avenir',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
-            onClick={scrollToPrivateExperience}
-          >
-            Book a Private Experience
-          </button>
+              lineHeight: '1.6',
+              margin: '0',
+              maxWidth: '400px'
+            }}>
+              Reserve the entire experience for your group on a date of your choice (subject to availability).
+            </p>
+          </div>
         </div>
 
         <div className="desktop-layout">
@@ -981,7 +1046,7 @@ export default function Instructions() {
       {/* Show Dates Section */}
       <section className="show-dates-section" ref={datesSectionRef}>
         <div className="show-dates-header">
-          <h2>Show Dates</h2>
+          <h2>Select an Event Date</h2>
         </div>
         <div className="dates-grid">
           {showDates.map((date, index) => (
@@ -1007,31 +1072,134 @@ export default function Instructions() {
             </div>
           ))}
         </div>
+
+        {/* WhatsApp Contact Section */}
+        <div style={{ position: 'relative', zIndex: 1, padding: '3rem 2rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontFamily: 'Avenir', fontSize: '1.2rem', color: '#E8E3E3', marginBottom: '1.5rem', lineHeight: '1.8' }}>
+            To book your experience for any date, contact us now on WhatsApp
+          </p>
+          <a 
+            href="https://wa.me/918279845322?text=Hi%20Mystery%20Mansion,%20I%20would%20like%20to%20book%20an%20experience"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.8rem',
+              padding: '12px 28px',
+              backgroundColor: '#25D366',
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              borderRadius: '8px',
+              fontFamily: 'Avenir',
+              fontWeight: '600',
+              fontSize: '1rem',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.064 3.488z"/>
+            </svg>
+            +91 8279845322
+          </a>
+        </div>
       </section>
 
       {/* Private Experience Section */}
       <section className="show-dates-section" ref={privateExperienceSectionRef}>
         <div className="show-dates-header">
-          <h2>Book a Private Experience</h2>
+          <h2>Book a Private Mystery</h2>
         </div>
-        <div style={{ position: 'relative', zIndex: 1, padding: '2rem 2rem 4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="desktop-content" style={{ margin: '0 auto', maxWidth: '800px' }}>
-            <div className="desktop-list" style={{ fontFamily: 'Avenir', fontSize: '1.1rem', lineHeight: '2', marginBottom: '2rem' }}>
-              <div>Exclusive access to our stunning Gurugram property</div>
-              <div>Fully customizable mystery experience tailored to your group</div>
-              <div>Professional game masters and luxury amenities included</div>
-              <div>Flexible scheduling to accommodate your calendar</div>
-              <div>Premium catering and beverage options available</div>
-              <div>Perfect for corporate events, celebrations, and special occasions</div>
-              <div>Minimum 8 guests recommended for optimal experience</div>
-              <div>Dedicated support team for seamless event coordination</div>
+        <div style={{ position: 'relative', zIndex: 1, padding: '4rem 2rem', maxWidth: '1300px', margin: '0 auto' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '4rem',
+            flexWrap: 'wrap'
+          }}>
+            {/* Left side - Text content */}
+            <div style={{ flex: 1, minWidth: '300px' }}>
+              {/* Tagline */}
+              <div style={{
+                fontFamily: 'Avenir',
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                color: '#D4AF37',
+                letterSpacing: '0.15em',
+                marginBottom: '1rem',
+                textTransform: 'uppercase'
+              }}>
+                Exclusive Group Experience
+              </div>
+
+              
+
+              {/* Description */}
+              <div style={{
+                fontFamily: 'Avenir',
+                fontSize: '1.1rem',
+                lineHeight: '1.8',
+                color: '#E8E3E3',
+                maxWidth: '450px'
+              }}>
+                <p>Reserve the entire mansion for a private night of mystery and intrigue. With the complete experience dedicated to your group, you and your guests will step into an unfolding story filled with hidden clues, unexpected twists, and secrets waiting to be discovered.</p>
+                <p>Choose your preferred date, gather your team of investigators, and work together to unravel the mystery before the night is over.</p>
+                
+              </div>
             </div>
-            <p className="desktop-contact" style={{ fontFamily: 'Avenir', marginTop: '2rem' }}>
-              Ready to create an unforgettable mystery at our exclusive property? Contact us now to book your private experience!
-            </p>
-            <p className="desktop-contact" style={{ fontFamily: 'Avenir', color: '#FFFFFF', fontStyle: 'italic' }}>
-              WhatsApp: +91 8279845322
-            </p>
+
+            {/* Right side - Visual element */}
+            <div style={{ flex: 1, minWidth: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '450px',
+                overflow: 'hidden',
+                borderRadius: '16px',
+                boxShadow: '0 16px 48px rgba(0, 0, 0, 0.5)',
+                transition: 'all 0.4s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 24px 64px rgba(0, 0, 0, 0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                e.currentTarget.style.boxShadow = '0 16px 48px rgba(0, 0, 0, 0.5)';
+              }}>
+                <img
+                  src={seventeenthImg}
+                  alt="Private mystery mansion experience"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    aspectRatio: '4 / 3',
+                    objectFit: 'cover'
+                  }}
+                />
+                {/* Overlay text */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  left: '0',
+                  right: '0',
+                  background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent)',
+                  padding: '2rem 1.5rem 1.5rem',
+                  color: '#FFFFFF',
+                  fontFamily: 'Avenir',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.6'
+                }}>
+                  Step into mystery. Uncover secrets. Create memories.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
