@@ -1,5 +1,5 @@
-import React, { useState, useEffect ,useMemo} from "react";
-import backgroundImg from "../assets/instructions-bg.png"; 
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import backgroundImg from "../assets/instructions-bg.png";
 import Img from "../assets/secondPic.jpeg";
 import secondImg from "../assets/thirdPic.png"
 import thirdImg from "../assets/fourthPic.png"
@@ -19,14 +19,43 @@ import sixteenthImg from "../assets/eighteenPic.png"
 import seventeenthImg from "../assets/nineteenPic.png"
 import eighteenImg from "../assets/twentyPic.png"
 import logoImg from "../assets/Logo.jpeg";
+import seventeenPic from "../assets/seventeenPic.png";
 import { Link } from "react-router-dom";
+import gurgaon_image from "../assets/Gurgaon_image.jpeg";
 
 export default function Instructions() {
-  
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
+  const datesSectionRef = useRef(null);
+  const privateExperienceSectionRef = useRef(null);
+
+  const scrollToDates = () => {
+    datesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToPrivateExperience = () => {
+    privateExperienceSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const showDates = [
+    { month: 'MAR', day: 21, label: 'MARCH', image: Img, soldOut: true },
+    { month: 'MAR', day: 27, label: 'MARCH', image: Img, soldOut: true },
+    { month: 'MAR', day: 28, label: 'MARCH', image: Img, soldOut: true },
+    { month: 'MAR', day: 30, label: 'MARCH', image: Img, soldOut: false },
+    { month: 'APR', day: 3, label: 'APRIL', image: fifthImg, soldOut: false },
+    { month: 'APR', day: 4, label: 'APRIL', image: fifthImg, soldOut: false },
+    { month: 'APR', day: 18, label: 'APRIL', image: fifthImg, soldOut: true },
+    { month: 'APR', day: 30, label: 'APRIL', image: fifthImg, soldOut: false },
+    { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: false },
+    { month: 'MAY', day: 15, label: 'MAY', image: gurgaon_image, soldOut: false },
+    { month: 'JUNE', day: 11, label: 'JUNE', image: seventeenPic, soldOut: false },
+    { month: 'JUNE', day: 13, label: 'JUNE', image: seventeenPic, soldOut: false },
+    { month: 'JUNE', day: 27, label: 'JUNE', image: seventeenPic, soldOut: false },
+    { month: 'JULY', day: 23, label: 'JULY', image: tenthImg, soldOut: false }
+  ];
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -35,7 +64,7 @@ export default function Instructions() {
     { name: "FAQs", href: "/#faqs" },
     { name: "The Architect", href: "/creator" }
   ];
-   const propertyImages = useMemo(() => [
+  const propertyImages = useMemo(() => [
     secondImg,
     sixthImg,
     fifthImg,
@@ -55,7 +84,7 @@ export default function Instructions() {
     seventeenthImg,
     eighteenImg
   ], []);
-  
+
 
   useEffect(() => {
     const preloadImages = async () => {
@@ -127,6 +156,10 @@ export default function Instructions() {
         /* Force text color for this component */
         body, .instructions-section, nav, .desktop-content, .desktop-title, .desktop-list, .desktop-contact, h1, h2, p, span, a, button {
           color: #E8E3E3 !important;
+        }
+
+        .property-btn {
+          color: #000000 !important;
         }
 
         @keyframes wave {
@@ -537,6 +570,197 @@ export default function Instructions() {
             font-size: 12px;
           }
         }
+
+        /* Show Dates Section */
+        .show-dates-section {
+          position: relative;
+          background-image: url(${backgroundImg});
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          padding-bottom: 4rem;
+        }
+
+        .show-dates-section::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.2);
+          z-index: 0;
+        }
+
+        .show-dates-header {
+          position: relative;
+          z-index: 1;
+          padding: 3rem 0 1rem 0;
+          text-align: center;
+        }
+
+        .show-dates-header h2 {
+          font-family: 'Avenir', sans-serif;
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #E8E3E3 !important;
+          letter-spacing: 0.1em;
+          margin: 0;
+          text-transform: uppercase;
+        }
+
+        .dates-grid {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          padding: 3rem 4rem;
+          max-width: 1200px;
+          margin: 0 auto;
+          justify-content: center;
+        }
+
+        .date-card {
+          width: 160px;
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          text-align: center;
+        }
+
+        .date-card:hover {
+          transform: translateY(-6px);
+        }
+
+        .date-card-img-wrapper {
+          position: relative;
+          width: 160px;
+          height: 180px;
+          border-radius: 4px;
+          overflow: hidden;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .date-card-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .date-card.sold-out .date-card-img {
+          filter: grayscale(100%);
+        }
+
+        .sold-out-overlay {
+          position: absolute;
+          bottom: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0,0,0,0.65);
+          color: #FFFFFF;
+          font-family: 'Georgia', serif;
+          font-size: 0.9rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          padding: 6px 16px;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .date-badge {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: #FFFFFF;
+          border-radius: 4px;
+          padding: 4px 8px;
+          text-align: center;
+          min-width: 42px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .date-badge-month {
+          font-size: 0.55rem;
+          font-weight: 700;
+          color: #333 !important;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          line-height: 1;
+          display: block;
+          margin-bottom: 1px;
+        }
+
+        .date-badge-day {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #222 !important;
+          line-height: 1.1;
+          display: block;
+        }
+
+        .date-card-label {
+          margin-top: 0.6rem;
+          font-family: 'Georgia', 'Times New Roman', serif;
+          font-size: 1rem;
+          font-weight: 700;
+          color: #E8E3E3 !important;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        .date-card.highlight .date-card-label {
+          color: #C5A930 !important;
+        }
+
+        .date-card.highlight .date-card-img-wrapper {
+          box-shadow: 0 4px 20px rgba(197, 169, 48, 0.25);
+        }
+
+        @media (max-width: 768px) {
+          .show-dates-header h2 {
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+          }
+
+          .dates-grid {
+            padding: 2rem 1.5rem;
+            gap: 1.25rem;
+          }
+
+          .date-card {
+            width: 140px;
+          }
+
+          .date-card-img-wrapper {
+            width: 140px;
+            height: 160px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .show-dates-header h2 {
+            font-size: 1.5rem;
+          }
+
+          .dates-grid {
+            padding: 1.5rem 1rem;
+            gap: 1rem;
+          }
+
+          .date-card {
+            width: 120px;
+          }
+
+          .date-card-img-wrapper {
+            width: 120px;
+            height: 140px;
+          }
+
+          .date-card-label {
+            font-size: 0.8rem;
+          }
+        }
       `}</style>
 
       {/* Navigation Bar */}
@@ -634,10 +858,54 @@ export default function Instructions() {
 
       {/* Instructions Section */}
       <section className="instructions-section">
+        {/* Centered Buttons */}
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'center', gap: '1rem', paddingTop: '7rem' }}>
+          <button
+            className="property-btn"
+            style={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              border: 'none',
+              padding: '12px 28px',
+              borderRadius: '8px',
+              fontSize: '1rem',
+              fontFamily: 'Avenir',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+            onClick={scrollToDates}
+          >
+            Select a Date
+          </button>
+          <button
+            className="property-btn"
+            style={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              border: 'none',
+              padding: '12px 28px',
+              borderRadius: '8px',
+              fontSize: '1rem',
+              fontFamily: 'Avenir',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+            onClick={scrollToPrivateExperience}
+          >
+            Book a Private Experience
+          </button>
+        </div>
+
         <div className="desktop-layout">
           {/* Left side - Instructions content */}
           <div className="desktop-content">
-            <h1 
+            <h1
               className="font-bold desktop-title"
               style={{ fontFamily: "Avenir" }}
             >
@@ -659,9 +927,7 @@ export default function Instructions() {
               <div>Check-in from 5pm, check-out by 10am</div>
             </div>
 
-            <p className="desktop-contact" style={{ fontFamily: "Avenir" }}>
-              For further queries and booking the experience, WhatsApp: +91 8279845322
-            </p>
+           
           </div>
 
           {/* Right side - Image Carousel */}
@@ -674,7 +940,7 @@ export default function Instructions() {
               </div>
             ) : (
               <div className="carousel-container">
-                <button 
+                <button
                   onClick={prevImage}
                   className="carousel-arrow prev"
                   aria-label="Previous image"
@@ -685,9 +951,9 @@ export default function Instructions() {
                 <div className="carousel-track">
                   {propertyImages.map((image, index) => (
                     <div key={index} className="carousel-slide">
-                      <img 
-                        src={image} 
-                        alt={`Luxury villa interior view ${index + 1}`} 
+                      <img
+                        src={image}
+                        alt={`Luxury villa interior view ${index + 1}`}
                         className="carousel-image"
                         loading={index < 3 ? "eager" : "lazy"}
                       />
@@ -695,7 +961,7 @@ export default function Instructions() {
                   ))}
                 </div>
 
-                <button 
+                <button
                   onClick={nextImage}
                   className="carousel-arrow next"
                   aria-label="Next image"
@@ -708,6 +974,64 @@ export default function Instructions() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Show Dates Section */}
+      <section className="show-dates-section" ref={datesSectionRef}>
+        <div className="show-dates-header">
+          <h2>Show Dates</h2>
+        </div>
+        <div className="dates-grid">
+          {showDates.map((date, index) => (
+            <div
+              key={index}
+              className={`date-card${date.soldOut ? ' sold-out' : ''}${date.highlight ? ' highlight' : ''}`}
+            >
+              <div className="date-card-img-wrapper">
+                <img
+                  src={date.image}
+                  alt={`${date.label} ${date.day}`}
+                  className="date-card-img"
+                />
+                <div className="date-badge">
+                  <span className="date-badge-month">{date.month}</span>
+                  <span className="date-badge-day">{date.day}</span>
+                </div>
+                {date.soldOut && (
+                  <div className="sold-out-overlay">Sold Out</div>
+                )}
+              </div>
+              <div className="date-card-label">{date.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Private Experience Section */}
+      <section className="show-dates-section" ref={privateExperienceSectionRef}>
+        <div className="show-dates-header">
+          <h2>Book a Private Experience</h2>
+        </div>
+        <div style={{ position: 'relative', zIndex: 1, padding: '2rem 2rem 4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="desktop-content" style={{ margin: '0 auto', maxWidth: '800px' }}>
+            <div className="desktop-list" style={{ fontFamily: 'Avenir', fontSize: '1.1rem', lineHeight: '2', marginBottom: '2rem' }}>
+              <div>Exclusive access to our stunning Gurugram property</div>
+              <div>Fully customizable mystery experience tailored to your group</div>
+              <div>Professional game masters and luxury amenities included</div>
+              <div>Flexible scheduling to accommodate your calendar</div>
+              <div>Premium catering and beverage options available</div>
+              <div>Perfect for corporate events, celebrations, and special occasions</div>
+              <div>Minimum 8 guests recommended for optimal experience</div>
+              <div>Dedicated support team for seamless event coordination</div>
+            </div>
+            <p className="desktop-contact" style={{ fontFamily: 'Avenir', marginTop: '2rem' }}>
+              Ready to create an unforgettable mystery at our exclusive property? Contact us now to book your private experience!
+            </p>
+            <p className="desktop-contact" style={{ fontFamily: 'Avenir', color: '#FFFFFF', fontStyle: 'italic' }}>
+              WhatsApp: +91 8279845322
+            </p>
           </div>
         </div>
       </section>
