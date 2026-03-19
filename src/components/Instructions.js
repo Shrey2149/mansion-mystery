@@ -19,7 +19,6 @@ import sixteenthImg from "../assets/eighteenPic.png"
 import seventeenthImg from "../assets/nineteenPic.png"
 import eighteenImg from "../assets/twentyPic.png"
 import logoImg from "../assets/Logo.jpeg";
-import seventeenPic from "../assets/seventeenPic.png";
 import { Link } from "react-router-dom";
 import gurgaon_image from "../assets/Gurgaon_image.jpeg";
 
