@@ -49,12 +49,7 @@ export default function Instructions() {
     { month: 'APR', day: 4, label: 'APRIL', image: fifthImg, soldOut: false },
     { month: 'APR', day: 18, label: 'APRIL', image: fifthImg, soldOut: true },
     { month: 'APR', day: 30, label: 'APRIL', image: fifthImg, soldOut: false },
-    { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: false },
-    { month: 'MAY', day: 15, label: 'MAY', image: gurgaon_image, soldOut: false },
-    { month: 'JUNE', day: 11, label: 'JUNE', image: seventeenPic, soldOut: false },
-    { month: 'JUNE', day: 13, label: 'JUNE', image: seventeenPic, soldOut: false },
-    { month: 'JUNE', day: 27, label: 'JUNE', image: seventeenPic, soldOut: false },
-    { month: 'JULY', day: 23, label: 'JULY', image: tenthImg, soldOut: false }
+    { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: false }
   ];
 
   const navItems = [
