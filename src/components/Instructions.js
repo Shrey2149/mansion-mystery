@@ -47,9 +47,9 @@ export default function Instructions() {
     { month: 'APR', day: 4, label: 'APRIL', image: fifthImg, soldOut: false },
     { month: 'APR', day: 18, label: 'APRIL', image: fifthImg, soldOut: true },
     { month: 'APR', day: 27, label: 'APRIL', image: fifthImg, soldOut: false },
-    { month: 'APR', day: 28, label: 'APRIL', image: fifthImg, soldOut: false },
+
     { month: 'APR', day: 30, label: 'APRIL', image: fifthImg, soldOut: false },
-    { month: 'MAY', day: 1, label: 'MAY', image: gurgaon_image, soldOut: false },
+
     { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: false },
     { month: 'MAY', day: 3, label: 'MAY', image: gurgaon_image, soldOut: false },
     { month: 'MAY', day: 8, label: 'MAY', image: gurgaon_image, soldOut: true },
