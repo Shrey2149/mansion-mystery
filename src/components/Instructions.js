@@ -40,11 +40,6 @@ export default function Instructions() {
   };
 
   const showDates = [
-    { month: 'MAR', day: 27, label: 'MARCH', image: Img, soldOut: true },
-    { month: 'MAR', day: 28, label: 'MARCH', image: Img, soldOut: true },
-    { month: 'MAR', day: 30, label: 'MARCH', image: Img, soldOut: true },
-    { month: 'APR', day: 3, label: 'APRIL', image: fifthImg, soldOut: true },
-    { month: 'APR', day: 4, label: 'APRIL', image: fifthImg, soldOut: false },
     { month: 'APR', day: 18, label: 'APRIL', image: fifthImg, soldOut: true },
     { month: 'APR', day: 27, label: 'APRIL', image: fifthImg, soldOut: false },
 
