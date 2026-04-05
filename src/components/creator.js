@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Creator() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   
   const creatorImageRef = useRef(null);
@@ -32,6 +33,15 @@ export default function Creator() {
       }, 100);
     }
   };
+
+  // Scroll-aware nav
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -75,16 +85,60 @@ export default function Creator() {
 
   return (
     <>
-      <style jsx>{`
-        * {
-          box-sizing: border-box;
+      <style>{`
+        /* ===== NAV BAR ===== */
+        .mm-nav {
+          background: ${scrolled ? 'rgba(10, 10, 18, 0.85)' : 'rgba(10, 10, 18, 0.35)'};
+          backdrop-filter: blur(${scrolled ? '20px' : '8px'});
+          border-bottom: 1px solid ${scrolled ? 'rgba(201, 168, 76, 0.15)' : 'transparent'};
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Force text color for this component */
-        body, .creator-section, nav, .content-card, .creator-image, h1, h2, h3, p, span, a, button {
-          color: #E8E3E3 !important;
+        .mm-nav-link {
+          font-family: var(--font-body);
+          color: var(--text-secondary);
+          text-decoration: none;
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          position: relative;
+          transition: color 0.3s ease;
         }
 
+        .mm-nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 1.5px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateX(-50%);
+        }
+
+        .mm-nav-link:hover {
+          color: var(--gold-light);
+        }
+
+        .mm-nav-link:hover::after {
+          width: 80%;
+        }
+
+        .mm-mobile-menu {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          background: rgba(10, 10, 18, 0.95);
+          backdrop-filter: blur(20px);
+        }
+        
+        .mm-mobile-menu.open {
+          max-height: 400px;
+        }
+
+        /* ===== WAVY ANIMATION ===== */
         @keyframes wave {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-8px); }
@@ -116,29 +170,7 @@ export default function Creator() {
         .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
         .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
 
-        body {
-          overflow-x: hidden;
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-
-        .nav-bg {
-          background: rgba(0, 0, 0, 0.95);
-          backdrop-filter: blur(10px);
-        }
-
-        .mobile-menu {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease-in-out;
-        }
-        
-        .mobile-menu.open {
-          max-height: 400px;
-        }
-
+        /* ===== CREATOR SECTION ===== */
         .creator-section {
           position: relative;
           background-image: url(${bgImage});
@@ -148,17 +180,27 @@ export default function Creator() {
           min-height: 100vh;
         }
 
-        .creator-section::after {
+        .creator-section::before {
           content: '';
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.3);
+          inset: 0;
+          background: 
+            radial-gradient(ellipse at 30% 20%, rgba(201, 168, 76, 0.05) 0%, transparent 60%),
+            radial-gradient(ellipse at 70% 80%, rgba(139, 47, 63, 0.04) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(10, 10, 15, 0.5) 0%, rgba(10, 10, 15, 0.3) 50%, rgba(10, 10, 15, 0.6) 100%);
           z-index: 0;
         }
 
+        .creator-section::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
         .scroll-animate {
           opacity: 0;
           transform: translateY(50px);
@@ -192,11 +234,16 @@ export default function Creator() {
           transform: scale(1) translateY(0);
         }
 
+        .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
+        .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
+        .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
+
+        /* ===== CREATOR IMAGE ===== */
         .creator-image {
           border-radius: 20px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-          transition: all 0.3s ease;
-          border: 3px solid rgba(114, 112, 129, 0.3);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(201, 168, 76, 0.08);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border: 1.5px solid rgba(201, 168, 76, 0.2);
           width: 100%;
           max-width: 450px;
           object-fit: cover;
@@ -204,90 +251,134 @@ export default function Creator() {
         }
 
         .creator-image:hover {
-          transform: scale(1.02);
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-          border-color: rgba(114, 112, 129, 0.6);
+          transform: scale(1.02) translateY(-4px);
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(201, 168, 76, 0.12);
+          border-color: rgba(201, 168, 76, 0.4);
         }
 
+        /* ===== CONTENT CARD ===== */
         .content-card {
-          background: rgba(0, 0, 0, 0.5);
-          backdrop-filter: blur(15px);
-          border: 1px solid rgba(114, 112, 129, 0.3);
+          background: var(--card-bg);
+          backdrop-filter: blur(20px);
+          border: 1px solid var(--card-border);
           border-radius: 20px;
           padding: 2rem;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .content-card:hover {
-          border-color: rgba(114, 112, 129, 0.5);
-          background: rgba(114, 112, 129, 0.15);
+          border-color: rgba(201, 168, 76, 0.3);
+          background: rgba(201, 168, 76, 0.06);
           transform: translateY(-5px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(201, 168, 76, 0.06);
         }
 
-        .highlight {
-          color: #E8E3E3;
-          font-weight: 700;
-        }
-
-        .institution {
-          color: #E8E3E3;
-          font-weight: 600;
-        }
-
+        /* ===== QUOTE ===== */
         .quote {
           position: relative;
           font-style: italic;
           padding: 1.5rem 1.5rem 1.5rem 3rem;
-          background: rgba(114, 112, 129, 0.1);
-          border-left: 4px solid #E8E3E3;
-          border-radius: 0 15px 15px 0;
+          background: rgba(201, 168, 76, 0.05);
+          border-left: 3px solid var(--gold);
+          border-radius: 0 16px 16px 0;
           margin: 2rem 0;
-          color: #E8E3E3;
+          color: var(--text-primary);
+          font-family: var(--font-heading);
         }
 
         .quote::before {
           content: '"';
           font-size: 4rem;
-          color: #E8E3E3;
+          color: var(--gold);
           position: absolute;
           top: -5px;
           left: 10px;
-          font-family: serif;
+          font-family: var(--font-heading);
           line-height: 1;
+          opacity: 0.6;
         }
 
+        /* ===== STAT CARDS ===== */
         .stat-card {
-          background: rgba(114, 112, 129, 0.15);
-          border: 1px solid rgba(114, 112, 129, 0.4);
-          border-radius: 15px;
+          background: rgba(201, 168, 76, 0.06);
+          border: 1px solid rgba(201, 168, 76, 0.15);
+          border-radius: 16px;
           padding: 1.5rem;
           text-align: center;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stat-card:hover {
           transform: translateY(-5px);
-          background: rgba(114, 112, 129, 0.2);
-          border-color: rgba(114, 112, 129, 0.6);
+          background: rgba(201, 168, 76, 0.1);
+          border-color: rgba(201, 168, 76, 0.35);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(201, 168, 76, 0.08);
         }
 
         .stat-number {
           font-size: 2.5rem;
           font-weight: bold;
-          color: #E8E3E3;
+          color: var(--gold);
           display: block;
+          font-family: var(--font-heading);
         }
 
         .stat-label {
-          color: #E8E3E3;
+          color: var(--text-secondary);
           font-size: 0.9rem;
           margin-top: 0.5rem;
+          font-family: var(--font-body);
         }
 
-        .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
-        .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
-        .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
+        /* ===== CTA BUTTON ===== */
+        .mm-cta {
+          font-family: var(--font-body);
+          font-weight: 600;
+          font-size: 0.95rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          padding: 0.875rem 2.5rem;
+          border: 1.5px solid var(--gold);
+          border-radius: 50px;
+          background: linear-gradient(135deg, rgba(201, 168, 76, 0.12) 0%, rgba(201, 168, 76, 0.04) 100%);
+          color: var(--gold-light);
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          backdrop-filter: blur(8px);
+        }
 
+        .mm-cta::before {
+          content: '';
+          position: absolute;
+          top: 0; left: -100%;
+          width: 100%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.15), transparent);
+          transition: left 0.6s ease;
+        }
+
+        .mm-cta:hover {
+          background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
+          border-color: var(--gold-light);
+          box-shadow: 0 0 30px rgba(201, 168, 76, 0.2), inset 0 0 20px rgba(201, 168, 76, 0.05);
+          transform: translateY(-2px);
+        }
+
+        .mm-cta:hover::before {
+          left: 100%;
+        }
+
+        /* ===== GOLD DIVIDER ===== */
+        .mm-gold-divider {
+          width: 60px;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
+          margin: 1rem auto;
+          border-radius: 2px;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
           .creator-image {
             max-width: 400px;
@@ -388,8 +479,8 @@ export default function Creator() {
         }
       `}</style>
 
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
+      {/* ===== NAVIGATION BAR ===== */}
+      <nav className="fixed top-0 left-0 right-0 z-50 mm-nav">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
             <div className="flex-shrink-0">
@@ -398,20 +489,20 @@ export default function Creator() {
                   src={logoImg} 
                   alt="Mystery Mansion Logo" 
                   className="h-14 sm:h-16 md:h-20 w-auto cursor-pointer my-0"
+                  style={{ filter: 'drop-shadow(0 0 20px rgba(201, 168, 76, 0.1))' }}
                 />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
+              <div className="ml-10 flex items-baseline space-x-2">
                 {navItems.map((item, index) => (
                   item.href.startsWith('/#') ? (
                     <button
                       key={index}
                       onClick={() => handleSectionNavigation(item.href)}
-                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer"
-                      style={{ fontFamily: "Avenir" }}
+                      className="mm-nav-link bg-transparent border-none cursor-pointer"
                     >
                       {item.name}
                     </button>
@@ -419,8 +510,7 @@ export default function Creator() {
                     <a
                       key={index}
                       href={item.href}
-                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                      style={{ fontFamily: "Avenir" }}
+                      className="mm-nav-link"
                     >
                       {item.name}
                     </a>
@@ -428,8 +518,7 @@ export default function Creator() {
                     <Link
                       key={index}
                       to={item.href}
-                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                      style={{ fontFamily: "Avenir" }}
+                      className="mm-nav-link"
                     >
                       {item.name}
                     </Link>
@@ -445,8 +534,9 @@ export default function Creator() {
                   e.stopPropagation();
                   setIsMenuOpen(!isMenuOpen);
                 }}
-                className="text-gray-300 hover:text-white focus:outline-none p-2"
+                className="focus:outline-none p-2"
                 aria-label="Toggle menu"
+                style={{ color: 'var(--text-secondary)' }}
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMenuOpen ? (
@@ -460,7 +550,7 @@ export default function Creator() {
           </div>
 
           {/* Mobile Navigation Menu */}
-          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} nav-bg`}>
+          <div className={`md:hidden mm-mobile-menu ${isMenuOpen ? 'open' : ''}`}>
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item, index) => (
                 item.href.startsWith('/#') ? (
@@ -470,8 +560,7 @@ export default function Creator() {
                       setIsMenuOpen(false);
                       handleSectionNavigation(item.href);
                     }}
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer w-full text-left"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-nav-link block py-3 bg-transparent border-none cursor-pointer w-full text-left"
                   >
                     {item.name}
                   </button>
@@ -479,8 +568,7 @@ export default function Creator() {
                   <a
                     key={index}
                     href={item.href}
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-nav-link block py-3"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -489,8 +577,7 @@ export default function Creator() {
                   <Link
                     key={index}
                     to={item.href}
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-nav-link block py-3"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -502,16 +589,16 @@ export default function Creator() {
         </div>
       </nav>
 
-      {/* Main Content */}
+      {/* ===== MAIN CONTENT ===== */}
       <section className="creator-section">
-        <div className="relative z-10 pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             
             {/* Title */}
             <h1 
               ref={creatorTitleRef}
-              className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 px-2"
-              style={{ fontFamily: "cursive", color: '#727081' }}
+              className="scroll-animate-up text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center mb-4 sm:mb-6 px-2"
+              style={{ fontFamily: "var(--font-heading)", color: 'var(--text-primary)' }}
             >
               {"The Architect".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">
@@ -519,6 +606,8 @@ export default function Creator() {
                 </span>
               ))}
             </h1>
+
+            <div className="mm-gold-divider" style={{ marginBottom: '2.5rem' }}></div>
 
             {/* Main Content Grid */}
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
@@ -538,15 +627,15 @@ export default function Creator() {
                 <div className="mt-4 sm:mt-6 text-center lg:text-left">
                   <h2 
                     className="text-xl sm:text-2xl md:text-3xl font-bold mb-2"
-                    style={{ fontFamily: "Avenir", color: '#727081' }}
+                    style={{ fontFamily: "var(--font-heading)", color: 'var(--gold)' }}
                   >
                     Eshan
                   </h2>
                   <p 
-                    className="text-sm sm:text-base md:text-lg lg:text-xl institution"
-                    style={{ fontFamily: "Avenir" }}
+                    className="text-sm sm:text-base md:text-lg lg:text-xl"
+                    style={{ fontFamily: "var(--font-body)", color: 'var(--text-secondary)', letterSpacing: '0.08em' }}
                   >
-                    Gamer.Dreamer.Builder
+                    Gamer · Dreamer · Builder
                   </p>
                 </div>
               </div>
@@ -560,8 +649,8 @@ export default function Creator() {
                   className="scroll-animate content-card"
                 >
                   <h3 
-                    className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 highlight text-center"
-                    style={{ fontFamily: "Avenir" }}
+                    className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 text-center"
+                    style={{ fontFamily: "var(--font-heading)", color: 'var(--gold-light)' }}
                   >
                     The Journey
                   </h3>
@@ -585,25 +674,25 @@ export default function Creator() {
                   {/* Journey Content */}
                   <p 
                     className="text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4"
-                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+                    style={{ fontFamily: "var(--font-body)", color: 'var(--text-secondary)' }}
                   >
                     Even before school, I was swapping cassettes, playing video games. Mario, Duck Hunt, and Contra soon gave way to Lion King, NFS, and Prince of Persia. But my love for thrill wasn't limited to the digital world—I loved creating board games, and reading novels like Goosebumps and Agatha Christie. I was also drawn to mind-bending thrillers like Glass Onion, Coherence, and The Sixth Sense, always envious of the characters who got to live the mysteries and experience the thrill firsthand. Then I finally found the perfect blend of them all.
                   </p>
                   <p 
                     className="text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4"
-                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+                    style={{ fontFamily: "var(--font-body)", color: 'var(--text-secondary)' }}
                   >
                     Mystery Mansion started as a quirky birthday party idea for a group of five at ISB. It quickly grew into one of the campus' most popular activities. And now I am sharing this immersive experience with the world, giving people a chance to be Holmes, Poirot, and Benoit Blanc themselves.
                   </p>
                   <p 
                     className="text-xs sm:text-sm md:text-base leading-relaxed"
-                    style={{ fontFamily: "Avenir", color: '#a8a6b5' }}
+                    style={{ fontFamily: "var(--font-body)", color: 'var(--text-secondary)' }}
                   >
                     I'm bringing the game to different locations, blending local culture and aesthetics of villas with the stories people become a part of for the night.
                   </p>
                   <p 
                     className="text-xs sm:text-sm md:text-base leading-relaxed mt-3 sm:mt-4 font-bold"
-                    style={{ fontFamily: "Avenir", color: '#727081' }}
+                    style={{ fontFamily: "var(--font-body)", color: 'var(--gold)' }}
                   >
                     New villa. New story. New thrill.
                   </p>
@@ -613,7 +702,6 @@ export default function Creator() {
                 <div 
                   ref={el => creatorContentRef.current[1] = el}
                   className="scroll-animate quote text-xs sm:text-sm md:text-base"
-                  style={{ fontFamily: "Avenir" }}
                 >
                   Through this game, I want people to not just watch thriller movies, but be a part of them and live them, for the entire stay!
                 </div>
@@ -625,8 +713,7 @@ export default function Creator() {
                 >
                   <button 
                     onClick={() => handleSectionNavigation('/#locations')}
-                    className="bg-gray-700 hover:bg-gray-900 text-gray-300 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base shadow-lg hover:shadow-xl"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-cta text-sm sm:text-base"
                   >
                     Experience the Mystery
                   </button>
