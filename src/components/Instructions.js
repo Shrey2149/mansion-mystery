@@ -144,14 +144,9 @@ export default function Instructions() {
 
   return (
     <>
-      <style jsx>{`
+      <style>{`
         * {
           box-sizing: border-box;
-        }
-
-        /* Force text color for this component */
-        body, .instructions-section, nav, .desktop-content, .desktop-title, .desktop-list, .desktop-contact, h1, h2, p, span, a, button {
-          color: #E8E3E3 ;
         }
 
         .property-btn {
@@ -212,19 +207,69 @@ export default function Instructions() {
           scroll-behavior: smooth;
         }
 
-        .nav-bg {
-          background: rgba(0, 0, 0, 0.95);
-          backdrop-filter: blur(10px);
+        .mm-nav {
+          background: rgba(10, 10, 18, 0.85);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .mobile-menu {
+        .mm-nav-link {
+          font-family: var(--font-body);
+          color: var(--text-secondary);
+          text-decoration: none;
+          padding: 0.6rem 1rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          position: relative;
+          transition: color 0.3s ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .mm-nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 1.5px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateX(-50%);
+        }
+
+        .mm-nav-link:hover {
+          color: var(--gold-light);
+        }
+
+        .mm-nav-link:hover::after {
+          width: 80%;
+        }
+
+        .mm-mobile-menu {
           max-height: 0;
           overflow: hidden;
-          transition: max-height 0.3s ease-in-out;
+          transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          background: rgba(10, 10, 18, 0.97);
+          backdrop-filter: blur(24px);
+          border-top: 1px solid rgba(201, 168, 76, 0.1);
         }
         
-        .mobile-menu.open {
+        .mm-mobile-menu.open {
           max-height: 400px;
+        }
+
+        .mm-mobile-menu .mm-nav-link {
+          font-size: 1rem;
+          padding: 0.875rem 1.25rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          display: block;
+          width: 100%;
+        }
+
+        .mm-mobile-menu .mm-nav-link::after {
+          display: none;
         }
 
         .instructions-section {
@@ -236,14 +281,21 @@ export default function Instructions() {
           min-height: 100vh;
         }
 
+        .instructions-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: 
+            radial-gradient(ellipse at 30% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 60%),
+            linear-gradient(180deg, rgba(10, 10, 15, 0.5) 0%, rgba(10, 10, 15, 0.3) 50%, rgba(10, 10, 15, 0.5) 100%);
+          z-index: 0;
+        }
+
         .instructions-section::after {
           content: '';
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.2);
+          inset: 0;
+          background: rgba(10, 10, 15, 0.25);
           z-index: 0;
         }
 
@@ -269,15 +321,17 @@ export default function Instructions() {
           font-size: clamp(1.75rem, 3vw, 2.5rem);
           margin-bottom: 3rem;
           text-align: center;
-          color: #E8E3E3;
+          color: var(--text-primary);
           white-space: nowrap;
+          font-family: var(--font-heading);
         }
 
         .desktop-list {
-          font-size: 1.25rem;
+          font-size: 1.15rem;
           margin-top: 2rem;
           line-height: 2.5;
-          color: #E8E3E3;
+          color: var(--text-secondary);
+          font-family: var(--font-body);
         }
 
         .desktop-list > div {
@@ -288,8 +342,9 @@ export default function Instructions() {
           font-size: 1.5rem;
           margin-top: 3rem;
           font-style: italic;
-          color: #E8E3E3;
+          color: var(--text-secondary);
           line-height: 1.6;
+          font-family: var(--font-heading);
         }
 
         .desktop-carousel {
@@ -581,11 +636,8 @@ export default function Instructions() {
         .show-dates-section::after {
           content: '';
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.2);
+          inset: 0;
+          background: rgba(10, 10, 15, 0.8);
           z-index: 0;
         }
 
@@ -597,13 +649,12 @@ export default function Instructions() {
         }
 
         .show-dates-header h2 {
-          font-family: 'Avenir', sans-serif;
+          font-family: var(--font-heading);
           font-size: 2.5rem;
           font-weight: 700;
-          color: #E8E3E3 !important;
-          letter-spacing: 0.1em;
+          color: var(--text-primary) !important;
+          letter-spacing: 0.05em;
           margin: 0;
-          text-transform: uppercase;
         }
 
         .dates-grid {
@@ -633,9 +684,10 @@ export default function Instructions() {
           position: relative;
           width: 160px;
           height: 180px;
-          border-radius: 4px;
+          border-radius: 8px;
           overflow: hidden;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(201, 168, 76, 0.15);
         }
 
         .date-card-img {
@@ -698,20 +750,21 @@ export default function Instructions() {
 
         .date-card-label {
           margin-top: 0.6rem;
-          font-family: 'Georgia', 'Times New Roman', serif;
+          font-family: var(--font-heading);
           font-size: 1rem;
           font-weight: 700;
-          color: #E8E3E3 !important;
+          color: var(--text-secondary) !important;
           text-transform: uppercase;
           letter-spacing: 0.08em;
         }
 
         .date-card.highlight .date-card-label {
-          color: #C5A930 !important;
+          color: var(--gold) !important;
         }
 
         .date-card.highlight .date-card-img-wrapper {
-          box-shadow: 0 4px 20px rgba(197, 169, 48, 0.25);
+          box-shadow: 0 4px 20px rgba(201, 168, 76, 0.25);
+          border-color: rgba(201, 168, 76, 0.35);
         }
 
         @media (max-width: 768px) {
@@ -761,29 +814,29 @@ export default function Instructions() {
       `}</style>
 
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
+      <nav className="fixed top-0 left-0 right-0 z-50 mm-nav">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
             <div className="flex-shrink-0">
               <Link to="/">
                 <img
                   src={logoImg}
                   alt="Mystery Mansion Logo"
-                  style={{ height: "100px", width: "auto", borderRadius: "8px" }}
+                  className="h-14 sm:h-16 md:h-20 w-auto cursor-pointer my-0"
+                  style={{ filter: 'drop-shadow(0 0 20px rgba(201, 168, 76, 0.1))' }}
                 />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
+              <div className="ml-10 flex items-baseline space-x-2">
                 {navItems.map((item, index) => (
                   item.href.startsWith('#') || item.href.startsWith('/#') ? (
                     <a
                       key={index}
                       href={item.href}
-                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                      style={{ fontFamily: "Avenir" }}
+                      className="mm-nav-link"
                     >
                       {item.name}
                     </a>
@@ -791,8 +844,7 @@ export default function Instructions() {
                     <Link
                       key={index}
                       to={item.href}
-                      className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                      style={{ fontFamily: "Avenir" }}
+                      className="mm-nav-link"
                     >
                       {item.name}
                     </Link>
@@ -808,8 +860,9 @@ export default function Instructions() {
                   e.stopPropagation();
                   setIsMenuOpen(!isMenuOpen);
                 }}
-                className="text-gray-300 hover:text-white focus:outline-none p-2"
+                className="focus:outline-none p-2"
                 aria-label="Toggle menu"
+                style={{ color: 'var(--text-secondary)' }}
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMenuOpen ? (
@@ -823,15 +876,14 @@ export default function Instructions() {
           </div>
 
           {/* Mobile Navigation Menu */}
-          <div className={`md:hidden mobile-menu ${isMenuOpen ? 'open' : ''} nav-bg`}>
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className={`md:hidden mm-mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+            <div className="px-2 pt-2 pb-3 space-y-0">
               {navItems.map((item, index) => (
                 item.href.startsWith('#') || item.href.startsWith('/#') ? (
                   <a
                     key={index}
                     href={item.href}
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-nav-link"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -840,8 +892,7 @@ export default function Instructions() {
                   <Link
                     key={index}
                     to={item.href}
-                    className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
-                    style={{ fontFamily: "Avenir" }}
+                    className="mm-nav-link"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -863,9 +914,11 @@ export default function Instructions() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '2rem',
-          paddingTop: '100px',
-          paddingBottom: '80px'
+          gap: '1.5rem',
+          paddingTop: '110px',
+          paddingBottom: '60px',
+          paddingLeft: '1rem',
+          paddingRight: '1rem'
         }}>
           {/* First booking option */}
           <div style={{
@@ -874,36 +927,40 @@ export default function Instructions() {
             justifyContent: 'center',
             gap: '1.5rem',
             flexWrap: 'wrap',
-            maxWidth: '900px'
+            maxWidth: '900px',
+            padding: '0 1rem'
           }}>
             <button
               style={{
-                backgroundColor: '#FFFFFF',
-                color: '#000000',
-                border: 'none',
-                padding: '16px 32px',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                fontFamily: 'Avenir',
-                fontWeight: '900',
+                background: 'linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0.05) 100%)',
+                color: 'var(--gold-light)',
+                border: '1.5px solid var(--gold)',
+                padding: '14px 28px',
+                borderRadius: '50px',
+                fontSize: '0.9rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: '600',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                backdropFilter: 'blur(8px)'
               }}
-              onMouseEnter={(e) => { e.target.style.opacity = '0.9'; e.target.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+              onMouseEnter={(e) => { e.target.style.boxShadow = '0 0 25px rgba(201, 168, 76, 0.2)'; e.target.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.target.style.boxShadow = 'none'; e.target.style.transform = 'translateY(0)'; }}
               onClick={scrollToDates}
             >
               Join a Scheduled Mystery
             </button>
             <p style={{
-              color: '#E8E3E3',
-              fontSize: '1rem',
-              fontFamily: 'Avenir',
+              color: 'var(--text-secondary)',
+              fontSize: '0.95rem',
+              fontFamily: 'var(--font-body)',
               lineHeight: '1.6',
               margin: '0',
-              maxWidth: '400px'
+              maxWidth: '400px',
+              textAlign: 'center'
             }}>
               Book seats for our upcoming mystery events on pre-announced dates and solve the case with other guests.
             </p>
@@ -911,13 +968,21 @@ export default function Instructions() {
 
           {/* OR separator */}
           <div style={{
-            fontSize: '2rem',
-            fontFamily: 'Avenir',
-            fontWeight: '700',
-            color: '#E8E3E3',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            width: '200px',
             margin: '0.5rem 0'
           }}>
-            OR
+            <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.3))' }}></div>
+            <span style={{
+              fontSize: '1rem',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: '600',
+              color: 'var(--gold)',
+              letterSpacing: '0.15em'
+            }}>OR</span>
+            <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(201, 168, 76, 0.3), transparent)' }}></div>
           </div>
 
           {/* Second booking option */}
@@ -927,36 +992,40 @@ export default function Instructions() {
             justifyContent: 'center',
             gap: '1.5rem',
             flexWrap: 'wrap',
-            maxWidth: '900px'
+            maxWidth: '900px',
+            padding: '0 1rem'
           }}>
             <button
               style={{
-                backgroundColor: '#FFFFFF',
-                color: '#000000',
-                border: 'none',
-                padding: '16px 32px',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                fontFamily: 'Avenir',
-                fontWeight: '900',
+                background: 'linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0.05) 100%)',
+                color: 'var(--gold-light)',
+                border: '1.5px solid var(--gold)',
+                padding: '14px 28px',
+                borderRadius: '50px',
+                fontSize: '0.9rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: '600',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                backdropFilter: 'blur(8px)'
               }}
-              onMouseEnter={(e) => { e.target.style.opacity = '0.9'; e.target.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }}
+              onMouseEnter={(e) => { e.target.style.boxShadow = '0 0 25px rgba(201, 168, 76, 0.2)'; e.target.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.target.style.boxShadow = 'none'; e.target.style.transform = 'translateY(0)'; }}
               onClick={scrollToPrivateExperience}
             >
               Book a Private Mystery
             </button>
             <p style={{
-              color: '#E8E3E3',
-              fontSize: '1rem',
-              fontFamily: 'Avenir',
+              color: 'var(--text-secondary)',
+              fontSize: '0.95rem',
+              fontFamily: 'var(--font-body)',
               lineHeight: '1.6',
               margin: '0',
-              maxWidth: '400px'
+              maxWidth: '400px',
+              textAlign: 'center'
             }}>
               Reserve the entire experience for your group on a date of your choice (subject to availability).
             </p>
@@ -968,7 +1037,6 @@ export default function Instructions() {
           <div className="desktop-content">
             <h1
               className="font-bold desktop-title"
-              style={{ fontFamily: "Avenir" }}
             >
               {"About The Property (Gurugram)".split('').map((letter, index) => (
                 <span key={index} className="wavy-letter">

@@ -149,12 +149,13 @@ export default function HeroSection() {
           font-family: var(--font-body);
           color: var(--text-secondary);
           text-decoration: none;
-          padding: 0.5rem 1rem;
+          padding: 0.6rem 1rem;
           font-size: 0.875rem;
           font-weight: 500;
           letter-spacing: 0.04em;
           position: relative;
           transition: color 0.3s ease;
+          -webkit-tap-highlight-color: transparent;
         }
 
         .mm-nav-link::after {
@@ -181,12 +182,29 @@ export default function HeroSection() {
           max-height: 0;
           overflow: hidden;
           transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          background: rgba(10, 10, 18, 0.95);
-          backdrop-filter: blur(20px);
+          background: rgba(10, 10, 18, 0.97);
+          backdrop-filter: blur(24px);
+          border-top: 1px solid rgba(201, 168, 76, 0.1);
         }
         
         .mm-mobile-menu.open {
           max-height: 400px;
+        }
+
+        .mm-mobile-menu .mm-nav-link {
+          font-size: 1rem;
+          padding: 0.875rem 1.25rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          display: block;
+          width: 100%;
+        }
+
+        .mm-mobile-menu .mm-nav-link:last-child {
+          border-bottom: none;
+        }
+
+        .mm-mobile-menu .mm-nav-link::after {
+          display: none;
         }
 
         /* ===== HERO SECTION ===== */
@@ -389,6 +407,13 @@ export default function HeroSection() {
 
         .mm-scroll-indicator svg {
           animation: scroll-indicator 2s ease-in-out infinite;
+        }
+
+        /* ===== FOG - hide on very small screens for perf ===== */
+        @media (max-width: 480px) {
+          .mm-fog-orb {
+            display: none;
+          }
         }
 
         /* ===== ABOUT THE GAME ===== */
@@ -607,34 +632,120 @@ export default function HeroSection() {
           opacity: 0.8;
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE — TABLET ===== */
+        @media (max-width: 768px) {
+          .mm-hero, .mm-about, .mm-locations, .mm-faqs {
+            background-attachment: scroll;
+          }
+
+          .mm-location-card:hover {
+            transform: translateY(-4px);
+          }
+
+          .mm-faq-item:hover {
+            transform: none;
+          }
+        }
+
+        /* ===== RESPONSIVE — MOBILE ===== */
         @media (max-width: 640px) {
           .wavy-letter {
             animation: wave 6s ease-in-out infinite;
-          }
-          
-          .mm-hero, .mm-about, .mm-locations, .mm-faqs {
-            background-attachment: scroll;
           }
 
           .mm-hero-content {
             padding-top: 80px;
           }
 
-          .mm-scroll-indicator {
-            bottom: 120px;
+          .mm-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+          }
+
+          .mm-tagline {
+            font-size: 0.85rem;
+          }
+
+          .mm-cta {
+            padding: 0.75rem 2rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+          }
+
+          .mm-hero-bar {
+            padding: 0.625rem 0.75rem;
+          }
+
+          .mm-gold-divider {
+            width: 50px;
+            margin: 1rem auto;
+          }
+
+          .mm-game-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+          }
+
+          .mm-location-card {
+            border-radius: 14px;
+          }
+
+          .mm-location-img-wrap {
+            margin: 0.5rem;
+            border-radius: 10px;
+          }
+
+          .mm-card-title {
+            font-size: 1.25rem;
+          }
+
+          .mm-coming-soon {
+            font-size: 1rem;
+          }
+
+          .mm-faq-item {
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
           }
 
           .mm-faq-question {
             padding: 1rem;
+            font-size: 0.875rem;
           }
 
           .mm-faq-answer {
             padding: 0 1rem;
+            font-size: 0.8rem;
+            line-height: 1.6;
           }
 
           .mm-faq-answer.open {
             padding: 0 1rem 1rem;
+          }
+
+          .mm-faq-icon {
+            margin-left: 0.75rem;
+          }
+        }
+
+        /* ===== RESPONSIVE — SMALL MOBILE ===== */
+        @media (max-width: 380px) {
+          .mm-subtitle {
+            font-size: 0.6rem;
+          }
+
+          .mm-cta {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.8rem;
+          }
+
+          .mm-faq-question {
+            padding: 0.875rem;
+            font-size: 0.8rem;
+          }
+
+          .mm-faq-answer {
+            font-size: 0.75rem;
           }
         }
       `}</style>

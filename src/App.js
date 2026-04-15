@@ -6,6 +6,7 @@ import { AudioProvider } from "./components/AudioContext"; // Import the audio p
 import Instructions from "./components/Instructions";
 import Whatsapp from "./components/whatsapp"
 import Creator from './components/creator'; 
+import ISBRsvp from './components/ISBRsvp';
 
 import Game from "./components/game";
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/game" element={<Game />} />
           <Route path="/Instructions" element={<Instructions />} />
           <Route path="/creator" element={<Creator />} />
+          <Route path="/isb-rsvp" element={<ISBRsvp />} />
           
         </Routes>
 
