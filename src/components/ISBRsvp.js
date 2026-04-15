@@ -7,6 +7,7 @@ export default function ISBRsvp() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     attending: "",
     guests: "",
   });
@@ -36,11 +37,49 @@ export default function ISBRsvp() {
       from_name: "Mystery Mansion RSVP",
       name: formData.name,
       email: formData.email,
+      phone: formData.phone,
       "Will be attending": formData.attending,
       "Number of guests": formData.guests,
     };
 
     try {
+      // Send to Google Sheets via hidden form (bypasses CORS)
+      const sheetsUrl = "https://script.google.com/macros/s/AKfycbw7lLDMKwiEmcDTsD00a9lPl1EvI_s8yKCs41WaufVHh7XjuHYBmuZzxxMSXuL_eT3J/exec";
+      try {
+        const iframe = document.createElement("iframe");
+        iframe.name = "sheets-target";
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+
+        const sheetsForm = document.createElement("form");
+        sheetsForm.method = "POST";
+        sheetsForm.action = sheetsUrl;
+        sheetsForm.target = "sheets-target";
+
+        const fields = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          attending: formData.attending,
+          guests: formData.guests,
+        };
+
+        Object.entries(fields).forEach(([key, val]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = val || "";
+          sheetsForm.appendChild(input);
+        });
+
+        document.body.appendChild(sheetsForm);
+        sheetsForm.submit();
+        document.body.removeChild(sheetsForm);
+        setTimeout(() => document.body.removeChild(iframe), 5000);
+      } catch (sheetErr) {
+        console.warn("Google Sheets log failed (non-critical):", sheetErr);
+      }
+
       // Send to both emails in parallel
       const results = await Promise.all(
         accessKeys.map((key) =>
@@ -224,7 +263,6 @@ export default function ISBRsvp() {
           font-weight: 600;
           color: var(--gold);
           letter-spacing: 0.06em;
-          text-transform: uppercase;
           margin-bottom: 0.5rem;
         }
 
@@ -247,6 +285,7 @@ export default function ISBRsvp() {
         .rsvp-input::placeholder {
           color: var(--text-secondary);
           opacity: 0.5;
+          font-style: italic;
         }
 
         .rsvp-input:focus,
@@ -552,8 +591,6 @@ export default function ISBRsvp() {
               <>
                 <h1 className="rsvp-card-title">Welcome to the Mystery Mansion</h1>
                 <p className="rsvp-card-subtitle">
-                  You are cordially invited to an evening of mystery & intrigue.
-                  <br />
                   RSVP below for the <strong style={{ color: 'var(--gold-light)' }}>2nd May / 3rd May</strong> game.
                 </p>
 
@@ -573,7 +610,7 @@ export default function ISBRsvp() {
                   </div>
 
                   <div className="rsvp-field">
-                    <label className="rsvp-label" htmlFor="rsvp-email">Email</label>
+                    <label className="rsvp-label" htmlFor="rsvp-email">ISB Email ID</label>
                     <input
                       type="email"
                       id="rsvp-email"
@@ -587,7 +624,21 @@ export default function ISBRsvp() {
                   </div>
 
                   <div className="rsvp-field">
-                    <label className="rsvp-label" htmlFor="rsvp-attending">Will you be attending?</label>
+                    <label className="rsvp-label" htmlFor="rsvp-phone">Phone Number</label>
+                    <input
+                      type="text"
+                      id="rsvp-phone"
+                      name="phone"
+                      className="rsvp-input"
+                      placeholder="Your phone number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="rsvp-field">
+                    <label className="rsvp-label" htmlFor="rsvp-attending">For which night would you like your invitation to the Mystery Mansion?</label>
                     <select
                       id="rsvp-attending"
                       name="attending"
@@ -597,27 +648,22 @@ export default function ISBRsvp() {
                       required
                     >
                       <option value="" disabled>Select</option>
-                      <option value="Yes - 2nd May">Yes — 2nd May</option>
-                      <option value="Yes - 3rd May">Yes — 3rd May</option>
-                      <option value="Yes - Either date works">Yes — Either date works</option>
-                      <option value="Maybe">Maybe</option>
-                      <option value="No">No, can't make it</option>
+                      <option value="Yes - 2nd May">2nd May 2026</option>
+                      <option value="Yes - 3rd May">3rd May 2026</option>
+                      <option value="Yes - Either date works">Either date works basis availability</option>
                     </select>
                   </div>
 
                   <div className="rsvp-field">
-                    <label className="rsvp-label" htmlFor="rsvp-guests">Number of Guests</label>
+                    <label className="rsvp-label" htmlFor="rsvp-guests">Inquiry/Requests</label>
                     <input
-                      type="number"
+                      type="text"
                       id="rsvp-guests"
                       name="guests"
                       className="rsvp-input"
-                      placeholder="How many guests (including yourself)?"
+                      placeholder="Optional"
                       value={formData.guests}
                       onChange={handleChange}
-                      min="1"
-                      max="20"
-                      required
                     />
                   </div>
 
