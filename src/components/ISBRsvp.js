@@ -686,7 +686,7 @@ export default function ISBRsvp() {
               <p className="rsvp-details-notice">
                 Invitations are extended on a first-come, first-served basis,
                 <br />
-                with each day limited to <strong>15 guests</strong>.
+                with each day limited to <strong>20 guests</strong>.
               </p>
 
               <div className="rsvp-details-grid">
