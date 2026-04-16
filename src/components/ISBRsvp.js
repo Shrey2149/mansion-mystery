@@ -43,39 +43,17 @@ export default function ISBRsvp() {
     };
 
     try {
-      // Send to Google Sheets via hidden form (bypasses CORS)
+      // Send to Google Sheets via GET with query params (most reliable for GAS)
       const sheetsUrl = "https://script.google.com/macros/s/AKfycbw7lLDMKwiEmcDTsD00a9lPl1EvI_s8yKCs41WaufVHh7XjuHYBmuZzxxMSXuL_eT3J/exec";
       try {
-        const iframe = document.createElement("iframe");
-        iframe.name = "sheets-target";
-        iframe.style.display = "none";
-        document.body.appendChild(iframe);
-
-        const sheetsForm = document.createElement("form");
-        sheetsForm.method = "POST";
-        sheetsForm.action = sheetsUrl;
-        sheetsForm.target = "sheets-target";
-
-        const fields = {
+        const params = new URLSearchParams({
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           attending: formData.attending,
-          guests: formData.guests,
-        };
-
-        Object.entries(fields).forEach(([key, val]) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = val || "";
-          sheetsForm.appendChild(input);
+          guests: formData.guests || "",
         });
-
-        document.body.appendChild(sheetsForm);
-        sheetsForm.submit();
-        document.body.removeChild(sheetsForm);
-        setTimeout(() => document.body.removeChild(iframe), 5000);
+        await fetch(`${sheetsUrl}?${params.toString()}`, { mode: "no-cors" });
       } catch (sheetErr) {
         console.warn("Google Sheets log failed (non-critical):", sheetErr);
       }
