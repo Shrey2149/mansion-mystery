@@ -704,9 +704,7 @@ export default function ISBRsvp() {
                 </div>
               </div>
 
-              <p className="rsvp-details-note">
-                Guests can choose to stay overnight and check-out by next morning.
-              </p>
+
             </div>
 
             <div className="rsvp-ornament" style={{ marginTop: '1.5rem' }}>⚜ ✦ ⚜</div>
