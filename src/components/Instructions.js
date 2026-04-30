@@ -41,12 +41,12 @@ export default function Instructions() {
 
   const showDates = [
     { month: 'APR', day: 18, label: 'APRIL', image: fifthImg, soldOut: true },
-    { month: 'APR', day: 27, label: 'APRIL', image: fifthImg, soldOut: false },
+    { month: 'APR', day: 27, label: 'APRIL', image: fifthImg, soldOut: true },
 
-    { month: 'APR', day: 30, label: 'APRIL', image: fifthImg, soldOut: false },
+    { month: 'APR', day: 30, label: 'APRIL', image: fifthImg, soldOut: true },
 
-    { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: false },
-    { month: 'MAY', day: 3, label: 'MAY', image: gurgaon_image, soldOut: false },
+    { month: 'MAY', day: 2, label: 'MAY', image: gurgaon_image, soldOut: true },
+    { month: 'MAY', day: 3, label: 'MAY', image: gurgaon_image, soldOut: true },
     { month: 'MAY', day: 8, label: 'MAY', image: gurgaon_image, soldOut: true },
     { month: 'JUNE', day: 19, label: 'JUNE', image: seventhImg, soldOut: false },
     { month: 'JUNE', day: 21, label: 'JUNE', image: seventhImg, soldOut: false },
