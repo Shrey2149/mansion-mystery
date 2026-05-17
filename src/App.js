@@ -7,6 +7,7 @@ import Instructions from "./components/Instructions";
 import Whatsapp from "./components/whatsapp"
 import Creator from './components/creator'; 
 import ISBRsvp from './components/ISBRsvp';
+import GreaterNoidaInfo from './components/GreaterNoidaInfo';
 
 import Game from "./components/game";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Instructions" element={<Instructions />} />
           <Route path="/creator" element={<Creator />} />
           <Route path="/isb-rsvp" element={<ISBRsvp />} />
+          <Route path="/greater-noida-info" element={<GreaterNoidaInfo />} />
           
         </Routes>
 

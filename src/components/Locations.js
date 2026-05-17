@@ -91,21 +91,29 @@ export default function Locations() {
       </div>
     </div>
 
-        {/* Mussoorie Card */}
+        {/* Greater Noida Card */}
         <div className="rounded-lg shadow-lg overflow-hidden w-[380px] transform transition duration-300 hover:scale-105" style={{backgroundColor: '#E8E3E3'}}>
           <div className="p-4" style={{backgroundColor: '#E8E3E3'}}>
-          <img src={mussoorieImg} alt="Mussoorie" className="w-full h-96 object-cover" />
+          <img src={mussoorieImg} alt="Greater Noida" className="w-full h-96 object-cover" />
           </div>
-          <div className="p-4 min-h-[150px] ">
+          <div className="p-4 min-h-[150px] relative right-0">
             <h2 className="text-4xl font-semibold text-black force-black" style = {{transform: "translate(0px, 0px)"}}>
-              {"Mussoorie".split('').map((letter, index) => (
+              {"Greater Noida".split('').map((letter, index) => (
               <span key={index} className="wavy-letter">
                 {letter === ' ' ? '\u00A0' : letter}
               </span>
             ))}
               
               </h2>
-            <p className="mt-2 text-gray-600 font-medium text-4xl" style = {{transform: "translate(0px, 10px)"}}>Coming Soon…!</p>
+
+        {/* Button with proper spacing */}
+        <div className="mt-10"> {/* Add margin to avoid overlap */}
+          <Link to="/greater-noida-info">
+          <button className="bg-gray-700 px-8 py-3 rounded-full hover:bg-gray-900 transition-colors duration-300 relative z-10 text-xl left-1 text-gray-400">
+            Book Now
+          </button>
+          </Link>
+        </div>
           </div>
         </div>
       </div>
