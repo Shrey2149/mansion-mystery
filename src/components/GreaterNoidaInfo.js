@@ -117,6 +117,27 @@ export default function GreaterNoidaInfo() {
         .wavy-letter:nth-child(12) { animation-delay: 1.1s; }
         .wavy-letter:nth-child(13) { animation-delay: 1.2s; }
         .wavy-letter:nth-child(14) { animation-delay: 1.3s; }
+        .wavy-letter:nth-child(15) { animation-delay: 1.4s; }
+        .wavy-letter:nth-child(16) { animation-delay: 1.5s; }
+        .wavy-letter:nth-child(17) { animation-delay: 1.6s; }
+        .wavy-letter:nth-child(18) { animation-delay: 1.7s; }
+        .wavy-letter:nth-child(19) { animation-delay: 1.8s; }
+        .wavy-letter:nth-child(20) { animation-delay: 1.9s; }
+        .wavy-letter:nth-child(21) { animation-delay: 2s; }
+        .wavy-letter:nth-child(22) { animation-delay: 2.1s; }
+        .wavy-letter:nth-child(23) { animation-delay: 2.2s; }
+        .wavy-letter:nth-child(24) { animation-delay: 2.3s; }
+        .wavy-letter:nth-child(25) { animation-delay: 2.4s; }
+        .wavy-letter:nth-child(26) { animation-delay: 2.5s; }
+        .wavy-letter:nth-child(27) { animation-delay: 2.6s; }
+        .wavy-letter:nth-child(28) { animation-delay: 2.7s; }
+        .wavy-letter:nth-child(29) { animation-delay: 2.8s; }
+        .wavy-letter:nth-child(30) { animation-delay: 2.9s; }
+        .wavy-letter:nth-child(31) { animation-delay: 3s; }
+        .wavy-letter:nth-child(32) { animation-delay: 3.1s; }
+        .wavy-letter:nth-child(33) { animation-delay: 3.2s; }
+        .wavy-letter:nth-child(34) { animation-delay: 3.3s; }
+        .wavy-letter:nth-child(35) { animation-delay: 3.4s; }
 
         .gn-nav {
           background: rgba(10, 10, 18, 0.85);
@@ -314,13 +335,11 @@ export default function GreaterNoidaInfo() {
               ))}
             </h1>
             <div className="gn-list">
-              <div>Spacious villa with elegant interiors—perfect for mystery and intrigue</div>
-              <div>Multiple bedrooms and bathrooms for comfortable group stays</div>
-              <div>Lush outdoor spaces and garden areas to explore</div>
-              <div>Indoor entertainment and games to keep the suspense alive</div>
-              <div>BYOB — your drinks, our bar can brew suspense for you</div>
-              <div>Dining available on order—fuel your next move</div>
-              <div>Ideal for 8–12 guests, where camaraderie and secrets intertwine</div>
+              <div>Farmhouse with elegant interiors—perfect for mystery and intrigue</div>
+              <div>4 bedrooms and 4+1 bathrooms for comfortable group stays</div>
+              <div>Lush outdoor space and garden area to explore</div>
+              <div>Pristine swimming pool to add a 24x7 mystery deep-dive</div>
+              <div>Ideal for 8–15 guests, where camaraderie and secrets intertwine</div>
               <div>Check-in from 5pm, check-out by 10am</div>
             </div>
           </div>
